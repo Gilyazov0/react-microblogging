@@ -1,20 +1,43 @@
 import { useState } from "react";
+import useLocalStorageState from "use-local-storage-state";
 import "./style/App.css";
 import Form from "./Form";
 import Tweet from "./Tweet";
+import { TweetProps } from "../types";
+import ErrorBoundary from "./ErrorBoundary";
+import moment from "moment";
+export default function App() {
+  const [tweets, setTweets] = useLocalStorageState<TweetProps[]>("tweetApp", {
+    defaultValue: [],
+  });
 
-function App() {
-  const [tweets, setTweets] = useState([]);
-  return (
-    <div className="app">
-      <Form />
+  tweets.sort((a, b) => moment(b.date).valueOf() - moment(a.date).valueOf());
+
+  function addTweet(tweet: TweetProps) {
+    setTweets((prevState) => {
+      const newState = [...prevState];
+      newState.push(tweet);
+      return newState;
+    });
+  }
+
+  const tweetComponents = tweets.map((tweet: TweetProps, index) => {
+    return (
       <Tweet
-        content="sadasd  asd asd as dsa "
-        date="this is a date"
-        userName="yonatan"
+        content={tweet.content}
+        date={tweet.date}
+        userName={tweet.userName}
+        key={index}
       />
-    </div>
+    );
+  });
+
+  return (
+    <ErrorBoundary>
+      <div className="app">
+        <Form addTweet={addTweet} />
+        {tweetComponents}
+      </div>
+    </ErrorBoundary>
   );
 }
-
-export default App;

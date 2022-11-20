@@ -2,11 +2,34 @@ import React, { useState } from "react";
 import { Button, Alert } from "react-bootstrap";
 import TextBox from "./TextBox";
 import "./style/Form.css";
-const Form: React.FC = () => {
+import { TweetProps } from "../types";
+
+const Form: React.FC<{ addTweet: (tweet: TweetProps) => void }> = (props: {
+  addTweet: (tweet: TweetProps) => void;
+}) => {
   const [lengthIsOk, setLengthIsOk] = useState(true);
 
+  const handleClick = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const content = (
+      e.currentTarget.getElementsByClassName(
+        "tweet-content"
+      )[0] as HTMLTextAreaElement
+    ).value!;
+
+    props.addTweet({
+      content,
+      date: new Date().toISOString(),
+      userName: "user#42",
+    });
+  };
   return (
-    <div className="form">
+    <form
+      className="form"
+      onSubmit={(e) => {
+        handleClick(e);
+      }}
+    >
       <TextBox setLengthIsOk={(x: boolean) => setLengthIsOk(x)} />
       <div className="d-flex ">
         {!lengthIsOk && (
@@ -15,11 +38,11 @@ const Form: React.FC = () => {
           </Alert>
         )}
         <div className="flex-grow-1 "></div>
-        <Button variant="primary" disabled={!lengthIsOk}>
+        <Button variant="primary" disabled={!lengthIsOk} type="submit">
           Tweet
         </Button>
       </div>
-    </div>
+    </form>
   );
 };
 

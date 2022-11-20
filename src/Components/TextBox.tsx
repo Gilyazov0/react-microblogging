@@ -13,7 +13,14 @@ const TextBox: React.FC<TextBoxProps> = (props: TextBoxProps) => {
     }
   };
 
-  return <textarea ref={ref} rows={1} onInput={handleInput} />;
+  return (
+    <textarea
+      ref={ref}
+      rows={1}
+      onInput={handleInput}
+      className="tweet-content"
+    />
+  );
 };
 
 export default TextBox;
