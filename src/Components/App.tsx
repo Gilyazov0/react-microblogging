@@ -1,9 +1,13 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
 import "./style/App.css";
+import Form from "./Form";
 
 function App() {
-  return <div className="App"></div>;
+  return (
+    <div className="app">
+      <Form />
+    </div>
+  );
 }
 
 export default App;
