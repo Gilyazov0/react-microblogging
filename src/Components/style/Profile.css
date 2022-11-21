@@ -1,12 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
-
 .profile {
   width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   color: #ffffff;
-  font-family: "Roboto";
+  max-width: 600px;
 }
 .title {
   font-size: 36px;
