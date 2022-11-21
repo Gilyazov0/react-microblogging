@@ -11,11 +11,11 @@ const Form: React.FC<{ addTweet: (tweet: TweetProps) => void }> = (props: {
 
   const handleClick = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const content = (
-      e.currentTarget.getElementsByClassName(
-        "tweet-content"
-      )[0] as HTMLTextAreaElement
-    ).value!;
+    const input = e.currentTarget.getElementsByClassName(
+      "tweet-content"
+    )[0] as HTMLTextAreaElement;
+    const content = input.value;
+    input.value = "";
 
     props.addTweet({
       content,
