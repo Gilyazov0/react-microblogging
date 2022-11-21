@@ -15,8 +15,11 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
 
   const handleClick = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
-      props.setIsUpdating(true);
-      props.setServerError("");
+      const { setIsUpdating, setServerError, setIsNeedGetTweets } = {
+        ...props,
+      };
+      setIsUpdating(true);
+      setServerError("");
       e.preventDefault();
       const input = e.currentTarget.getElementsByClassName(
         "tweet-content"
@@ -30,9 +33,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
         date: new Date().toISOString(),
       });
       if (response.error) {
-        props.setServerError(response.message);
-        props.setIsUpdating(false);
-      } else props.setIsNeedGetTweets(true);
+        setServerError(response.message);
+        setIsUpdating(false);
+      } else setIsNeedGetTweets(true);
     },
     []
   );
