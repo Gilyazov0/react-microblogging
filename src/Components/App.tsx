@@ -50,7 +50,7 @@ export default function App() {
           setServerError={setServerError}
         />
         {
-          <Alert variant="danger" className="m-0 p-1 ms-5 me-5">
+          <Alert variant="danger" className="m-0 p-1 ">
             {serverError}
           </Alert>
         }
