@@ -3,7 +3,7 @@ import useLocalStorageState from "use-local-storage-state";
 import "./style/App.css";
 import Form from "./Form";
 import Tweet from "./Tweet";
-import { TweetProps } from "../types";
+import { TweetProps } from "../Types/TweetProps";
 import ErrorBoundary from "./ErrorBoundary";
 import moment from "moment";
 export default function App() {

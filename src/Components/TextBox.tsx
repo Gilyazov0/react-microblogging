@@ -1,6 +1,10 @@
 import { ChangeEvent, useRef } from "react";
 import "./style/TextBox.css";
-import { TextBoxProps } from "../types";
+
+interface TextBoxProps {
+  setLengthIsOk: Function;
+}
+
 const TextBox: React.FC<TextBoxProps> = (props: TextBoxProps) => {
   const ref = useRef<HTMLTextAreaElement>(null);
 

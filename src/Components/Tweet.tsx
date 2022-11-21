@@ -1,5 +1,5 @@
 import React from "react";
-import { TweetProps } from "../types";
+import { TweetProps } from "../Types/TweetProps";
 import "./style/Tweet.css";
 
 const Tweet: React.FC<TweetProps> = (props: TweetProps) => {

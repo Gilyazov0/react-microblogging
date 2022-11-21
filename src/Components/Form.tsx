@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Button, Alert } from "react-bootstrap";
 import TextBox from "./TextBox";
 import "./style/Form.css";
-import { TweetProps } from "../types";
+import { TweetProps } from "../Types/TweetProps";
 
 const Form: React.FC<{ addTweet: (tweet: TweetProps) => void }> = (props: {
   addTweet: (tweet: TweetProps) => void;
