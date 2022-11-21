@@ -21,7 +21,7 @@ export default class API {
 
   static async postTweet(tweet: TweetProps) {
     try {
-      const response = await fetch(this.url + "sds", {
+      const response = await fetch(this.url, {
         method: "POST",
         headers: {
           Accept: "application/json",

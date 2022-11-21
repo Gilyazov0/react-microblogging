@@ -16,6 +16,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const handleClick = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
       props.setIsUpdating(true);
+      props.setServerError("");
       e.preventDefault();
       const input = e.currentTarget.getElementsByClassName(
         "tweet-content"

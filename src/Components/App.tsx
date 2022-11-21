@@ -49,11 +49,11 @@ export default function App() {
           isUpdating={isUpdating}
           setServerError={setServerError}
         />
-        {
+        {serverError && (
           <Alert variant="danger" className="m-0 p-1 ">
             {serverError}
           </Alert>
-        }
+        )}
 
         {isUpdating && <Loading />}
         {tweetComponents}
