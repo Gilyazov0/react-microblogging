@@ -6,6 +6,8 @@ import API from "../lib/serverApi";
 interface FormProps {
   setIsUpdating: Function;
   setIsNeedGetTweets: Function;
+  setServerError: Function;
+  isUpdating: boolean;
 }
 
 const Form: React.FC<FormProps> = (props: FormProps) => {
@@ -13,7 +15,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
 
   const handleClick = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
-      props.setIsUpdating();
+      props.setIsUpdating(true);
       e.preventDefault();
       const input = e.currentTarget.getElementsByClassName(
         "tweet-content"
@@ -26,11 +28,10 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
         userName: "Sergey",
         date: new Date().toISOString(),
       });
-
-      if (response.error) console.log("terrible error occurred", response);
-      else {
-        props.setIsNeedGetTweets();
-      }
+      if (response.error) {
+        props.setServerError(response.message);
+        props.setIsUpdating(false);
+      } else props.setIsNeedGetTweets(true);
     },
     []
   );

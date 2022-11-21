@@ -7,11 +7,13 @@ import ErrorBoundary from "./ErrorBoundary";
 import moment from "moment";
 import API from "../lib/serverApi";
 import Loading from "./Loading";
+import { Alert } from "react-bootstrap";
 
 export default function App() {
   const [tweets, setTweets] = useState<TweetProps[]>([]);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [isNeedGetTweets, setIsNeedGetTweets] = useState<boolean>(false);
+  const [serverError, setServerError] = useState<string>("");
 
   // getting tweets from server
   useEffect(() => {
@@ -38,15 +40,21 @@ export default function App() {
       />
     );
   });
-
   return (
     <ErrorBoundary>
       <div className="app">
         <Form
-          setIsUpdating={() => setIsUpdating(true)}
-          setIsNeedGetTweets={() => setIsNeedGetTweets(true)}
+          setIsUpdating={setIsUpdating}
+          setIsNeedGetTweets={setIsNeedGetTweets}
           isUpdating={isUpdating}
+          setServerError={setServerError}
         />
+        {
+          <Alert variant="danger" className="m-0 p-1 ms-5 me-5">
+            {serverError}
+          </Alert>
+        }
+
         {isUpdating && <Loading />}
         {tweetComponents}
       </div>
