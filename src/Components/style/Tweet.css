@@ -10,4 +10,5 @@
   padding: 20px;
   gap: 16px;
   margin: 10px;
+  word-wrap: break-word;
 }

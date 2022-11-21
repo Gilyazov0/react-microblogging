@@ -1,28 +1,40 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Button, Alert } from "react-bootstrap";
 import TextBox from "./TextBox";
 import "./style/Form.css";
-import { TweetProps } from "../Types/TweetProps";
+import API from "../lib/serverApi";
+interface FormProps {
+  setIsUpdating: Function;
+  setIsNeedGetTweets: Function;
+}
 
-const Form: React.FC<{ addTweet: (tweet: TweetProps) => void }> = (props: {
-  addTweet: (tweet: TweetProps) => void;
-}) => {
+const Form: React.FC<FormProps> = (props: FormProps) => {
   const [lengthIsOk, setLengthIsOk] = useState(true);
 
-  const handleClick = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const input = e.currentTarget.getElementsByClassName(
-      "tweet-content"
-    )[0] as HTMLTextAreaElement;
-    const content = input.value;
-    input.value = "";
+  const handleClick = useCallback(
+    async (e: React.FormEvent<HTMLFormElement>) => {
+      props.setIsUpdating();
+      e.preventDefault();
+      const input = e.currentTarget.getElementsByClassName(
+        "tweet-content"
+      )[0] as HTMLTextAreaElement;
+      const content = input.value;
+      input.value = "";
 
-    props.addTweet({
-      content,
-      date: new Date().toISOString(),
-      userName: "user#42",
-    });
-  };
+      const response = await API.postTweet({
+        content: content,
+        userName: "Sergey",
+        date: new Date().toISOString(),
+      });
+
+      if (response.error) console.log("terrible error occurred", response);
+      else {
+        props.setIsNeedGetTweets();
+      }
+    },
+    []
+  );
+
   return (
     <form
       className="form"
@@ -38,7 +50,11 @@ const Form: React.FC<{ addTweet: (tweet: TweetProps) => void }> = (props: {
           </Alert>
         )}
         <div className="flex-grow-1 "></div>
-        <Button variant="primary" disabled={!lengthIsOk} type="submit">
+        <Button
+          variant="primary"
+          disabled={!lengthIsOk || props.isUpdating}
+          type="submit"
+        >
           Tweet
         </Button>
       </div>
