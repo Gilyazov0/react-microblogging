@@ -1,10 +1,9 @@
 body {
   padding: 0;
-  min-height: 100vh;
   margin: 0;
 }
 #root {
-  height: 100%;
+  min-height: 100vh;
   background-color: #15202b;
   display: flex;
   flex-direction: column;
