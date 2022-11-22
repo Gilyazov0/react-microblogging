@@ -19,7 +19,7 @@ const App: React.FC = () => {
     <ErrorBoundary>
       <div className="app">
         <NavBar currentPage={page} setPage={setPage} />
-        {page === "Home" && <Home user={user} />}{" "}
+        {page === "Home" && <Home user={user} />}
         {page === "Profile" && <Profile user={user} setUser={setUser} />}
       </div>
     </ErrorBoundary>

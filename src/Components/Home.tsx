@@ -14,20 +14,21 @@ export const TweetsContext = React.createContext<TweetProps[]>([]);
 export default function Home(props: { user: string }) {
   const [tweets, setTweets] = useState<TweetProps[]>([]);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
-  const [isNeedGetTweets, setIsNeedGetTweets] = useState<boolean>(false);
   const [serverError, setServerError] = useState<string>("");
 
   // getting tweets from server
   useEffect(() => {
-    setIsUpdating(true);
-    (async () => {
+    const getTweets = async () => {
+      setIsUpdating(true);
       const tweets = await API.getTweets();
       if (tweets) {
         setTweets(tweets);
       }
-      setIsNeedGetTweets(false);
       setIsUpdating(false);
-    })();
+    };
+    getTweets();
+    const interval = setInterval(getTweets, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   tweets.sort((a, b) => moment(b.date).valueOf() - moment(a.date).valueOf());
@@ -37,7 +38,6 @@ export default function Home(props: { user: string }) {
       <div className="app">
         <Form
           setIsUpdating={setIsUpdating}
-          setIsNeedGetTweets={setIsNeedGetTweets}
           isUpdating={isUpdating}
           setServerError={setServerError}
           userName={props.user}

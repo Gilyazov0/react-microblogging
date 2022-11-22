@@ -5,7 +5,6 @@ import "./style/Form.css";
 import API from "../lib/serverApi";
 interface FormProps {
   setIsUpdating: Function;
-  setIsNeedGetTweets: Function;
   setServerError: Function;
   isUpdating: boolean;
   userName: string;
@@ -16,7 +15,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
 
   const handleClick = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
-      const { setIsUpdating, setServerError, setIsNeedGetTweets } = {
+      const { setIsUpdating, setServerError } = {
         ...props,
       };
       setIsUpdating(true);
@@ -36,7 +35,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       if (response.error) {
         setServerError(response.message);
         setIsUpdating(false);
-      } else setIsNeedGetTweets(true);
+      }
     },
     []
   );
