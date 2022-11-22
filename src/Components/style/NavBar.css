@@ -5,7 +5,8 @@
   padding-left: 35px;
   display: flex;
   align-items: center;
-  width: 1076px;
+  max-width: 1076px;
+  width: 100%;
 }
 
 .link {

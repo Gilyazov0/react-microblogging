@@ -21,14 +21,12 @@ const Profile: React.FC<ProfileProps> = (props: ProfileProps) => {
   return (
     <div className="profile">
       <div className="title">Profile</div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="name">User name</label>
-        <input type={"text"} name="name" ref={nameRef} />
+      <label htmlFor="name">User name</label>
+      <input type={"text"} name="name" ref={nameRef} />
 
-        <Button variant="primary" onClick={handleSubmit}>
-          Save
-        </Button>
-      </form>
+      <Button variant="primary" onClick={handleSubmit}>
+        Save
+      </Button>
     </div>
   );
 };

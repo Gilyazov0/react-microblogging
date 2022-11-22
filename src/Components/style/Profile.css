@@ -26,8 +26,3 @@ input {
 button {
   margin: 18px 10px 0 0;
 }
-
-form {
-  display: flex;
-  flex-direction: column;
-}
