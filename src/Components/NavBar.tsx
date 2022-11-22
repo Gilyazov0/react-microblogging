@@ -1,10 +1,31 @@
 import React from "react";
+import { Pages } from "./App";
 import "./style/NavBar.css";
 
-const NavBar: React.FC = () => {
+interface NavBarProps {
+  currentPage: Pages;
+  setPage: (page: Pages) => void;
+}
+
+const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
   return (
     <div className="nav-bar">
-      <span className="link">Home</span> <span className="link">Profile</span>
+      <span
+        onClick={() => props.setPage("Home")}
+        className={`link ${
+          props.currentPage === "Home" ? "" : "text-secondary"
+        }`}
+      >
+        Home
+      </span>
+      <span
+        onClick={() => props.setPage("Profile")}
+        className={`link ${
+          props.currentPage === "Profile" ? "" : "text-secondary"
+        }`}
+      >
+        Profile
+      </span>
     </div>
   );
 };

@@ -5,12 +5,13 @@ import NavBar from "./NavBar";
 import { useState } from "react";
 import "./style/App.css";
 
+export type Pages = "Home" | "Profile";
 const App: React.FC = () => {
-  const [page, setPage] = useState<"Home" | "Profile">("Profile");
+  const [page, setPage] = useState<Pages>("Profile");
 
   return (
     <div className="app">
-      <NavBar />
+      <NavBar currentPage={page} setPage={setPage} />
       {page === "Home" && <Home />} {page === "Profile" && <Profile />}
     </div>
   );
