@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import "./style/Home.css";
-import Form from "./Form";
-import Tweet from "./Tweet";
+import NewTweet from "./NewTweet";
 import { TweetProps } from "../Types/TweetProps";
 import moment from "moment";
 import API from "../lib/serverApi";
 import Loading from "./Loading";
 import { Alert } from "react-bootstrap";
-import TweetList from "./TeetsList";
+import TweetList from "./TweetsList";
 
 export const TweetsContext = React.createContext<TweetProps[]>([]);
 
@@ -36,7 +35,7 @@ export default function Home(props: { user: string }) {
   return (
     <TweetsContext.Provider value={tweets}>
       <div className="app">
-        <Form
+        <NewTweet
           setIsUpdating={setIsUpdating}
           isUpdating={isUpdating}
           setServerError={setServerError}

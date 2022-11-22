@@ -1,17 +1,20 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useContext, useState } from "react";
 import { Button, Alert } from "react-bootstrap";
 import TextBox from "./TextBox";
-import "./style/Form.css";
+import "./style/NewTweet.css";
 import API from "../lib/serverApi";
-interface FormProps {
+import { TweetsContext } from "./Home";
+
+interface Props {
   setIsUpdating: Function;
   setServerError: Function;
   isUpdating: boolean;
   userName: string;
 }
 
-const Form: React.FC<FormProps> = (props: FormProps) => {
+const NewTweet: React.FC<Props> = (props: Props) => {
   const [lengthIsOk, setLengthIsOk] = useState(true);
+  const tweets = useContext(TweetsContext);
 
   const handleClick = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -27,15 +30,21 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       const content = input.value;
       input.value = "";
 
-      const response = await API.postTweet({
+      const tweet = {
         content: content,
         userName: props.userName,
         date: new Date().toISOString(),
-      });
+      };
+
+      const response = await API.postTweet(tweet);
       if (response.error) {
         setServerError(response.message);
         setIsUpdating(false);
+      } else {
+        tweets.push(tweet);
       }
+
+      setIsUpdating(false);
     },
     []
   );
@@ -67,4 +76,4 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   );
 };
 
-export default Form;
+export default NewTweet;
