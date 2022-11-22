@@ -11,7 +11,7 @@ const Profile: React.FC<ProfileProps> = (props: ProfileProps) => {
   const nameRef = useRef<HTMLInputElement>(null);
 
   function handleSubmit() {
-    console.log(nameRef.current!.value);
+    props.setUser(nameRef.current!.value);
   }
 
   useEffect(() => {
