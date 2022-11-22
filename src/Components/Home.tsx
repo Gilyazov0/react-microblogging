@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import "./style/Home.css";
 import Form from "./Form";
 import Tweet from "./Tweet";
@@ -9,7 +9,7 @@ import API from "../lib/serverApi";
 import Loading from "./Loading";
 import { Alert } from "react-bootstrap";
 
-export default function Home() {
+export default function Home(props: { user: string }) {
   const [tweets, setTweets] = useState<TweetProps[]>([]);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [isNeedGetTweets, setIsNeedGetTweets] = useState<boolean>(false);
