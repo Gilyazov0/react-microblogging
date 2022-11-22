@@ -8,6 +8,7 @@ interface FormProps {
   setIsNeedGetTweets: Function;
   setServerError: Function;
   isUpdating: boolean;
+  userName: string;
 }
 
 const Form: React.FC<FormProps> = (props: FormProps) => {
@@ -29,7 +30,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
 
       const response = await API.postTweet({
         content: content,
-        userName: "Sergey",
+        userName: props.userName,
         date: new Date().toISOString(),
       });
       if (response.error) {

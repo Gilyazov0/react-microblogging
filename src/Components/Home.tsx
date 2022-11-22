@@ -48,6 +48,7 @@ export default function Home(props: { user: string }) {
           setIsNeedGetTweets={setIsNeedGetTweets}
           isUpdating={isUpdating}
           setServerError={setServerError}
+          userName={props.user}
         />
         {serverError && (
           <Alert variant="danger" className="m-0 p-1 ">
