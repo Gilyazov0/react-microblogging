@@ -1,13 +1,15 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import "./style/Home.css";
 import Form from "./Form";
 import Tweet from "./Tweet";
 import { TweetProps } from "../Types/TweetProps";
-import ErrorBoundary from "./ErrorBoundary";
 import moment from "moment";
 import API from "../lib/serverApi";
 import Loading from "./Loading";
 import { Alert } from "react-bootstrap";
+import TweetList from "./TeetsList";
+
+export const TweetsContext = React.createContext<TweetProps[]>([]);
 
 export default function Home(props: { user: string }) {
   const [tweets, setTweets] = useState<TweetProps[]>([]);
@@ -26,22 +28,12 @@ export default function Home(props: { user: string }) {
       setIsNeedGetTweets(false);
       setIsUpdating(false);
     })();
-  }, [isNeedGetTweets]);
+  }, []);
 
   tweets.sort((a, b) => moment(b.date).valueOf() - moment(a.date).valueOf());
 
-  const tweetComponents = tweets.map((tweet: TweetProps, index) => {
-    return (
-      <Tweet
-        content={tweet.content}
-        date={tweet.date}
-        userName={tweet.userName}
-        key={index}
-      />
-    );
-  });
   return (
-    <ErrorBoundary>
+    <TweetsContext.Provider value={tweets}>
       <div className="app">
         <Form
           setIsUpdating={setIsUpdating}
@@ -57,8 +49,8 @@ export default function Home(props: { user: string }) {
         )}
 
         {isUpdating && <Loading />}
-        {tweetComponents}
+        <TweetList />
       </div>
-    </ErrorBoundary>
+    </TweetsContext.Provider>
   );
 }
