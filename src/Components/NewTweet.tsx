@@ -21,7 +21,7 @@ const NewTweet: React.FC<Props> = (props: Props) => {
       const { setIsUpdating, setServerError } = {
         ...props,
       };
-      setIsUpdating(true);
+      // setIsUpdating(true);
       setServerError("");
       e.preventDefault();
       const input = e.currentTarget.getElementsByClassName(
@@ -41,10 +41,10 @@ const NewTweet: React.FC<Props> = (props: Props) => {
         setServerError(response.message);
         setIsUpdating(false);
       } else {
-        tweets.push(tweet);
+        tweets.addTweet(tweet);
       }
 
-      setIsUpdating(false);
+      // setIsUpdating(false);
     },
     []
   );

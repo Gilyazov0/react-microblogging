@@ -5,7 +5,7 @@ import Tweet from "./Tweet";
 
 const TweetList: React.FC = () => {
   const tweets = useContext(TweetsContext);
-  const tweetComponents = tweets.map((tweet: TweetProps, index) => {
+  const tweetComponents = tweets.tweetsData.map((tweet: TweetProps, index) => {
     return (
       <Tweet
         content={tweet.content}

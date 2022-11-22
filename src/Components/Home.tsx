@@ -8,20 +8,42 @@ import Loading from "./Loading";
 import { Alert } from "react-bootstrap";
 import TweetList from "./TweetsList";
 
-export const TweetsContext = React.createContext<TweetProps[]>([]);
+interface TweetsContextProps {
+  tweetsData: TweetProps[];
+  addTweet: (tweet: TweetProps) => void;
+}
+
+export const TweetsContext = React.createContext<TweetsContextProps>({
+  tweetsData: [],
+  addTweet: () => {},
+});
 
 export default function Home(props: { user: string }) {
-  const [tweets, setTweets] = useState<TweetProps[]>([]);
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [serverError, setServerError] = useState<string>("");
+
+  const addTweet = (tweet: TweetProps) => {
+    setTweets((prev) => {
+      const data = [...prev.tweetsData];
+      data.unshift(tweet);
+      return { ...prev, tweetsData: data };
+    });
+  };
+  const [tweets, setTweets] = useState<TweetsContextProps>({
+    tweetsData: [],
+    addTweet,
+  });
 
   // getting tweets from server
   useEffect(() => {
     const getTweets = async () => {
       setIsUpdating(true);
-      const tweets = await API.getTweets();
-      if (tweets) {
-        setTweets(tweets);
+      const newTweets = await API.getTweets();
+      if (newTweets) {
+        newTweets.sort(
+          (a, b) => moment(b.date).valueOf() - moment(a.date).valueOf()
+        );
+        setTweets({ tweetsData: newTweets, addTweet: addTweet });
       }
       setIsUpdating(false);
     };
@@ -29,8 +51,6 @@ export default function Home(props: { user: string }) {
     const interval = setInterval(getTweets, 30000);
     return () => clearInterval(interval);
   }, []);
-
-  tweets.sort((a, b) => moment(b.date).valueOf() - moment(a.date).valueOf());
 
   return (
     <TweetsContext.Provider value={tweets}>
