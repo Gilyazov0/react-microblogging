@@ -3,10 +3,10 @@ import "./style/Home.css";
 import NewTweet from "./NewTweet";
 import { TweetProps } from "../Types/TweetProps";
 import moment from "moment";
-import API from "../lib/serverApi";
 import Loading from "./Loading";
 import { Alert } from "react-bootstrap";
 import TweetList from "./TweetsList";
+import db from "../lib/dbApi";
 
 interface TweetsContextProps {
   tweetsData: TweetProps[];
@@ -38,13 +38,9 @@ export default function Home(props: { user: string }) {
   useEffect(() => {
     const getTweets = async () => {
       setIsUpdating(true);
-      const newTweets = await API.getTweets();
-      if (newTweets) {
-        newTweets.sort(
-          (a, b) => moment(b.date).valueOf() - moment(a.date).valueOf()
-        );
-        setTweets({ tweetsData: newTweets, addTweet: addTweet });
-      }
+      const newTweets = await db.getTweets();
+      if (newTweets) setTweets({ tweetsData: newTweets, addTweet: addTweet });
+
       setIsUpdating(false);
     };
     getTweets();

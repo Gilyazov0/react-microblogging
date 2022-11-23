@@ -21,7 +21,7 @@ const Profile: React.FC<ProfileProps> = (props: ProfileProps) => {
   return (
     <div className="profile">
       <div className="title">Profile</div>
-      <label htmlFor="name">User name:</label>
+      <label htmlFor="name">User name</label>
       <input type={"text"} name="name" ref={nameRef} />
 
       <Button variant="primary" onClick={handleSubmit}>

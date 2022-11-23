@@ -4,6 +4,7 @@ import TextBox from "./TextBox";
 import "./style/NewTweet.css";
 import API from "../lib/serverApi";
 import { TweetsContext } from "./Home";
+import db from "../lib/dbApi";
 
 interface Props {
   setIsUpdating: Function;
@@ -35,16 +36,14 @@ const NewTweet: React.FC<Props> = (props: Props) => {
         userName: props.userName,
         date: new Date().toISOString(),
       };
-
-      const response = await API.postTweet(tweet);
-      if (response.error) {
-        setServerError(response.message);
-        setIsUpdating(false);
-      } else {
+      try {
+        await db.postTweet(tweet);
         tweets.addTweet(tweet);
+      } catch (e: any) {
+        setServerError("server error:" + e?.message);
+      } finally {
+        setIsUpdating(false);
       }
-
-      // setIsUpdating(false);
     },
     []
   );
