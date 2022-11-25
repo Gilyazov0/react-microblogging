@@ -26,6 +26,14 @@ const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
       >
         Profile
       </span>
+      <span
+        onClick={() => props.setPage("SignIn")}
+        className={`link ${
+          props.currentPage === "SignIn" ? "" : "text-secondary"
+        }`}
+      >
+        SignIn
+      </span>
     </div>
   );
 };
