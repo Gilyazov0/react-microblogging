@@ -1,17 +1,17 @@
-import React from "react";
-import { Pages } from "./App";
-
+import React, { useContext } from "react";
+import { Pages, SetPageContext } from "./App";
 interface LinkProps {
-  setPage: (page: Pages) => void;
   isActive: boolean;
   text: string;
   pageName: Pages;
 }
 
 const Link: React.FC<LinkProps> = (props: LinkProps) => {
+  const setPage = useContext(SetPageContext);
+
   return (
     <span
-      onClick={() => props.setPage(props.pageName)}
+      onClick={() => setPage(props.pageName)}
       className={`link ${props.isActive ? "" : "text-secondary"}`}
     >
       {props.text}

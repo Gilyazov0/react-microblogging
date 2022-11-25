@@ -11,6 +11,8 @@ import auth from "../lib/auth";
 
 export type Pages = "Home" | "Profile" | "LogIn" | "Register" | "LogOut";
 
+export const SetPageContext = React.createContext<Function>(() => {});
+
 const App: React.FC = () => {
   const [page, setPage] = useState<Pages>("Home");
   const [user, setUser] = useState<User | null>(null);
@@ -29,16 +31,18 @@ const App: React.FC = () => {
   return (
     <ErrorBoundary>
       <div className="app">
-        <NavBar
-          currentPage={page}
-          setPage={setPage}
-          userName={
-            user ? (user.displayName ? user.displayName : user.email!) : ""
-          }
-        />
-        {page === "Home" && <Home user={""} />}
-        {page === "Register" && <Register />}
-        {page === "LogIn" && <LogIn />}
+        <SetPageContext.Provider value={setPage}>
+          <NavBar
+            currentPage={page}
+            setPage={setPage}
+            userName={
+              user ? (user.displayName ? user.displayName : user.email!) : ""
+            }
+          />
+          {page === "Home" && <Home user={""} />}
+          {page === "Register" && <Register />}
+          {page === "LogIn" && <LogIn />}
+        </SetPageContext.Provider>
       </div>
     </ErrorBoundary>
   );
