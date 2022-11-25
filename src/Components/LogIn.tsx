@@ -1,13 +1,12 @@
 import React, { FormEvent } from "react";
 import { Button } from "react-bootstrap";
-import Auth from "../lib/auth";
+import auth from "../lib/auth";
 
 const LogIn: React.FC = () => {
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const elements = e.currentTarget.elements;
     const [email, password] = [...elements] as HTMLInputElement[];
-    const auth = new Auth();
     auth.signIn(email.value, password.value);
   }
 

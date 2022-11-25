@@ -2,6 +2,7 @@ import React from "react";
 import { Pages } from "./App";
 import "./style/NavBar.css";
 import Link from "./Link";
+import Auth from "../lib/auth";
 
 interface NavBarProps {
   currentPage: Pages;

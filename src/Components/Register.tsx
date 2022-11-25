@@ -1,14 +1,13 @@
 import React, { FormEvent } from "react";
 import "./style/Profile.css";
 import { Button } from "react-bootstrap";
-import Auth from "../lib/auth";
+import auth from "../lib/auth";
 
 const Register: React.FC = () => {
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const elements = e.currentTarget.elements;
     const [name, email, password] = [...elements] as HTMLInputElement[];
-    const auth = new Auth();
     auth.createUser(email.value, password.value, name.value);
   }
 

@@ -1,5 +1,6 @@
 import {
   getAuth,
+  onAuthStateChanged,
   updateProfile,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -14,7 +15,11 @@ class Auth extends Firebase {
     this.auth = getAuth(this.app);
   }
 
-  async createUser(email: string, password: string, displayName: string) {
+  public async createUser(
+    email: string,
+    password: string,
+    displayName: string
+  ) {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         this.auth,
@@ -30,7 +35,7 @@ class Auth extends Firebase {
     await this.setUserData({ displayName });
   }
 
-  async setUserData(data: object) {
+  public async setUserData(data: object) {
     if (!this.auth.currentUser) return;
     try {
       await updateProfile(this.auth.currentUser, data);
@@ -41,7 +46,7 @@ class Auth extends Firebase {
     }
   }
 
-  async signIn(email: string, password: string) {
+  public async signIn(email: string, password: string) {
     try {
       const userCredential = await signInWithEmailAndPassword(
         this.auth,
@@ -55,11 +60,20 @@ class Auth extends Firebase {
     }
   }
 
-  logError(error: any) {
+  public getUserName() {
+    onAuthStateChanged(this.auth, (user) => {
+      if (user) return user.displayName ? user.displayName : user.email;
+      return "";
+    });
+  }
+
+  private logError(error: any) {
     const errorCode = error.code;
     const errorMessage = error.message;
     console.log("code", errorCode, "message", errorMessage);
   }
 }
 
-export default Auth;
+const auth = new Auth();
+
+export default auth;
