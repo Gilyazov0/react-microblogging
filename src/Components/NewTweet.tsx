@@ -56,7 +56,7 @@ const NewTweet: React.FC<Props> = (props: Props) => {
       <TextBox setTweetLength={(x: number) => setTweetLength(x)} />
       <div className="d-flex ">
         {tweetLength > 140 && (
-          <Alert variant="danger" className="m-0 p-1 ">
+          <Alert variant="danger" className="m-0">
             The tweet can't contain more then 140 chars.
           </Alert>
         )}
