@@ -2,7 +2,6 @@ import React, { useCallback, useContext, useState } from "react";
 import { Button, Alert } from "react-bootstrap";
 import TextBox from "./TextBox";
 import "./style/NewTweet.css";
-import API from "../lib/serverApi";
 import { TweetsContext } from "./Home";
 import db from "../lib/dbApi";
 
@@ -14,7 +13,7 @@ interface Props {
 }
 
 const NewTweet: React.FC<Props> = (props: Props) => {
-  const [lengthIsOk, setLengthIsOk] = useState(true);
+  const [tweetLength, setTweetLength] = useState(0);
   const tweets = useContext(TweetsContext);
 
   const handleClick = useCallback(
@@ -22,8 +21,9 @@ const NewTweet: React.FC<Props> = (props: Props) => {
       const { setIsUpdating, setServerError } = {
         ...props,
       };
-      setIsUpdating(true);
+      setIsUpdating(false);
       setServerError("");
+      setTweetLength(0);
       e.preventDefault();
       const input = e.currentTarget.firstChild as HTMLTextAreaElement;
       const content = input.value;
@@ -53,9 +53,9 @@ const NewTweet: React.FC<Props> = (props: Props) => {
         handleClick(e);
       }}
     >
-      <TextBox setLengthIsOk={(x: boolean) => setLengthIsOk(x)} />
+      <TextBox setTweetLength={(x: number) => setTweetLength(x)} />
       <div className="d-flex ">
-        {!lengthIsOk && (
+        {tweetLength > 140 && (
           <Alert variant="danger" className="m-0 p-1 ">
             The tweet can't contain more then 140 chars.
           </Alert>
@@ -63,7 +63,7 @@ const NewTweet: React.FC<Props> = (props: Props) => {
         <div className="flex-grow-1 "></div>
         <Button
           variant="primary"
-          disabled={!lengthIsOk || props.isUpdating}
+          disabled={tweetLength < 1 || tweetLength > 140 || props.isUpdating}
           type="submit"
         >
           Tweet

@@ -2,7 +2,7 @@ import { ChangeEvent, useRef } from "react";
 import "./style/TextBox.css";
 
 interface TextBoxProps {
-  setLengthIsOk: Function;
+  setTweetLength: Function;
 }
 
 const TextBox: React.FC<TextBoxProps> = (props: TextBoxProps) => {
@@ -11,7 +11,7 @@ const TextBox: React.FC<TextBoxProps> = (props: TextBoxProps) => {
   const handleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const input = ref.current;
     if (input) {
-      props.setLengthIsOk(input.value.length < 140);
+      props.setTweetLength(input.value.length);
       input.style.height = "auto";
       input.style.height = `${e.target.scrollHeight}px`;
     }
