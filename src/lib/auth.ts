@@ -1,5 +1,6 @@
 import {
   getAuth,
+  signOut,
   onAuthStateChanged,
   updateProfile,
   createUserWithEmailAndPassword,
@@ -46,7 +47,7 @@ class Auth extends Firebase {
     }
   }
 
-  public async signIn(email: string, password: string) {
+  public async logIn(email: string, password: string) {
     try {
       const userCredential = await signInWithEmailAndPassword(
         this.auth,
@@ -60,10 +61,17 @@ class Auth extends Firebase {
     }
   }
 
-  public getUserName() {
+  public async logOut() {
+    try {
+      await signOut(this.auth);
+    } catch (error) {
+      this.logError(error);
+    }
+  }
+
+  public async getUserName(cb: Function) {
     onAuthStateChanged(this.auth, (user) => {
-      if (user) return user.displayName ? user.displayName : user.email;
-      return "";
+      cb(user);
     });
   }
 

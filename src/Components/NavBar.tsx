@@ -2,11 +2,11 @@ import React from "react";
 import { Pages } from "./App";
 import "./style/NavBar.css";
 import Link from "./Link";
-import Auth from "../lib/auth";
 
 interface NavBarProps {
   currentPage: Pages;
   setPage: (page: Pages) => void;
+  userName: string;
 }
 
 const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
@@ -29,6 +29,12 @@ const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
         isActive={props.currentPage === "LogIn"}
         text={"Log in"}
         pageName={"LogIn"}
+      />
+      <Link
+        setPage={props.setPage}
+        isActive={false}
+        text={props.userName}
+        pageName={"Profile"}
       />
     </div>
   );
