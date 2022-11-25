@@ -8,28 +8,14 @@ import {
 } from "firebase/firestore";
 import moment from "moment";
 import { TweetProps } from "../Types/TweetProps";
-
-// import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+import { FIREBASE_CONFIG } from "./config_firebase";
 
 class DB {
-  private readonly firebaseConfig = {
-    apiKey: "AIzaSyDTcRKH3Z0bdupcM_qBVGjiDcrz3GKu-mQ",
-    authDomain: "micro-blogging--app.firebaseapp.com",
-    projectId: "micro-blogging--app",
-    storageBucket: "micro-blogging--app.appspot.com",
-    messagingSenderId: "224728624560",
-    appId: "1:224728624560:web:9c96fdbe87b3b7d82d7a75",
-    measurementId: "G-ZL712TRRHW",
-  };
-
+  private readonly firebaseConfig;
   app: FirebaseApp;
   db: Firestore;
   constructor() {
+    this.firebaseConfig = FIREBASE_CONFIG;
     this.app = initializeApp(this.firebaseConfig);
     this.db = getFirestore(this.app);
   }
