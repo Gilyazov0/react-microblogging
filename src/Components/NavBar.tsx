@@ -19,15 +19,15 @@ const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
       />
       <Link
         setPage={props.setPage}
-        isActive={props.currentPage === "Profile"}
-        text={"Profile"}
-        pageName={"Profile"}
+        isActive={props.currentPage === "Register"}
+        text={"Register"}
+        pageName={"Register"}
       />
       <Link
         setPage={props.setPage}
-        isActive={props.currentPage === "SignIn"}
-        text={"Sign in"}
-        pageName={"SignIn"}
+        isActive={props.currentPage === "LogIn"}
+        text={"Log in"}
+        pageName={"LogIn"}
       />
     </div>
   );

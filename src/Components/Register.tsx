@@ -1,31 +1,34 @@
 import React, { FormEvent } from "react";
+import "./style/Profile.css";
 import { Button } from "react-bootstrap";
 import Auth from "../lib/auth";
 
-const SignIn: React.FC = () => {
+const Register: React.FC = () => {
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const elements = e.currentTarget.elements;
-    const [email, password] = [...elements] as HTMLInputElement[];
+    const [name, email, password] = [...elements] as HTMLInputElement[];
     const auth = new Auth();
-    auth.signIn(email.value, password.value);
+    auth.createUser(email.value, password.value, name.value);
   }
 
   return (
     <div className="profile">
-      <div className="title">Profile</div>
+      <div className="title">Register</div>
       <form className="d-flex flex-column" onSubmit={handleSubmit}>
+        <label htmlFor="name">User name</label>
+        <input type={"text"} name="name" />
         <label htmlFor="email">Email</label>
         <input type={"email"} name="email" />
         <label htmlFor="password">Password</label>
         <input type={"password"} name="password" />
 
         <Button variant="primary" type="submit">
-          Save
+          Register
         </Button>
       </form>
     </div>
   );
 };
 
-export default SignIn;
+export default Register;
