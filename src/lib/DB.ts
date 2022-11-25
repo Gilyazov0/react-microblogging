@@ -1,4 +1,3 @@
-import { FirebaseApp, initializeApp } from "firebase/app";
 import {
   getFirestore,
   collection,
@@ -8,15 +7,12 @@ import {
 } from "firebase/firestore";
 import moment from "moment";
 import { TweetProps } from "../Types/TweetProps";
-import { FIREBASE_CONFIG } from "./config_firebase";
+import Firebase from "./Firebase";
 
-class DB {
-  private readonly firebaseConfig;
-  app: FirebaseApp;
+class DB extends Firebase {
   db: Firestore;
   constructor() {
-    this.firebaseConfig = FIREBASE_CONFIG;
-    this.app = initializeApp(this.firebaseConfig);
+    super();
     this.db = getFirestore(this.app);
   }
 

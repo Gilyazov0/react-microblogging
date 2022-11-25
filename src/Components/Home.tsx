@@ -5,7 +5,7 @@ import { TweetProps } from "../Types/TweetProps";
 import Loading from "./Loading";
 import { Alert } from "react-bootstrap";
 import TweetList from "./TweetsList";
-import db from "../lib/dbApi";
+import db from "../lib/DB";
 
 interface TweetsContextProps {
   tweetsData: TweetProps[];

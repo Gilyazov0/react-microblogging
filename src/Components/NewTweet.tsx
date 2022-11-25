@@ -3,7 +3,7 @@ import { Button, Alert } from "react-bootstrap";
 import TextBox from "./TextBox";
 import "./style/NewTweet.css";
 import { TweetsContext } from "./Home";
-import db from "../lib/dbApi";
+import db from "../lib/DB";
 
 interface Props {
   setIsUpdating: Function;
