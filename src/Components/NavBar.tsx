@@ -36,6 +36,12 @@ const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
         text={props.userName}
         pageName={"Profile"}
       />
+      <Link
+        setPage={props.setPage}
+        isActive={false}
+        text={"Log out"}
+        pageName={"LogOut"}
+      />
     </div>
   );
 };

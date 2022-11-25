@@ -7,7 +7,7 @@ const LogIn: React.FC = () => {
     e.preventDefault();
     const elements = e.currentTarget.elements;
     const [email, password] = [...elements] as HTMLInputElement[];
-    auth.signIn(email.value, password.value);
+    auth.logIn(email.value, password.value);
   }
 
   return (

@@ -49,13 +49,7 @@ class Auth extends Firebase {
 
   public async logIn(email: string, password: string) {
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        this.auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-      console.log(user);
+      await signInWithEmailAndPassword(this.auth, email, password);
     } catch (error) {
       this.logError(error);
     }
