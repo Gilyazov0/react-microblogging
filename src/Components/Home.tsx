@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import "./style/Home.css";
 import NewTweet from "./NewTweet";
 import { TweetProps } from "../Types/TweetProps";
-import moment from "moment";
 import Loading from "./Loading";
 import { Alert } from "react-bootstrap";
 import TweetList from "./TweetsList";

@@ -30,7 +30,6 @@ class DB {
   app: FirebaseApp;
   db: Firestore;
   constructor() {
-    // Initialize Firebase
     this.app = initializeApp(this.firebaseConfig);
     this.db = getFirestore(this.app);
   }

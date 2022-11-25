@@ -22,12 +22,10 @@ const NewTweet: React.FC<Props> = (props: Props) => {
       const { setIsUpdating, setServerError } = {
         ...props,
       };
-      // setIsUpdating(true);
+      setIsUpdating(true);
       setServerError("");
       e.preventDefault();
-      const input = e.currentTarget.getElementsByClassName(
-        "tweet-content"
-      )[0] as HTMLTextAreaElement;
+      const input = e.currentTarget.firstChild as HTMLTextAreaElement;
       const content = input.value;
       input.value = "";
 
