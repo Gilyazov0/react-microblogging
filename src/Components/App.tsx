@@ -8,6 +8,7 @@ import { User } from "firebase/auth";
 import auth from "../lib/auth";
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
+import Profile from "./Profile";
 
 export type Pages = "Home" | "Profile" | "SignUp" | "SignIn" | "SignOut";
 
@@ -46,6 +47,7 @@ const App: React.FC = () => {
             {page === "Home" && <Home />}
             {page === "SignUp" && <SignUp />}
             {page === "SignIn" && <SignIn />}
+            {page === "Profile" && <Profile />}
           </SetPageContext.Provider>
         </UserContext.Provider>
       </div>

@@ -5,9 +5,9 @@ import {
   Firestore,
   getDocs,
 } from "firebase/firestore";
+import Firebase from "./Firebase";
 import moment from "moment";
 import { TweetProps } from "../Types/TweetProps";
-import Firebase from "./Firebase";
 
 class TweetsDB extends Firebase {
   db: Firestore;

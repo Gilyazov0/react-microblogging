@@ -10,7 +10,7 @@ import {
   Auth as AuthFB,
 } from "firebase/auth";
 import Firebase from "./Firebase";
-
+import userDB from "./usersDB";
 class Auth extends Firebase {
   auth: AuthFB;
   constructor() {
@@ -24,7 +24,12 @@ class Auth extends Firebase {
     displayName: string
   ) {
     try {
-      await createUserWithEmailAndPassword(this.auth, email, password);
+      const userCredentials = await createUserWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      );
+      userDB.writeUserData(userCredentials.user.uid, { email, displayName });
     } catch (error) {
       this.logError(error);
       throw "Something went wrong. Check... everything";
@@ -68,7 +73,9 @@ class Auth extends Firebase {
   public async signInGoogle() {
     try {
       const provider = new GoogleAuthProvider();
-      await signInWithPopup(this.auth, provider);
+      const userCredentials = await signInWithPopup(this.auth, provider);
+      const { uid, email, displayName } = userCredentials.user;
+      userDB.writeUserData(uid, { email, displayName });
     } catch (error) {
       this.logError(error);
     }
