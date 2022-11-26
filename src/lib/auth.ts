@@ -1,5 +1,7 @@
 import {
   getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
   signOut,
   onAuthStateChanged,
   updateProfile,
@@ -61,10 +63,24 @@ class Auth extends Firebase {
     });
   }
 
+  public async signInGoogle() {
+    try {
+      const provider = new GoogleAuthProvider();
+      await signInWithPopup(this.auth, provider);
+    } catch (error) {
+      this.logError(error);
+    }
+  }
+
   private logError(error: any) {
     const errorCode = error.code;
     const errorMessage = error.message;
-    console.log("code", errorCode, "message", errorMessage);
+    console.log(
+      "Error in the process of authorization. Code:",
+      errorCode,
+      "message:",
+      errorMessage
+    );
   }
 }
 

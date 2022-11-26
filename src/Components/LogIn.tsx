@@ -28,6 +28,10 @@ const LogIn: React.FC = () => {
           Log in
         </Button>
       </form>
+
+      <Button variant="primary" onClick={() => auth.signInGoogle()}>
+        Google
+      </Button>
     </div>
   );
 };
