@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Pages } from "./App";
 import "./style/NavBar.css";
 import Link from "./Link";
+import { UserContext } from "./App";
 
 interface NavBarProps {
   currentPage: Pages;
-  setPage: (page: Pages) => void;
-  userName: string;
 }
 
 const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
+  const user = useContext(UserContext);
+  const userName = user
+    ? user.displayName
+      ? user.displayName
+      : user.email!
+    : "";
   return (
     <div className="nav-bar">
       <Link
@@ -29,7 +34,7 @@ const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
       />
       <Link
         isActive={props.currentPage === "Profile"}
-        text={props.userName}
+        text={userName}
         pageName={"Profile"}
       />
       <Link isActive={false} text={"Log out"} pageName={"LogOut"} />

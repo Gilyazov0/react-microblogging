@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import "./style/Home.css";
 import NewTweet from "./NewTweet";
 import { TweetProps } from "../Types/TweetProps";
@@ -6,6 +6,7 @@ import Loading from "./Loading";
 import { Alert } from "react-bootstrap";
 import TweetList from "./TweetsList";
 import db from "../lib/DB";
+import { UserContext } from "./App";
 
 interface TweetsContextProps {
   tweetsData: TweetProps[];
@@ -17,7 +18,7 @@ export const TweetsContext = React.createContext<TweetsContextProps>({
   addTweet: () => {},
 });
 
-export default function Home(props: { user: string }) {
+export default function Home() {
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [serverError, setServerError] = useState<string>("");
 
@@ -47,6 +48,13 @@ export default function Home(props: { user: string }) {
     return () => clearInterval(interval);
   }, []);
 
+  const user = useContext(UserContext);
+  const userName = user
+    ? user.displayName
+      ? user.displayName
+      : user.email!
+    : "";
+
   return (
     <TweetsContext.Provider value={tweets}>
       <div className="app">
@@ -54,7 +62,7 @@ export default function Home(props: { user: string }) {
           setIsUpdating={setIsUpdating}
           isUpdating={isUpdating}
           setServerError={setServerError}
-          userName={props.user}
+          userName={userName}
         />
         {serverError && (
           <Alert variant="danger" className="m-0 p-1 ">
