@@ -1,13 +1,18 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useContext } from "react";
 import { Button } from "react-bootstrap";
 import auth from "../lib/auth";
+import { SetPageContext } from "./App";
 
 const LogIn: React.FC = () => {
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  const setPage = useContext(SetPageContext);
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const elements = e.currentTarget.elements;
     const [email, password] = [...elements] as HTMLInputElement[];
-    auth.logIn(email.value, password.value);
+    await auth.logIn(email.value, password.value);
+
+    setPage("Home");
   }
 
   return (

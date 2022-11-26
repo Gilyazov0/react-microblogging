@@ -22,13 +22,7 @@ class Auth extends Firebase {
     displayName: string
   ) {
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        this.auth,
-        email,
-        password
-      );
-      const user = userCredential.user;
-      console.log(user);
+      await createUserWithEmailAndPassword(this.auth, email, password);
     } catch (error) {
       this.logError(error);
     }
@@ -40,8 +34,6 @@ class Auth extends Firebase {
     if (!this.auth.currentUser) return;
     try {
       await updateProfile(this.auth.currentUser, data);
-      console.log(data);
-      console.log("profile updated", this.auth.currentUser);
     } catch (error) {
       this.logError(error);
     }

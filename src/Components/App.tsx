@@ -11,7 +11,9 @@ import auth from "../lib/auth";
 
 export type Pages = "Home" | "Profile" | "LogIn" | "Register" | "LogOut";
 
-export const SetPageContext = React.createContext<Function>(() => {});
+export const SetPageContext = React.createContext<(page: Pages) => void>(
+  (page: Pages) => {}
+);
 export const UserContext = React.createContext<User | null>(null);
 
 const App: React.FC = () => {
