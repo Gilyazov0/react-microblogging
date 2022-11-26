@@ -13,6 +13,9 @@ const Register: React.FC = () => {
     const elements = e.currentTarget.elements;
     const [name, email, password] = [...elements] as HTMLInputElement[];
     try {
+      if (name.value.length < 5) throw "Name length should be bigger than 4";
+      if (password.value.length < 5)
+        throw "Password length should be bigger than 7";
       await auth.createUser(email.value, password.value, name.value);
       setPage("Home");
     } catch (error) {
