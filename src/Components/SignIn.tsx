@@ -1,5 +1,5 @@
 import React, { FormEvent, useContext } from "react";
-import { Button, InputGroup } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import auth from "../lib/auth";
 import { SetPageContext } from "./App";
 

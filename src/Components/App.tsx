@@ -1,13 +1,13 @@
 import React from "react";
 import Home from "./Home";
-import Register from "./Register";
-import LogIn from "./LogIn";
 import NavBar from "./NavBar";
 import { useState, useEffect } from "react";
 import "./style/App.css";
 import ErrorBoundary from "./ErrorBoundary";
 import { User } from "firebase/auth";
 import auth from "../lib/auth";
+import SignUp from "./SignUp";
+import SignIn from "./SignIn";
 
 export type Pages = "Home" | "Profile" | "SignUp" | "SignIn" | "SignOut";
 
@@ -44,8 +44,8 @@ const App: React.FC = () => {
           <SetPageContext.Provider value={setPage}>
             <NavBar currentPage={page} />
             {page === "Home" && <Home />}
-            {page === "SignUp" && <Register />}
-            {page === "SignIn" && <LogIn />}
+            {page === "SignUp" && <SignUp />}
+            {page === "SignIn" && <SignIn />}
           </SetPageContext.Provider>
         </UserContext.Provider>
       </div>
