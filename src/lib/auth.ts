@@ -27,6 +27,7 @@ class Auth extends Firebase {
       await createUserWithEmailAndPassword(this.auth, email, password);
     } catch (error) {
       this.logError(error);
+      throw "Something went wrong. Check... everything";
     }
 
     await this.setUserData({ displayName });
@@ -46,6 +47,7 @@ class Auth extends Firebase {
       await signInWithEmailAndPassword(this.auth, email, password);
     } catch (error) {
       this.logError(error);
+      throw "Something went wrong. Check... everything";
     }
   }
 
@@ -76,10 +78,7 @@ class Auth extends Firebase {
     const errorCode = error.code;
     const errorMessage = error.message;
     console.log(
-      "Error in the process of authorization. Code:",
-      errorCode,
-      "message:",
-      errorMessage
+      `Error in the process of authorization. Code: ${errorCode}, message:${errorMessage}`
     );
   }
 }
