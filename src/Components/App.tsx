@@ -25,9 +25,15 @@ const App: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (page === "LogOut") {
-      auth.logOut();
-      setPage("Home");
+    switch (page) {
+      case "LogOut":
+        setPage("LogIn");
+        auth.logOut();
+        break;
+
+      case "Home":
+        if (!user) setPage("LogIn");
+        break;
     }
   }, [page]);
 
