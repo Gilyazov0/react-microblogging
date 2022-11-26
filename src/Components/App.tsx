@@ -9,7 +9,7 @@ import ErrorBoundary from "./ErrorBoundary";
 import { User } from "firebase/auth";
 import auth from "../lib/auth";
 
-export type Pages = "Home" | "Profile" | "LogIn" | "Register" | "LogOut";
+export type Pages = "Home" | "Profile" | "SignUp" | "SignIn" | "SignOut";
 
 export const SetPageContext = React.createContext<(page: Pages) => void>(
   (page: Pages) => {}
@@ -26,13 +26,13 @@ const App: React.FC = () => {
 
   useEffect(() => {
     switch (page) {
-      case "LogOut":
-        setPage("LogIn");
+      case "SignOut":
+        setPage("SignIn");
         auth.logOut();
         break;
 
       case "Home":
-        if (!user) setPage("LogIn");
+        if (!user) setPage("SignIn");
         break;
     }
   }, [page]);
@@ -44,8 +44,8 @@ const App: React.FC = () => {
           <SetPageContext.Provider value={setPage}>
             <NavBar currentPage={page} />
             {page === "Home" && <Home />}
-            {page === "Register" && <Register />}
-            {page === "LogIn" && <LogIn />}
+            {page === "SignUp" && <Register />}
+            {page === "SignIn" && <LogIn />}
           </SetPageContext.Provider>
         </UserContext.Provider>
       </div>

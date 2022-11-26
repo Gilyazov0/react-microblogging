@@ -1,5 +1,5 @@
 import React, { FormEvent, useContext } from "react";
-import "./style/Profile.css";
+import "./style/Register.css";
 import { Button } from "react-bootstrap";
 import auth from "../lib/auth";
 import { SetPageContext } from "./App";
@@ -18,17 +18,21 @@ const Register: React.FC = () => {
 
   return (
     <div className="profile">
-      <div className="title">Register</div>
+      <div className="title">Sign in</div>
       <form className="d-flex flex-column" onSubmit={handleSubmit}>
         <label htmlFor="name">User name</label>
         <input type={"text"} name="name" />
-        <label htmlFor="email">Email</label>
+        <label htmlFor="email" className="mt-2">
+          Email
+        </label>
         <input type={"email"} name="email" />
-        <label htmlFor="password">Password</label>
+        <label htmlFor="password" className="mt-2">
+          Password
+        </label>
         <input type={"password"} name="password" />
 
         <Button variant="primary" type="submit">
-          Register
+          Sing in
         </Button>
       </form>
     </div>

@@ -26,14 +26,14 @@ const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
       {!userName && (
         <>
           <Link
-            isActive={props.currentPage === "Register"}
-            text={"Register"}
-            pageName={"Register"}
+            isActive={props.currentPage === "SignUp"}
+            text={"Sign up"}
+            pageName={"SignUp"}
           />
           <Link
-            isActive={props.currentPage === "LogIn"}
-            text={"Log in"}
-            pageName={"LogIn"}
+            isActive={props.currentPage === "SignIn"}
+            text={"Sign in"}
+            pageName={"SignIn"}
           />
         </>
       )}
@@ -44,7 +44,7 @@ const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
             text={userName}
             pageName={"Profile"}
           />
-          <Link isActive={false} text={"Log out"} pageName={"LogOut"} />
+          <Link isActive={false} text={"Sign out"} pageName={"SignOut"} />
         </>
       )}
     </div>
