@@ -57,22 +57,20 @@ export default function Home() {
 
   return (
     <TweetsContext.Provider value={tweets}>
-      <div className="app">
-        <NewTweet
-          setIsUpdating={setIsUpdating}
-          isUpdating={isUpdating}
-          setServerError={setServerError}
-          userName={userName}
-        />
-        {serverError && (
-          <Alert variant="danger" className="m-0 p-1 ">
-            {serverError}
-          </Alert>
-        )}
+      <NewTweet
+        setIsUpdating={setIsUpdating}
+        isUpdating={isUpdating}
+        setServerError={setServerError}
+        userName={userName}
+      />
+      {serverError && (
+        <Alert variant="danger" className="m-0 p-1 ">
+          {serverError}
+        </Alert>
+      )}
 
-        {isUpdating && <Loading />}
-        <TweetList />
-      </div>
+      {isUpdating && <Loading />}
+      <TweetList />
     </TweetsContext.Provider>
   );
 }

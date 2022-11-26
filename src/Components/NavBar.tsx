@@ -22,22 +22,31 @@ const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
         text={"Home"}
         pageName={"Home"}
       />
-      <Link
-        isActive={props.currentPage === "Register"}
-        text={"Register"}
-        pageName={"Register"}
-      />
-      <Link
-        isActive={props.currentPage === "LogIn"}
-        text={"Log in"}
-        pageName={"LogIn"}
-      />
-      <Link
-        isActive={props.currentPage === "Profile"}
-        text={userName}
-        pageName={"Profile"}
-      />
-      <Link isActive={false} text={"Log out"} pageName={"LogOut"} />
+      <div className="flex-grow-1"></div>
+      {!userName && (
+        <>
+          <Link
+            isActive={props.currentPage === "Register"}
+            text={"Register"}
+            pageName={"Register"}
+          />
+          <Link
+            isActive={props.currentPage === "LogIn"}
+            text={"Log in"}
+            pageName={"LogIn"}
+          />
+        </>
+      )}
+      {userName && (
+        <>
+          <Link
+            isActive={props.currentPage === "Profile"}
+            text={userName}
+            pageName={"Profile"}
+          />
+          <Link isActive={false} text={"Log out"} pageName={"LogOut"} />
+        </>
+      )}
     </div>
   );
 };
