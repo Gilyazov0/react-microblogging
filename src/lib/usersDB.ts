@@ -30,8 +30,8 @@ class UsersDB extends Firebase {
   public async getUserData(uid: string) {
     try {
       const docRef = doc(this.db, this.collection, uid);
-      const data = await getDoc(docRef);
-      return data;
+      const dataSnap = await getDoc(docRef);
+      return dataSnap.data();
     } catch (error) {
       console.log(error);
     }
