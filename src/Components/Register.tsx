@@ -1,14 +1,19 @@
-import React, { FormEvent } from "react";
+import React, { FormEvent, useContext } from "react";
 import "./style/Profile.css";
 import { Button } from "react-bootstrap";
 import auth from "../lib/auth";
+import { SetPageContext } from "./App";
 
 const Register: React.FC = () => {
+  const setPage = useContext(SetPageContext);
+
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const elements = e.currentTarget.elements;
     const [name, email, password] = [...elements] as HTMLInputElement[];
     auth.createUser(email.value, password.value, name.value);
+
+    setPage("Home");
   }
 
   return (

@@ -29,7 +29,13 @@ const LogIn: React.FC = () => {
         </Button>
       </form>
 
-      <Button variant="primary" onClick={() => auth.signInGoogle()}>
+      <Button
+        variant="primary"
+        onClick={async () => {
+          await auth.signInGoogle();
+          setPage("Home");
+        }}
+      >
         Google
       </Button>
     </div>
