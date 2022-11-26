@@ -3,7 +3,7 @@ import { Button, Alert } from "react-bootstrap";
 import TextBox from "./TextBox";
 import "./style/NewTweet.css";
 import { TweetsContext } from "./Home";
-import db from "../lib/DB";
+import tweetsDB from "../lib/tweetsDB";
 
 interface Props {
   setIsUpdating: Function;
@@ -35,7 +35,7 @@ const NewTweet: React.FC<Props> = (props: Props) => {
         date: new Date().toISOString(),
       };
       try {
-        await db.postTweet(tweet);
+        await tweetsDB.postTweet(tweet);
         tweets.addTweet(tweet);
       } catch (e: any) {
         setServerError("server error:" + e?.message);

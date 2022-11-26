@@ -5,7 +5,7 @@ import { TweetProps } from "../Types/TweetProps";
 import Loading from "./Loading";
 import { Alert } from "react-bootstrap";
 import TweetList from "./TweetsList";
-import db from "../lib/DB";
+import tweetsDB from "../lib/tweetsDB";
 import { UserContext } from "./App";
 
 interface TweetsContextProps {
@@ -38,7 +38,7 @@ export default function Home() {
   useEffect(() => {
     const getTweets = async () => {
       setIsUpdating(true);
-      const newTweets = await db.getTweets();
+      const newTweets = await tweetsDB.getTweets();
       if (newTweets) setTweets({ tweetsData: newTweets, addTweet: addTweet });
 
       setIsUpdating(false);
