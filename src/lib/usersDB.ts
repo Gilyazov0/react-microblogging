@@ -1,18 +1,17 @@
 import {
   getFirestore,
-  collection,
-  addDoc,
   Firestore,
-  getDocs,
   setDoc,
   doc,
   getDoc,
 } from "firebase/firestore";
+import UserData from "../Types/userData";
 import Firebase from "./Firebase";
+import storage from "./storage";
 
 class UsersDB extends Firebase {
-  collection: string;
-  db: Firestore;
+  private collection: string;
+  private db: Firestore;
   constructor() {
     super();
     this.db = getFirestore(this.app);
@@ -31,10 +30,21 @@ class UsersDB extends Firebase {
     const dataSnap = await this.getDataSnap(uid);
     if (!dataSnap?.exists()) this.writeUserData(uid, data);
   }
+
   public async getUserData(uid: string) {
     const dataSnap = await this.getDataSnap(uid);
-    if (dataSnap?.exists()) return dataSnap.data();
+    if (dataSnap?.exists()) return dataSnap.data() as UserData;
     return null;
+  }
+
+  public async addProfileImg(uid: string, file: File) {
+    const userData = await this.getUserData(uid);
+    if (!userData) return;
+
+    //for code reviewer: is it a bad practice to skip await?
+    if (userData.picture) storage.delFile(userData.picture);
+    const fileName = await storage.storeFile(file);
+    this.writeUserData(uid, { picture: fileName });
   }
 
   private async getDataSnap(uid: string) {

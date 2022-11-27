@@ -12,7 +12,7 @@ import {
 import Firebase from "./Firebase";
 import userDB from "./usersDB";
 class Auth extends Firebase {
-  auth: AuthFB;
+  private auth: AuthFB;
   constructor() {
     super();
     this.auth = getAuth(this.app);

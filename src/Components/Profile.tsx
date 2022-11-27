@@ -2,43 +2,54 @@ import React, { useContext, useEffect, useRef } from "react";
 import { Button } from "react-bootstrap";
 import userDB from "../lib/usersDB";
 import { UserContext } from "./App";
+import UserData from "../Types/userData";
 
 const Profile: React.FC<{ setUser: Function }> = (props: {
   setUser: Function;
 }) => {
-  const user = useContext(UserContext);
+  const user = useContext(UserContext) as UserData;
 
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
+  const imgRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    if (!user) return;
     nameRef.current!.value = user.displayName;
     emailRef.current!.value = user.email;
   }, [user]);
 
   async function handleChangeNameClick() {
-    await userDB.writeUserData(user!.uid, {
+    await userDB.writeUserData(user.uid, {
       displayName: nameRef.current?.value,
     });
-    const newUserData = await userDB.getUserData(user!.uid);
+    const newUserData = await userDB.getUserData(user.uid);
     props.setUser(newUserData);
+  }
+
+  async function handleUploadPicClick() {
+    const file = imgRef!.current!.files![0];
+    userDB.addProfileImg(user.uid, file);
   }
 
   return (
     <div className="profile mt-5">
-      <label htmlFor="name">Name</label>
-
+      <span className="mt-2">Name</span>
       <div className="d-flex align-items-center">
-        <input
-          type={"text"}
-          name="name"
-          className="flex-grow-1 me-2"
-          ref={nameRef}
-        />
+        <input type="file" className="flex-grow-1 me-2" ref={imgRef} />
         <Button
           variant="primary"
-          type="submit"
+          className="align-self-center"
+          onClick={handleUploadPicClick}
+        >
+          Upload
+        </Button>
+      </div>
+
+      <span className="mt-2">Name</span>
+      <div className="d-flex align-items-center">
+        <input type={"text"} className="flex-grow-1 me-2" ref={nameRef} />
+        <Button
+          variant="primary"
           className="align-self-center"
           onClick={handleChangeNameClick}
         >
@@ -46,23 +57,10 @@ const Profile: React.FC<{ setUser: Function }> = (props: {
         </Button>
       </div>
 
-      <label htmlFor="email" className="mt-2">
-        Email
-      </label>
+      <span className="mt-2">Email</span>
       <div className="d-flex align-items-center">
-        <input
-          type={"email"}
-          name="email"
-          className="flex-grow-1 me-2"
-          ref={emailRef}
-          disabled
-        />
-        <Button
-          variant="primary"
-          type="submit"
-          className="align-self-center"
-          disabled
-        >
+        <input type={"email"} className="flex-grow-1" ref={emailRef} disabled />
+        <Button variant="primary" className="align-self-center ms-2" disabled>
           Change
         </Button>
       </div>

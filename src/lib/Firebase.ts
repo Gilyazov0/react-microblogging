@@ -3,7 +3,7 @@ import FIREBASE_CONFIG from "./config_firebase";
 
 abstract class Firebase {
   private readonly firebaseConfig;
-  app: FirebaseApp;
+  protected app: FirebaseApp;
   constructor() {
     this.firebaseConfig = FIREBASE_CONFIG;
     this.app = initializeApp(this.firebaseConfig);
