@@ -4,25 +4,41 @@ import NavBar from "./NavBar";
 import { useState, useEffect } from "react";
 import "./style/App.css";
 import ErrorBoundary from "./ErrorBoundary";
-import { User } from "firebase/auth";
 import auth from "../lib/auth";
 import SignUp from "./SignUp";
 import SignIn from "./SignIn";
 import Profile from "./Profile";
+import UserData from "../Types/userData";
+import userDB from "../lib/usersDB";
 
 export type Pages = "Home" | "Profile" | "SignUp" | "SignIn" | "SignOut";
 
 export const SetPageContext = React.createContext<(page: Pages) => void>(
   (page: Pages) => {}
 );
-export const UserContext = React.createContext<User | null>(null);
+export const UserContext = React.createContext<UserData | null>(null);
 
 const App: React.FC = () => {
   const [page, setPage] = useState<Pages>("Home");
-  const [user, setUser] = useState<User | null>(null);
+  const [uid, setUid] = useState<string | null>(null);
+  const [user, setUser] = useState<UserData | null>(null);
 
   useEffect(() => {
-    auth.getUserName(setUser);
+    if (!uid) {
+      setUser(null);
+      return;
+    }
+
+    async function setUserData(uid: string) {
+      const data = (await userDB.getUserData(uid)) as UserData;
+      data["uid"] = uid;
+      setUser(data);
+    }
+    setUserData(uid);
+  }, [uid]);
+
+  useEffect(() => {
+    auth.getUserUid(setUid);
   }, []);
 
   useEffect(() => {
@@ -47,7 +63,7 @@ const App: React.FC = () => {
             {page === "Home" && <Home />}
             {page === "SignUp" && <SignUp />}
             {page === "SignIn" && <SignIn />}
-            {page === "Profile" && <Profile />}
+            {page === "Profile" && <Profile setUser={setUser} />}
           </SetPageContext.Provider>
         </UserContext.Provider>
       </div>

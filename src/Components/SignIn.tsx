@@ -2,6 +2,7 @@ import React, { FormEvent, useContext, useRef } from "react";
 import { Button } from "react-bootstrap";
 import auth from "../lib/auth";
 import { SetPageContext } from "./App";
+import ErrorBoundary from "./ErrorBoundary";
 
 const LogIn: React.FC = () => {
   const setPage = useContext(SetPageContext);
@@ -49,7 +50,7 @@ const LogIn: React.FC = () => {
         <span>Log in using:</span>
         <img
           role="button"
-          src="../../public/Google__G__Logo.svg"
+          src="../../Google__G__Logo.svg"
           className="ms-2"
           onClick={async () => {
             await auth.signInGoogle();

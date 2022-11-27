@@ -27,11 +27,21 @@ class UsersDB extends Firebase {
     }
   }
 
+  public async writeIfNotExist(uid: string, data: object) {
+    const dataSnap = await this.getDataSnap(uid);
+    if (!dataSnap?.exists()) this.writeUserData(uid, data);
+  }
   public async getUserData(uid: string) {
+    const dataSnap = await this.getDataSnap(uid);
+    if (dataSnap?.exists()) return dataSnap.data();
+    return null;
+  }
+
+  private async getDataSnap(uid: string) {
     try {
       const docRef = doc(this.db, this.collection, uid);
       const dataSnap = await getDoc(docRef);
-      return dataSnap.data();
+      return dataSnap;
     } catch (error) {
       console.log(error);
     }

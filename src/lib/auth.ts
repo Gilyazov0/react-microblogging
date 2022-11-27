@@ -64,9 +64,9 @@ class Auth extends Firebase {
     }
   }
 
-  public async getUserName(cb: Function) {
+  public async getUserUid(cb: Function) {
     onAuthStateChanged(this.auth, (user) => {
-      cb(user);
+      cb(user?.uid);
     });
   }
 
@@ -75,7 +75,7 @@ class Auth extends Firebase {
       const provider = new GoogleAuthProvider();
       const userCredentials = await signInWithPopup(this.auth, provider);
       const { uid, email, displayName } = userCredentials.user;
-      userDB.writeUserData(uid, { email, displayName });
+      userDB.writeIfNotExist(uid, { email, displayName });
     } catch (error) {
       this.logError(error);
     }

@@ -1,23 +1,29 @@
-import { async } from "@firebase/util";
-import React, { useCallback, useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { Button } from "react-bootstrap";
 import userDB from "../lib/usersDB";
 import { UserContext } from "./App";
 
-const Profile: React.FC = () => {
+const Profile: React.FC<{ setUser: Function }> = (props: {
+  setUser: Function;
+}) => {
   const user = useContext(UserContext);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const setValues = async () => {
-      const userData = await userDB.getUserData(user!.uid);
-      nameRef.current!.value = userData?.displayName;
-      emailRef.current!.value = userData?.email;
-    };
-    setValues();
+    if (!user) return;
+    nameRef.current!.value = user.displayName;
+    emailRef.current!.value = user.email;
   }, []);
+
+  async function handleChangeNameClick() {
+    await userDB.writeUserData(user!.uid, {
+      displayName: nameRef.current?.value,
+    });
+    const newUserData = await userDB.getUserData(user!.uid);
+    props.setUser(newUserData);
+  }
 
   return (
     <div className="profile mt-5">
@@ -30,7 +36,12 @@ const Profile: React.FC = () => {
           className="flex-grow-1 me-2"
           ref={nameRef}
         />
-        <Button variant="primary" type="submit" className="align-self-center">
+        <Button
+          variant="primary"
+          type="submit"
+          className="align-self-center"
+          onClick={handleChangeNameClick}
+        >
           Change
         </Button>
       </div>
