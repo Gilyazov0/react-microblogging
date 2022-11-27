@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { Pages } from "./App";
 import "./style/NavBar.css";
 import Link from "./Link";

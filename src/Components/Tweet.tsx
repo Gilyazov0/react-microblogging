@@ -1,4 +1,3 @@
-import React from "react";
 import { TweetProps } from "../Types/TweetProps";
 import "./style/Tweet.css";
 

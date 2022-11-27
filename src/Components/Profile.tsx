@@ -15,7 +15,7 @@ const Profile: React.FC<{ setUser: Function }> = (props: {
     if (!user) return;
     nameRef.current!.value = user.displayName;
     emailRef.current!.value = user.email;
-  }, []);
+  }, [user]);
 
   async function handleChangeNameClick() {
     await userDB.writeUserData(user!.uid, {

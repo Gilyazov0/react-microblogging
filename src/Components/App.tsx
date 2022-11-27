@@ -1,7 +1,6 @@
-import React from "react";
 import Home from "./Home";
 import NavBar from "./NavBar";
-import { useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 import "./style/App.css";
 import ErrorBoundary from "./ErrorBoundary";
 import auth from "../lib/auth";
@@ -13,10 +12,10 @@ import userDB from "../lib/usersDB";
 
 export type Pages = "Home" | "Profile" | "SignUp" | "SignIn" | "SignOut";
 
-export const SetPageContext = React.createContext<(page: Pages) => void>(
+export const SetPageContext = createContext<(page: Pages) => void>(
   (page: Pages) => {}
 );
-export const UserContext = React.createContext<UserData | null>(null);
+export const UserContext = createContext<UserData | null>(null);
 
 const App: React.FC = () => {
   const [page, setPage] = useState<Pages>("Home");

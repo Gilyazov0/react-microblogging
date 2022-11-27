@@ -1,8 +1,7 @@
-import React, { FormEvent, useContext, useRef } from "react";
+import { FormEvent, useContext, useRef } from "react";
 import { Button } from "react-bootstrap";
 import auth from "../lib/auth";
 import { SetPageContext } from "./App";
-import ErrorBoundary from "./ErrorBoundary";
 
 const LogIn: React.FC = () => {
   const setPage = useContext(SetPageContext);

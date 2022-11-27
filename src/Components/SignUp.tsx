@@ -1,4 +1,4 @@
-import React, { FormEvent, useContext, useRef } from "react";
+import { FormEvent, useContext, useRef } from "react";
 import "./style/SignUp.css";
 import { Button } from "react-bootstrap";
 import auth from "../lib/auth";

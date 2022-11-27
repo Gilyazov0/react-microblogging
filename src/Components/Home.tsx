@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, createContext } from "react";
 import "./style/Home.css";
 import NewTweet from "./NewTweet";
 import { TweetProps } from "../Types/TweetProps";
@@ -13,7 +13,7 @@ interface TweetsContextProps {
   addTweet: (tweet: TweetProps) => void;
 }
 
-export const TweetsContext = React.createContext<TweetsContextProps>({
+export const TweetsContext = createContext<TweetsContextProps>({
   tweetsData: [],
   addTweet: () => {},
 });
