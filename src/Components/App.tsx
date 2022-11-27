@@ -15,16 +15,18 @@ export type Pages = "Home" | "Profile" | "SignUp" | "SignIn" | "SignOut";
 export const SetPageContext = createContext<(page: Pages) => void>(
   (page: Pages) => {}
 );
-export const UserContext = createContext<UserData | null>(null);
+export const UserContext = createContext<UserData | null | undefined>(
+  undefined
+);
 
 const App: React.FC = () => {
   const [page, setPage] = useState<Pages>("Home");
-  const [uid, setUid] = useState<string | null>(null);
-  const [user, setUser] = useState<UserData | null>(null);
+  const [uid, setUid] = useState<string | null | undefined>(undefined);
+  const [user, setUser] = useState<UserData | null | undefined>(undefined);
 
   useEffect(() => {
-    if (!uid) {
-      setUser(null);
+    if (typeof uid !== "string") {
+      setUser(uid);
       return;
     }
 
@@ -48,10 +50,10 @@ const App: React.FC = () => {
         break;
 
       case "Home":
-        if (!user) setPage("SignIn");
+        if (user === null) setPage("SignIn");
         break;
     }
-  }, [page]);
+  }, [page, user]);
 
   return (
     <ErrorBoundary>

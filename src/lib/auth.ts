@@ -66,7 +66,7 @@ class Auth extends Firebase {
 
   public async getUserUid(cb: Function) {
     onAuthStateChanged(this.auth, (user) => {
-      cb(user?.uid);
+      cb(user?.uid ? user.uid : null);
     });
   }
 
