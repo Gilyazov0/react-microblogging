@@ -3,6 +3,7 @@ import { Pages } from "./App";
 import "./style/NavBar.css";
 import Link from "./Link";
 import { UserContext } from "./App";
+import ProfileImage from "./ProfileImage";
 
 interface NavBarProps {
   currentPage: Pages;
@@ -23,7 +24,7 @@ const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
         pageName={"Home"}
       />
       <div className="flex-grow-1"></div>
-      {!userName && (
+      {!user && (
         <>
           <Link
             isActive={props.currentPage === "SignUp"}
@@ -37,8 +38,9 @@ const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
           />
         </>
       )}
-      {userName && (
+      {user && (
         <>
+          <ProfileImage user={user} />
           <Link
             isActive={props.currentPage === "Profile"}
             text={userName}

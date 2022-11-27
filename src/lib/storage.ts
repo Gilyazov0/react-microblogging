@@ -2,6 +2,7 @@ import Firebase from "./Firebase";
 import {
   deleteObject,
   FirebaseStorage,
+  getDownloadURL,
   getStorage,
   ref,
   uploadBytes,
@@ -17,14 +18,24 @@ class Storage extends Firebase {
     this.workFolder = workFolder;
   }
 
-  async storeFile(file: File) {
+  public async storeFile(file: File) {
     const uniqName = this.getUniqName(file.name);
     const fileRef = ref(this.storage, this.workFolder + uniqName);
     await uploadBytes(fileRef, file);
     return uniqName;
   }
 
-  async delFile(fileName: string) {
+  public async getUrl(fileName: string) {
+    try {
+      const fileRef = ref(this.storage, this.workFolder + fileName);
+      const url = await getDownloadURL(fileRef);
+      return url;
+    } catch (error) {
+      console.log(error);
+      return "";
+    }
+  }
+  public async delFile(fileName: string) {
     const fileRef = ref(this.storage, this.workFolder + fileName);
     try {
       await deleteObject(fileRef);

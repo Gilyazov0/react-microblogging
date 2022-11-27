@@ -33,7 +33,7 @@ const Profile: React.FC<{ setUser: Function }> = (props: {
 
   return (
     <div className="profile mt-5">
-      <span className="mt-2">Name</span>
+      <span className="mt-2">Avatar</span>
       <div className="d-flex align-items-center">
         <input type="file" className="flex-grow-1 me-2" ref={imgRef} />
         <Button

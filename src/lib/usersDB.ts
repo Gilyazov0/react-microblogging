@@ -47,6 +47,10 @@ class UsersDB extends Firebase {
     this.writeUserData(uid, { picture: fileName });
   }
 
+  public async getProfilePicUrl(fileName: string) {
+    return await storage.getUrl(fileName);
+  }
+
   private async getDataSnap(uid: string) {
     try {
       const docRef = doc(this.db, this.collection, uid);
