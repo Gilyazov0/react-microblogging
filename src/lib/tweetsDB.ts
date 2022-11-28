@@ -54,11 +54,12 @@ class TweetsDB extends Firebase {
     return unsubscribe;
   }
 
-  async getTweets() {
+  async getTweets(date: number) {
     const q = query(
       collection(this.db, this.collection),
-      orderBy("date", "desc")
-      // limit(10)
+      where("date", "<", date),
+      orderBy("date", "desc"),
+      limit(10)
     );
     const querySnapshot = await getDocs(q);
 
@@ -66,15 +67,8 @@ class TweetsDB extends Firebase {
     querySnapshot.forEach((doc) => {
       res.push(doc.data() as TweetProps);
     });
-
-    // this.sortTweets(res);
-
     return res;
   }
-
-  // private sortTweets(tweets: TweetProps[]) {
-  //   tweets.sort((a, b) => moment(b.date).valueOf() - moment(a.date).valueOf());
-  // }
 }
 const tweetsDB = new TweetsDB();
 export default tweetsDB;

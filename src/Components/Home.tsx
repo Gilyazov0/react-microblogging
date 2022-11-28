@@ -1,4 +1,10 @@
-import { useState, useEffect, useContext, createContext } from "react";
+import {
+  useState,
+  useEffect,
+  useContext,
+  createContext,
+  useCallback,
+} from "react";
 import "./style/Home.css";
 import NewTweet from "./NewTweet";
 import { TweetProps } from "../Types/TweetProps";
@@ -22,17 +28,15 @@ export default function Home() {
     });
   };
 
+  const getTweets = async () => {
+    const date = tweets.length ? tweets[tweets.length - 1].date : Date.now();
+    const newTweets = await tweetsDB.getTweets(date);
+    if (newTweets) setTweets((prevTweets) => [...prevTweets, ...newTweets]);
+  };
+
   const [tweets, setTweets] = useState<TweetProps[]>([]);
 
-  // getting tweets from server
   useEffect(() => {
-    const getTweets = async () => {
-      setIsUpdating(true);
-      const newTweets = await tweetsDB.getTweets();
-      if (newTweets) setTweets(newTweets);
-
-      setIsUpdating(false);
-    };
     getTweets();
     const unsubscribe = tweetsDB.subscribeForUpdates(addTweet);
     return () => unsubscribe();
@@ -60,7 +64,7 @@ export default function Home() {
       )}
 
       {isUpdating && <Loading />}
-      <TweetList />
+      <TweetList getTweets={getTweets} />
     </TweetsContext.Provider>
   );
 }
