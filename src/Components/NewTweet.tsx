@@ -38,7 +38,6 @@ const NewTweet: React.FC<Props> = (props: Props) => {
       };
       try {
         await tweetsDB.postTweet(tweet);
-        tweets.addTweet(tweet);
       } catch (e: any) {
         setServerError("server error:" + e?.message);
       } finally {

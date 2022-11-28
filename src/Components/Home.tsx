@@ -8,15 +8,7 @@ import TweetList from "./TweetsList";
 import tweetsDB from "../lib/tweetsDB";
 import { UserContext } from "./App";
 
-interface TweetsContextProps {
-  tweetsData: TweetProps[];
-  addTweet: (tweet: TweetProps) => void;
-}
-
-export const TweetsContext = createContext<TweetsContextProps>({
-  tweetsData: [],
-  addTweet: () => {},
-});
+export const TweetsContext = createContext<TweetProps[]>([]);
 
 export default function Home() {
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
@@ -24,23 +16,20 @@ export default function Home() {
 
   const addTweet = (tweet: TweetProps) => {
     setTweets((prev) => {
-      const data = [...prev.tweetsData];
+      const data = [...prev];
       data.unshift(tweet);
-      return { ...prev, tweetsData: data };
+      return data;
     });
   };
 
-  const [tweets, setTweets] = useState<TweetsContextProps>({
-    tweetsData: [],
-    addTweet,
-  });
+  const [tweets, setTweets] = useState<TweetProps[]>([]);
 
   // getting tweets from server
   useEffect(() => {
     const getTweets = async () => {
       setIsUpdating(true);
       const newTweets = await tweetsDB.getTweets();
-      if (newTweets) setTweets({ tweetsData: newTweets, addTweet: addTweet });
+      if (newTweets) setTweets(newTweets);
 
       setIsUpdating(false);
     };
