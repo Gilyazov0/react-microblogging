@@ -8,6 +8,8 @@ import {
   doc,
   query,
   where,
+  orderBy,
+  limit,
 } from "firebase/firestore";
 import Firebase from "./Firebase";
 import moment from "moment";
@@ -31,8 +33,12 @@ class TweetsDB extends Firebase {
   }
 
   public subscribeForUpdates(callback: Function) {
-    const q = query(collection(this.db, this.collection));
-    onSnapshot(q, (snapshot) => {
+    const date = Date.now();
+    const q = query(
+      collection(this.db, this.collection),
+      where("date", ">", date)
+    );
+    const unsubscribe = onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach(
         (change) => {
           if (change.type === "added") {
@@ -44,24 +50,31 @@ class TweetsDB extends Firebase {
         }
       );
     });
+
+    return unsubscribe;
   }
 
   async getTweets() {
-    const querySnapshot = await getDocs(collection(this.db, this.collection));
+    const q = query(
+      collection(this.db, this.collection),
+      orderBy("date", "desc")
+      // limit(10)
+    );
+    const querySnapshot = await getDocs(q);
 
     const res: TweetProps[] = [];
     querySnapshot.forEach((doc) => {
       res.push(doc.data() as TweetProps);
     });
 
-    this.sortTweets(res);
+    // this.sortTweets(res);
 
     return res;
   }
 
-  private sortTweets(tweets: TweetProps[]) {
-    tweets.sort((a, b) => moment(b.date).valueOf() - moment(a.date).valueOf());
-  }
+  // private sortTweets(tweets: TweetProps[]) {
+  //   tweets.sort((a, b) => moment(b.date).valueOf() - moment(a.date).valueOf());
+  // }
 }
 const tweetsDB = new TweetsDB();
 export default tweetsDB;

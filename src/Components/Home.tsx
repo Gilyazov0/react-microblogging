@@ -29,6 +29,7 @@ export default function Home() {
       return { ...prev, tweetsData: data };
     });
   };
+
   const [tweets, setTweets] = useState<TweetsContextProps>({
     tweetsData: [],
     addTweet,
@@ -44,8 +45,8 @@ export default function Home() {
       setIsUpdating(false);
     };
     getTweets();
-    const interval = setInterval(getTweets, 30000);
-    return () => clearInterval(interval);
+    const unsubscribe = tweetsDB.subscribeForUpdates(addTweet);
+    return () => unsubscribe();
   }, []);
 
   const user = useContext(UserContext);
