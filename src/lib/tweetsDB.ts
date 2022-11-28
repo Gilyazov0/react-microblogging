@@ -4,6 +4,10 @@ import {
   addDoc,
   Firestore,
   getDocs,
+  onSnapshot,
+  doc,
+  query,
+  where,
 } from "firebase/firestore";
 import Firebase from "./Firebase";
 import moment from "moment";
@@ -24,6 +28,22 @@ class TweetsDB extends Firebase {
     } catch (e) {
       throw e;
     }
+  }
+
+  public subscribeForUpdates(callback: Function) {
+    const q = query(collection(this.db, this.collection));
+    onSnapshot(q, (snapshot) => {
+      snapshot.docChanges().forEach(
+        (change) => {
+          if (change.type === "added") {
+            callback(change.doc.data());
+          }
+        },
+        (error: unknown) => {
+          console.log(error);
+        }
+      );
+    });
   }
 
   async getTweets() {

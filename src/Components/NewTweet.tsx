@@ -4,6 +4,7 @@ import TextBox from "./TextBox";
 import "./style/NewTweet.css";
 import { TweetsContext } from "./Home";
 import tweetsDB from "../lib/tweetsDB";
+import { UserContext } from "./App";
 
 interface Props {
   setIsUpdating: Function;
@@ -15,6 +16,7 @@ interface Props {
 const NewTweet: React.FC<Props> = (props: Props) => {
   const [tweetLength, setTweetLength] = useState(0);
   const tweets = useContext(TweetsContext);
+  const user = useContext(UserContext);
 
   const handleClick = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -31,8 +33,8 @@ const NewTweet: React.FC<Props> = (props: Props) => {
 
       const tweet = {
         content: content,
-        userName: props.userName,
-        date: new Date().toISOString(),
+        id: user!.uid,
+        date: Date.now(),
       };
       try {
         await tweetsDB.postTweet(tweet);
@@ -43,7 +45,7 @@ const NewTweet: React.FC<Props> = (props: Props) => {
         setIsUpdating(false);
       }
     },
-    []
+    [user]
   );
 
   return (
