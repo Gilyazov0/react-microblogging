@@ -1,0 +1,9 @@
+.all-tweets {
+  background-color: rgba(128, 128, 128, 0.4);
+  border-color: rgba(128, 128, 128, 0.4);
+}
+
+.my-tweets {
+  background-color: rgba(128, 128, 128, 0.2);
+  border-color: rgba(128, 128, 128, 0.2);
+}

@@ -50,6 +50,7 @@ const App: React.FC = () => {
       case "SignOut":
         setPage("SignIn");
         auth.logOut();
+        setViewType("all tweets");
         break;
 
       case "Home":

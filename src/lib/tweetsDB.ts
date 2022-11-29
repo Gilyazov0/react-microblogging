@@ -1,7 +1,6 @@
 import {
   getFirestore,
   collection,
-  addDoc,
   Firestore,
   getDocs,
   onSnapshot,
@@ -13,7 +12,6 @@ import {
   setDoc,
 } from "firebase/firestore";
 import Firebase from "./Firebase";
-import moment from "moment";
 import { TweetProps } from "../Types/TweetProps";
 
 class TweetsDB extends Firebase {
@@ -59,20 +57,33 @@ class TweetsDB extends Firebase {
     return unsubscribe;
   }
 
-  async getTweets(date: number) {
-    const q = query(
-      collection(this.db, this.collection),
-      where("date", "<", date),
-      orderBy("date", "desc"),
-      limit(10)
-    );
-    const querySnapshot = await getDocs(q);
+  async getTweets(date: number, uid = "") {
+    try {
+      const q = uid
+        ? query(
+            collection(this.db, this.collection),
+            where("date", "<", date),
+            where("userId", "==", uid),
+            orderBy("date", "desc"),
+            limit(10)
+          )
+        : query(
+            collection(this.db, this.collection),
+            where("date", "<", date),
+            orderBy("date", "desc"),
+            limit(10)
+          );
+      const querySnapshot = await getDocs(q);
 
-    const res: TweetProps[] = [];
-    querySnapshot.forEach((doc) => {
-      res.push(doc.data() as TweetProps);
-    });
-    return res;
+      const res: TweetProps[] = [];
+      querySnapshot.forEach((doc) => {
+        res.push(doc.data() as TweetProps);
+      });
+      return res;
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
   }
 }
 const tweetsDB = new TweetsDB();

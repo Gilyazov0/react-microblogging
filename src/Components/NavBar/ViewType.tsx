@@ -1,12 +1,17 @@
 import { useContext } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { ViewTypeContext } from "../App";
+import "../style/ViewType.css";
 const ViewType: React.FC<{ setViewType: Function }> = ({ setViewType }) => {
   const viewType = useContext(ViewTypeContext);
 
   return (
     <Dropdown>
-      <Dropdown.Toggle variant="secondary" id="dropdown-basic">
+      <Dropdown.Toggle
+        variant={"secondary"}
+        className={viewType === "all tweets" ? "all-tweets" : "my-tweets"}
+        id="dropdown-basic"
+      >
         {viewType}
       </Dropdown.Toggle>
 
