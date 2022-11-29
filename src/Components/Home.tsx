@@ -6,6 +6,7 @@ import { Alert } from "react-bootstrap";
 import TweetList from "./TweetsList";
 import tweetsDB from "../lib/tweetsDB";
 import { UserContext } from "./App";
+import userDB from "../lib/usersDB";
 
 export const TweetsContext = createContext<TweetProps[]>([]);
 
@@ -25,7 +26,12 @@ export default function Home() {
   const getTweets = async () => {
     const date = tweets.length ? tweets[tweets.length - 1].date : Date.now();
     const newTweets = await tweetsDB.getTweets(date);
-    if (newTweets.length === 0) setHasMore(false);
+    if (newTweets.length === 0) {
+      setHasMore(false);
+    }
+    for (const tweet of newTweets) {
+      await userDB.addUserDataToTweet(tweet);
+    }
     if (newTweets) setTweets((prevTweets) => [...prevTweets, ...newTweets]);
   };
 

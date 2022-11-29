@@ -5,6 +5,7 @@ import {
   doc,
   getDoc,
 } from "firebase/firestore";
+import { TweetProps } from "../Types/TweetProps";
 import UserData from "../Types/userData";
 import Firebase from "./Firebase";
 import storage from "./storage";
@@ -50,6 +51,24 @@ class UsersDB extends Firebase {
   public async getProfilePicUrl(fileName: string) {
     return await storage.getUrl(fileName);
   }
+
+  public async addUserDataToTweet(tweet: TweetProps) {
+    const user = await this.getUserData(tweet.userId);
+    tweet.picture = user?.picture;
+    tweet.userName = user?.displayName;
+  }
+  // public async getUsers(uids: string[]) {
+  //   uids = [...new Set(uids)];
+  //   const promises = uids.map((uid) => this.getUserData(uid));
+  //   const users = await Promise.all(promises);
+
+  //   const res: { [key: string]: UserData } = {};
+
+  //   users.forEach((user) => {
+  //     if (user) res[user.uid] = user!;
+  //   });
+  //   return res;
+  // }
 
   private async getDataSnap(uid: string) {
     try {

@@ -33,7 +33,7 @@ const NewTweet: React.FC<Props> = (props: Props) => {
 
       const tweet = {
         content: content,
-        id: user!.uid,
+        userId: user!.uid,
         date: Date.now(),
       };
       try {
