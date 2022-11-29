@@ -11,6 +11,7 @@ import UserData from "../Types/userData";
 import userDB from "../lib/usersDB";
 
 export type Pages = "Home" | "Profile" | "SignUp" | "SignIn" | "SignOut";
+export type ViewType = "all tweets" | "my tweets";
 
 export const SetPageContext = createContext<(page: Pages) => void>(
   (page: Pages) => {}
@@ -18,11 +19,13 @@ export const SetPageContext = createContext<(page: Pages) => void>(
 export const UserContext = createContext<UserData | null | undefined>(
   undefined
 );
+export const ViewTypeContext = createContext<ViewType>("all tweets");
 
 const App: React.FC = () => {
   const [page, setPage] = useState<Pages>("Home");
   const [uid, setUid] = useState<string | null | undefined>(undefined);
   const [user, setUser] = useState<UserData | null | undefined>(undefined);
+  const [viewType, setViewType] = useState<ViewType>("all tweets");
 
   useEffect(() => {
     if (typeof uid !== "string") {
@@ -63,11 +66,13 @@ const App: React.FC = () => {
       <div className="app">
         <UserContext.Provider value={user}>
           <SetPageContext.Provider value={setPage}>
-            <NavBar currentPage={page} />
-            {page === "Home" && <Home />}
-            {page === "SignUp" && <SignUp />}
-            {page === "SignIn" && <SignIn />}
-            {page === "Profile" && <Profile setUser={setUser} />}
+            <ViewTypeContext.Provider value={viewType}>
+              <NavBar currentPage={page} setViewType={setViewType} />
+              {page === "Home" && <Home />}
+              {page === "SignUp" && <SignUp />}
+              {page === "SignIn" && <SignIn />}
+              {page === "Profile" && <Profile setUser={setUser} />}
+            </ViewTypeContext.Provider>
           </SetPageContext.Provider>
         </UserContext.Provider>
       </div>

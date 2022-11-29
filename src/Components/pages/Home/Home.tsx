@@ -8,10 +8,10 @@ import tweetsDB from "../../../lib/tweetsDB";
 import userDB from "../../../lib/usersDB";
 
 export const TweetsContext = createContext<TweetProps[]>([]);
-
 export default function Home() {
   const [serverError, setServerError] = useState<string>("");
   const [hasMore, setHasMore] = useState(true);
+  const [tweets, setTweets] = useState<TweetProps[]>([]);
 
   const addTweet = async (tweet: TweetProps) => {
     await userDB.addUserDataToTweet(tweet);
@@ -34,8 +34,6 @@ export default function Home() {
     }
     if (newTweets) setTweets((prevTweets) => [...prevTweets, ...newTweets]);
   };
-
-  const [tweets, setTweets] = useState<TweetProps[]>([]);
 
   useEffect(() => {
     getTweets();

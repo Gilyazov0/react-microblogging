@@ -57,18 +57,6 @@ class UsersDB extends Firebase {
     tweet.picture = user?.picture;
     tweet.userName = user?.displayName;
   }
-  // public async getUsers(uids: string[]) {
-  //   uids = [...new Set(uids)];
-  //   const promises = uids.map((uid) => this.getUserData(uid));
-  //   const users = await Promise.all(promises);
-
-  //   const res: { [key: string]: UserData } = {};
-
-  //   users.forEach((user) => {
-  //     if (user) res[user.uid] = user!;
-  //   });
-  //   return res;
-  // }
 
   private async getDataSnap(uid: string) {
     try {

@@ -74,7 +74,8 @@ class Auth extends Firebase {
     try {
       const provider = new GoogleAuthProvider();
       const userCredentials = await signInWithPopup(this.auth, provider);
-      const { uid, email, displayName } = userCredentials.user;
+      let { uid, email, displayName } = userCredentials.user;
+      displayName = displayName ? displayName : email;
       userDB.writeIfNotExist(uid, { email, displayName });
     } catch (error) {
       this.logError(error);

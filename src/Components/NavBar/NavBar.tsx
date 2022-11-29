@@ -4,8 +4,11 @@ import "../style/NavBar.css";
 import Link from "./Link";
 import { UserContext } from "../App";
 import ProfileImage from "../ProfileImage";
-
-const NavBar: React.FC<{ currentPage: Pages }> = ({ currentPage }) => {
+import ViewType from "./ViewType";
+const NavBar: React.FC<{ currentPage: Pages; setViewType: Function }> = ({
+  currentPage,
+  setViewType,
+}) => {
   const user = useContext(UserContext);
   const userName = user
     ? user.displayName
@@ -15,6 +18,7 @@ const NavBar: React.FC<{ currentPage: Pages }> = ({ currentPage }) => {
   return (
     <div className="nav-bar">
       <Link isActive={currentPage === "Home"} text={"Home"} pageName={"Home"} />
+      <ViewType setViewType={setViewType} />
       <div className="flex-grow-1"></div>
       {!user && (
         <>
