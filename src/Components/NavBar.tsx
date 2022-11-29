@@ -40,7 +40,7 @@ const NavBar: React.FC<NavBarProps> = (props: NavBarProps) => {
       )}
       {user && (
         <>
-          <ProfileImage user={user} />
+          <ProfileImage pictureUrl={user.picture} />
           <Link
             isActive={props.currentPage === "Profile"}
             text={userName}
