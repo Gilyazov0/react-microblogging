@@ -4,6 +4,7 @@ import { TweetProps } from "../Types/TweetProps";
 import { TweetsContext } from "./Home";
 import Loading from "./Loading";
 import Tweet from "./Tweet";
+import moment from "moment";
 
 const TweetList: React.FC<{ getTweets: Function; hasMore: boolean }> = (
   props
