@@ -2,9 +2,12 @@ import { useContext } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TweetProps } from "../Types/TweetProps";
 import { TweetsContext } from "./Home";
+import Loading from "./Loading";
 import Tweet from "./Tweet";
 
-const TweetList: React.FC<{ getTweets: Function }> = (props) => {
+const TweetList: React.FC<{ getTweets: Function; hasMore: boolean }> = (
+  props
+) => {
   const tweets = useContext(TweetsContext);
 
   const tweetComponents = tweets.map((tweet: TweetProps, index) => {
@@ -26,12 +29,14 @@ const TweetList: React.FC<{ getTweets: Function }> = (props) => {
       <InfiniteScroll
         dataLength={tweets.length}
         next={next}
-        hasMore={true}
-        loader={<h4>Loading...</h4>}
+        hasMore={props.hasMore}
+        loader={
+          <div className="d-flex justify-content-center">
+            <Loading />
+          </div>
+        }
         endMessage={
-          <p style={{ textAlign: "center" }}>
-            <b>Yay! You have seen it all</b>
-          </p>
+          <p className="text-light text-center">Yay! You have seen it all</p>
         }
       >
         {tweetComponents}

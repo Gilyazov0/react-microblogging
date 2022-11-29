@@ -1,14 +1,7 @@
-import {
-  useState,
-  useEffect,
-  useContext,
-  createContext,
-  useCallback,
-} from "react";
+import { useState, useEffect, useContext, createContext } from "react";
 import "./style/Home.css";
 import NewTweet from "./NewTweet";
 import { TweetProps } from "../Types/TweetProps";
-import Loading from "./Loading";
 import { Alert } from "react-bootstrap";
 import TweetList from "./TweetsList";
 import tweetsDB from "../lib/tweetsDB";
@@ -19,6 +12,7 @@ export const TweetsContext = createContext<TweetProps[]>([]);
 export default function Home() {
   const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [serverError, setServerError] = useState<string>("");
+  const [hasMore, setHasMore] = useState(true);
 
   const addTweet = (tweet: TweetProps) => {
     setTweets((prev) => {
@@ -31,6 +25,7 @@ export default function Home() {
   const getTweets = async () => {
     const date = tweets.length ? tweets[tweets.length - 1].date : Date.now();
     const newTweets = await tweetsDB.getTweets(date);
+    if (newTweets.length === 0) setHasMore(false);
     if (newTweets) setTweets((prevTweets) => [...prevTweets, ...newTweets]);
   };
 
@@ -63,8 +58,7 @@ export default function Home() {
         </Alert>
       )}
 
-      {isUpdating && <Loading />}
-      <TweetList getTweets={getTweets} />
+      <TweetList getTweets={getTweets} hasMore={hasMore} />
     </TweetsContext.Provider>
   );
 }
