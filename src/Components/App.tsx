@@ -10,7 +10,13 @@ import Profile from "./pages/Profile";
 import UserData from "../Types/userData";
 import userDB from "../lib/usersDB";
 
-export type Pages = "Home" | "Profile" | "SignUp" | "SignIn" | "SignOut";
+export type Pages =
+  | "Home"
+  | "Profile"
+  | "SignUp"
+  | "SignIn"
+  | "SignOut"
+  | "Search";
 export type ViewType = "all tweets" | "my tweets";
 
 export const SetPageContext = createContext<(page: Pages) => void>(

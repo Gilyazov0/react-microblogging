@@ -1,10 +1,12 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { Pages } from "../App";
 import "../style/NavBar.css";
 import Link from "./Link";
 import { UserContext } from "../App";
 import ProfileImage from "../ProfileImage";
 import ViewType from "./ViewType";
+import Search from "./Search";
+
 const NavBar: React.FC<{ currentPage: Pages; setViewType: Function }> = ({
   currentPage,
   setViewType,
@@ -19,6 +21,10 @@ const NavBar: React.FC<{ currentPage: Pages; setViewType: Function }> = ({
     <div className="nav-bar">
       <Link isActive={currentPage === "Home"} text={"Home"} pageName={"Home"} />
       <ViewType setViewType={setViewType} />
+      <div className="flex-grow-1"></div>
+      <div>
+        <Search isActive={currentPage === "Search"} />
+      </div>
       <div className="flex-grow-1"></div>
       {!user && (
         <>
