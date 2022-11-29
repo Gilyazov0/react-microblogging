@@ -4,9 +4,7 @@ import userDB from "../../lib/usersDB";
 import { UserContext } from "../App";
 import UserData from "../../Types/userData";
 
-const Profile: React.FC<{ setUser: Function }> = (props: {
-  setUser: Function;
-}) => {
+const Profile: React.FC<{ setUser: Function }> = ({ setUser }) => {
   const user = useContext(UserContext) as UserData;
 
   const nameRef = useRef<HTMLInputElement>(null);
@@ -23,7 +21,7 @@ const Profile: React.FC<{ setUser: Function }> = (props: {
       displayName: nameRef.current?.value,
     });
     const newUserData = await userDB.getUserData(user.uid);
-    props.setUser(newUserData);
+    setUser(newUserData);
   }
 
   async function handleUploadPicClick() {

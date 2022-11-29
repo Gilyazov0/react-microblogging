@@ -5,9 +5,10 @@ import { TweetsContext } from "./Home";
 import Loading from "./Loading";
 import Tweet from "./Tweet";
 
-const TweetList: React.FC<{ getTweets: Function; hasMore: boolean }> = (
-  props
-) => {
+const TweetList: React.FC<{ getTweets: Function; hasMore: boolean }> = ({
+  getTweets,
+  hasMore,
+}) => {
   const tweets = useContext(TweetsContext);
 
   const tweetComponents = tweets.map((tweet: TweetProps, index) => {
@@ -24,14 +25,14 @@ const TweetList: React.FC<{ getTweets: Function; hasMore: boolean }> = (
   });
 
   function next() {
-    props.getTweets();
+    getTweets();
   }
   return (
     <div className="tweets-list">
       <InfiniteScroll
         dataLength={tweets.length}
         next={next}
-        hasMore={props.hasMore}
+        hasMore={hasMore}
         loader={
           <div className="d-flex justify-content-center">
             <Loading />

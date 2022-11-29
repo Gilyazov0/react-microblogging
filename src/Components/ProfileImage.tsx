@@ -1,7 +1,5 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import userDB from "../lib/usersDB";
-import UserData from "../Types/userData";
-import { UserContext } from "./App";
 import "./style/ProfileImage.css";
 
 const ProfileImage: React.FC<{ pictureUrl: string | undefined }> = ({

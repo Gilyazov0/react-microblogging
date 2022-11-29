@@ -6,15 +6,15 @@ interface LinkProps {
   pageName: Pages;
 }
 
-const Link: React.FC<LinkProps> = (props: LinkProps) => {
+const Link: React.FC<LinkProps> = ({ isActive, pageName, text }) => {
   const setPage = useContext(SetPageContext);
 
   return (
     <span
-      onClick={() => setPage(props.pageName)}
-      className={`link ${props.isActive ? "" : "text-secondary"}`}
+      onClick={() => setPage(pageName)}
+      className={`link ${isActive ? "" : "text-secondary"}`}
     >
-      {props.text}
+      {text}
     </span>
   );
 };

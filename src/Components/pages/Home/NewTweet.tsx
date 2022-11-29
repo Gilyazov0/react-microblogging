@@ -2,34 +2,24 @@ import { useCallback, useContext, useState } from "react";
 import { Button, Alert } from "react-bootstrap";
 import TextBox from "./TextBox";
 import "../../style/NewTweet.css";
-import { TweetsContext } from "./Home";
 import tweetsDB from "../../../lib/tweetsDB";
 import { UserContext } from "../../App";
 
-interface Props {
-  setIsUpdating: Function;
-  setServerError: Function;
-  isUpdating: boolean;
-  userName: string;
-}
-
-const NewTweet: React.FC<Props> = (props: Props) => {
+const NewTweet: React.FC<{ setServerError: Function }> = ({
+  setServerError,
+}) => {
   const [tweetLength, setTweetLength] = useState(0);
-  const tweets = useContext(TweetsContext);
   const user = useContext(UserContext);
 
   const handleClick = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
-      const { setIsUpdating, setServerError } = {
-        ...props,
-      };
-      setIsUpdating(false);
       setServerError("");
       setTweetLength(0);
       e.preventDefault();
       const input = e.currentTarget.firstChild as HTMLTextAreaElement;
       const content = input.value;
       input.value = "";
+      input.focus();
 
       const tweet = {
         content: content,
@@ -40,8 +30,6 @@ const NewTweet: React.FC<Props> = (props: Props) => {
         await tweetsDB.postTweet(tweet);
       } catch (e: any) {
         setServerError("server error:" + e?.message);
-      } finally {
-        setIsUpdating(false);
       }
     },
     [user]
@@ -64,7 +52,7 @@ const NewTweet: React.FC<Props> = (props: Props) => {
         <div className="flex-grow-1 "></div>
         <Button
           variant="primary"
-          disabled={tweetLength < 1 || tweetLength > 140 || props.isUpdating}
+          disabled={tweetLength < 1 || tweetLength > 140}
           type="submit"
         >
           Tweet

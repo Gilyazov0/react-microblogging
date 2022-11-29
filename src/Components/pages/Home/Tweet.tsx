@@ -3,18 +3,18 @@ import { TweetProps } from "../../../Types/TweetProps";
 import ProfileImage from "../../ProfileImage";
 import "../../style/Tweet.css";
 
-const Tweet: React.FC<TweetProps> = (props: TweetProps) => {
+const Tweet: React.FC<TweetProps> = ({ content, userName, picture, date }) => {
   return (
     <div className="tweet">
       <div className="d-flex">
-        <ProfileImage pictureUrl={props.picture} />
-        <div className="text-secondary">{props.userName}</div>
+        <ProfileImage pictureUrl={picture} />
+        <div className="text-secondary">{userName}</div>
         <div className="flex-grow-1"></div>
         <div className="text-secondary">
-          {moment(props.date).format("MMM Mo HH:mm A")}
+          {moment(date).format("MMM Mo HH:mm A")}
         </div>
       </div>
-      <div>{props.content}</div>
+      <div>{content}</div>
     </div>
   );
 };

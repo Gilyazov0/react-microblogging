@@ -5,13 +5,11 @@ import { TweetProps } from "../../../Types/TweetProps";
 import { Alert } from "react-bootstrap";
 import TweetList from "./TweetsList";
 import tweetsDB from "../../../lib/tweetsDB";
-import { UserContext } from "../../App";
 import userDB from "../../../lib/usersDB";
 
 export const TweetsContext = createContext<TweetProps[]>([]);
 
 export default function Home() {
-  const [isUpdating, setIsUpdating] = useState<boolean>(false);
   const [serverError, setServerError] = useState<string>("");
   const [hasMore, setHasMore] = useState(true);
 
@@ -45,21 +43,9 @@ export default function Home() {
     return () => unsubscribe();
   }, []);
 
-  const user = useContext(UserContext);
-  const userName = user
-    ? user.displayName
-      ? user.displayName
-      : user.email!
-    : "";
-
   return (
     <TweetsContext.Provider value={tweets}>
-      <NewTweet
-        setIsUpdating={setIsUpdating}
-        isUpdating={isUpdating}
-        setServerError={setServerError}
-        userName={userName}
-      />
+      <NewTweet setServerError={setServerError} />
       {serverError && (
         <Alert variant="danger" className="m-0 p-1 ">
           {serverError}

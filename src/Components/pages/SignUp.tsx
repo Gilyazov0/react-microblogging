@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 import auth from "../../lib/auth";
 import { SetPageContext } from "../App";
 
-const Register: React.FC = () => {
+const SignUp: React.FC = () => {
   const setPage = useContext(SetPageContext);
   const refAlert = useRef<HTMLDivElement>(null);
 
@@ -57,4 +57,4 @@ const Register: React.FC = () => {
   );
 };
 
-export default Register;
+export default SignUp;
