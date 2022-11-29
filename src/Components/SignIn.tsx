@@ -1,10 +1,8 @@
-import { FormEvent, useContext, useRef } from "react";
+import { FormEvent, useRef } from "react";
 import { Button } from "react-bootstrap";
 import auth from "../lib/auth";
-import { SetPageContext } from "./App";
 
 const LogIn: React.FC = () => {
-  const setPage = useContext(SetPageContext);
   const refAlert = useRef<HTMLDivElement>(null);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -14,7 +12,6 @@ const LogIn: React.FC = () => {
     const [email, password] = [...elements] as HTMLInputElement[];
     try {
       await auth.logIn(email.value, password.value);
-      setPage("Home");
     } catch (error) {
       const alert = refAlert.current;
       if (!alert) return;
@@ -53,7 +50,6 @@ const LogIn: React.FC = () => {
           className="ms-2"
           onClick={async () => {
             await auth.signInGoogle();
-            setPage("Home");
           }}
         />
       </div>

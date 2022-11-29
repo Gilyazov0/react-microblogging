@@ -25,6 +25,10 @@ const App: React.FC = () => {
   const [user, setUser] = useState<UserData | null | undefined>(undefined);
 
   useEffect(() => {
+    console.log(page);
+  }, [page]);
+
+  useEffect(() => {
     if (typeof uid !== "string") {
       setUser(uid);
       return;
@@ -52,6 +56,9 @@ const App: React.FC = () => {
       case "Home":
         if (user === null) setPage("SignIn");
         break;
+
+      case "SignIn":
+        if (user) setPage("Home");
     }
   }, [page, user]);
 
