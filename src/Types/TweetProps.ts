@@ -4,4 +4,5 @@ export interface TweetProps {
   date: number;
   userId: string;
   picture?: string;
+  tweetId?: string;
 }

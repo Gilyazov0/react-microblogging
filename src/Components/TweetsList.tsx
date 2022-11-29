@@ -18,7 +18,7 @@ const TweetList: React.FC<{ getTweets: Function; hasMore: boolean }> = (
         userName={tweet.userName}
         userId={tweet.userId}
         picture={tweet.picture}
-        key={index}
+        key={tweet.tweetId}
       />
     );
   });

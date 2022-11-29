@@ -10,6 +10,7 @@ import {
   where,
   orderBy,
   limit,
+  setDoc,
 } from "firebase/firestore";
 import Firebase from "./Firebase";
 import moment from "moment";
@@ -26,7 +27,11 @@ class TweetsDB extends Firebase {
 
   async postTweet(tweet: TweetProps) {
     try {
-      await addDoc(collection(this.db, this.collection), tweet);
+      const newDocRef = doc(collection(this.db, this.collection));
+      await setDoc(newDocRef, {
+        ...tweet,
+        tweetId: newDocRef.id,
+      });
     } catch (e) {
       throw e;
     }

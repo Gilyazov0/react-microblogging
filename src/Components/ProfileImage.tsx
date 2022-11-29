@@ -17,7 +17,7 @@ const ProfileImage: React.FC<{ pictureUrl: string | undefined }> = ({
     getUrl();
   }, [pictureUrl]);
 
-  return <img src={url} className={"me-2"} />;
+  return <img src={url ? url : "./no-image.png"} className={"me-2"} />;
 };
 
 export default ProfileImage;

@@ -15,9 +15,11 @@ export default function Home() {
   const [serverError, setServerError] = useState<string>("");
   const [hasMore, setHasMore] = useState(true);
 
-  const addTweet = (tweet: TweetProps) => {
+  const addTweet = async (tweet: TweetProps) => {
+    await userDB.addUserDataToTweet(tweet);
     setTweets((prev) => {
       const data = [...prev];
+
       data.unshift(tweet);
       return data;
     });

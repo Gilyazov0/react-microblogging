@@ -4,7 +4,6 @@ import ProfileImage from "./ProfileImage";
 import "./style/Tweet.css";
 
 const Tweet: React.FC<TweetProps> = (props: TweetProps) => {
-  console.log(props.picture);
   return (
     <div className="tweet">
       <div className="d-flex">
