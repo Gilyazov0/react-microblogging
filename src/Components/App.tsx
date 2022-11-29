@@ -25,10 +25,6 @@ const App: React.FC = () => {
   const [user, setUser] = useState<UserData | null | undefined>(undefined);
 
   useEffect(() => {
-    console.log(page);
-  }, [page]);
-
-  useEffect(() => {
     if (typeof uid !== "string") {
       setUser(uid);
       return;
