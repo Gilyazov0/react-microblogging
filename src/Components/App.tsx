@@ -9,14 +9,10 @@ import SignIn from "./pages/SignIn";
 import Profile from "./pages/Profile";
 import UserData from "../Types/userData";
 import userDB from "../lib/usersDB";
+import Search from "./pages/Search";
+import Pages from "../Types/Pages";
+import SearchProps from "../SearchTypes";
 
-export type Pages =
-  | "Home"
-  | "Profile"
-  | "SignUp"
-  | "SignIn"
-  | "SignOut"
-  | "Search";
 export type ViewType = "all tweets" | "my tweets";
 
 export const SetPageContext = createContext<(page: Pages) => void>(
@@ -32,6 +28,10 @@ const App: React.FC = () => {
   const [uid, setUid] = useState<string | null | undefined>(undefined);
   const [user, setUser] = useState<UserData | null | undefined>(undefined);
   const [viewType, setViewType] = useState<ViewType>("all tweets");
+  const [searchData, setSearchData] = useState<SearchProps>({
+    searchAt: "tweets",
+    query: "",
+  });
 
   useEffect(() => {
     if (typeof uid !== "string") {
@@ -74,11 +74,17 @@ const App: React.FC = () => {
         <UserContext.Provider value={user}>
           <SetPageContext.Provider value={setPage}>
             <ViewTypeContext.Provider value={viewType}>
-              <NavBar currentPage={page} setViewType={setViewType} />
+              <NavBar
+                page={page}
+                setViewType={setViewType}
+                setSearchData={setSearchData}
+                searchAt={searchData.searchAt}
+              />
               {page === "Home" && <Home />}
               {page === "SignUp" && <SignUp />}
               {page === "SignIn" && <SignIn />}
               {page === "Profile" && <Profile setUser={setUser} />}
+              {page === "Search" && <Search {...searchData} />}
             </ViewTypeContext.Provider>
           </SetPageContext.Provider>
         </UserContext.Provider>

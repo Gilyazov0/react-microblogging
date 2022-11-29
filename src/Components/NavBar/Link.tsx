@@ -1,5 +1,6 @@
 import { useContext } from "react";
-import { Pages, SetPageContext } from "../App";
+import Pages from "../../Types/Pages";
+import { SetPageContext } from "../App";
 interface LinkProps {
   isActive: boolean;
   text: string;

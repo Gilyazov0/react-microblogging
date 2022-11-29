@@ -1,40 +1,48 @@
-import { useContext, useState } from "react";
-import { Pages } from "../App";
+import { useContext } from "react";
 import "../style/NavBar.css";
 import Link from "./Link";
-import { UserContext } from "../App";
+import { UserContext, ViewType } from "../App";
 import ProfileImage from "../ProfileImage";
-import ViewType from "./ViewType";
-import Search from "./Search";
+import ViewSelector from "./ViewSelector";
+import SearchBar from "./SearchBar";
+import Pages from "../../Types/Pages";
+import SearchProps, { SearchAtType } from "../../SearchTypes";
 
-const NavBar: React.FC<{ currentPage: Pages; setViewType: Function }> = ({
-  currentPage,
-  setViewType,
-}) => {
+const NavBar: React.FC<{
+  page: Pages;
+  setViewType: React.Dispatch<React.SetStateAction<ViewType>>;
+  setSearchData: React.Dispatch<React.SetStateAction<SearchProps>>;
+  searchAt: SearchAtType;
+}> = ({ page, setViewType, setSearchData, searchAt }) => {
   const user = useContext(UserContext);
   const userName = user
     ? user.displayName
       ? user.displayName
       : user.email!
     : "";
+
   return (
     <div className="nav-bar">
-      <Link isActive={currentPage === "Home"} text={"Home"} pageName={"Home"} />
-      <ViewType setViewType={setViewType} />
+      <Link isActive={page === "Home"} text={"Home"} pageName={"Home"} />
+      <ViewSelector setViewType={setViewType} />
       <div className="flex-grow-1"></div>
       <div>
-        <Search isActive={currentPage === "Search"} />
+        <SearchBar
+          isActive={page === "Search"}
+          setSearchData={setSearchData}
+          searchAt={searchAt}
+        />
       </div>
       <div className="flex-grow-1"></div>
       {!user && (
         <>
           <Link
-            isActive={currentPage === "SignUp"}
+            isActive={page === "SignUp"}
             text={"Sign up"}
             pageName={"SignUp"}
           />
           <Link
-            isActive={currentPage === "SignIn"}
+            isActive={page === "SignIn"}
             text={"Sign in"}
             pageName={"SignIn"}
           />
@@ -44,7 +52,7 @@ const NavBar: React.FC<{ currentPage: Pages; setViewType: Function }> = ({
         <>
           <ProfileImage pictureUrl={user.picture} />
           <Link
-            isActive={currentPage === "Profile"}
+            isActive={page === "Profile"}
             text={userName}
             pageName={"Profile"}
           />

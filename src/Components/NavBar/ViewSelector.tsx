@@ -2,7 +2,7 @@ import { useContext } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { ViewTypeContext } from "../App";
 import "../style/ViewType.css";
-const ViewType: React.FC<{ setViewType: Function }> = ({ setViewType }) => {
+const ViewSelector: React.FC<{ setViewType: Function }> = ({ setViewType }) => {
   const viewType = useContext(ViewTypeContext);
 
   return (
@@ -28,4 +28,4 @@ const ViewType: React.FC<{ setViewType: Function }> = ({ setViewType }) => {
   );
 };
 
-export default ViewType;
+export default ViewSelector;

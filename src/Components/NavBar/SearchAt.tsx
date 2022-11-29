@@ -1,9 +1,8 @@
-import { useContext } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
-import { SearchAtType } from "./Search";
+import { SearchAtType } from "../../SearchTypes";
 
 const SearchAt: React.FC<{
-  setSearchAt: React.Dispatch<React.SetStateAction<SearchAtType>>;
+  setSearchAt: Function;
   searchAt: SearchAtType;
 }> = ({ setSearchAt, searchAt }) => {
   return (
