@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { Pages } from "./App";
-import "./style/NavBar.css";
+import { Pages } from "../App";
+import "../style/NavBar.css";
 import Link from "./Link";
-import { UserContext } from "./App";
-import ProfileImage from "./ProfileImage";
+import { UserContext } from "../App";
+import ProfileImage from "../ProfileImage";
 
 interface NavBarProps {
   currentPage: Pages;

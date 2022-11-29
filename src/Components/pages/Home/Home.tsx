@@ -1,12 +1,12 @@
 import { useState, useEffect, useContext, createContext } from "react";
-import "./style/Home.css";
+import "../../style/Home.css";
 import NewTweet from "./NewTweet";
-import { TweetProps } from "../Types/TweetProps";
+import { TweetProps } from "../../../Types/TweetProps";
 import { Alert } from "react-bootstrap";
 import TweetList from "./TweetsList";
-import tweetsDB from "../lib/tweetsDB";
-import { UserContext } from "./App";
-import userDB from "../lib/usersDB";
+import tweetsDB from "../../../lib/tweetsDB";
+import { UserContext } from "../../App";
+import userDB from "../../../lib/usersDB";
 
 export const TweetsContext = createContext<TweetProps[]>([]);
 

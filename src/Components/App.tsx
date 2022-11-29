@@ -1,12 +1,12 @@
-import Home from "./Home";
-import NavBar from "./NavBar";
+import Home from "./pages/Home/Home";
+import NavBar from "./NavBar/NavBar";
 import { useState, useEffect, createContext } from "react";
 import "./style/App.css";
 import ErrorBoundary from "./ErrorBoundary";
 import auth from "../lib/auth";
-import SignUp from "./SignUp";
-import SignIn from "./SignIn";
-import Profile from "./Profile";
+import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
+import Profile from "./pages/Profile";
 import UserData from "../Types/userData";
 import userDB from "../lib/usersDB";
 

@@ -1,5 +1,5 @@
 import { ChangeEvent, useRef } from "react";
-import "./style/TextBox.css";
+import "../../style/TextBox.css";
 
 interface TextBoxProps {
   setTweetLength: Function;

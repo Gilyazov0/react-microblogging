@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useRef } from "react";
 import { Button } from "react-bootstrap";
-import userDB from "../lib/usersDB";
-import { UserContext } from "./App";
-import UserData from "../Types/userData";
+import userDB from "../../lib/usersDB";
+import { UserContext } from "../App";
+import UserData from "../../Types/userData";
 
 const Profile: React.FC<{ setUser: Function }> = (props: {
   setUser: Function;

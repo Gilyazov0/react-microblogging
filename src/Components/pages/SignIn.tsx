@@ -1,23 +1,17 @@
-import { FormEvent, useContext, useRef } from "react";
-import "./style/SignUp.css";
+import { FormEvent, useRef } from "react";
 import { Button } from "react-bootstrap";
-import auth from "../lib/auth";
-import { SetPageContext } from "./App";
+import auth from "../../lib/auth";
 
-const Register: React.FC = () => {
-  const setPage = useContext(SetPageContext);
+const LogIn: React.FC = () => {
   const refAlert = useRef<HTMLDivElement>(null);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    refAlert.current?.classList.add("d-none");
     const elements = e.currentTarget.elements;
-    const [name, email, password] = [...elements] as HTMLInputElement[];
+    const [email, password] = [...elements] as HTMLInputElement[];
     try {
-      if (name.value.length < 5) throw "Name length should be bigger than 4";
-      if (password.value.length < 5)
-        throw "Password length should be bigger than 7";
-      await auth.createUser(email.value, password.value, name.value);
-      setPage("Home");
+      await auth.logIn(email.value, password.value);
     } catch (error) {
       const alert = refAlert.current;
       if (!alert) return;
@@ -28,33 +22,39 @@ const Register: React.FC = () => {
 
   return (
     <div className="profile">
-      <div className="title">Sign in</div>
+      <div className="title">Log in:</div>
       <form className="d-flex flex-column" onSubmit={handleSubmit}>
-        <label htmlFor="name">User name</label>
-        <input type={"text"} name="name" />
-        <label htmlFor="email" className="mt-2">
-          Email
-        </label>
+        <label htmlFor="email">Email</label>
         <input type={"email"} name="email" />
         <label htmlFor="password" className="mt-2">
           Password
         </label>
         <input type={"password"} name="password" />
-
         <div className="d-flex align-items-center mt-3">
           <div
             className="alert alert-danger p-1 m-0 d-none"
             ref={refAlert}
           ></div>
           <div className="flex-grow-1"></div>
-
           <Button variant="primary" type="submit">
-            Sing in
+            Log in
           </Button>
         </div>
       </form>
+
+      <div className="mt-5">
+        <span>Log in using:</span>
+        <img
+          role="button"
+          src="../../Google__G__Logo.svg"
+          className="ms-2"
+          onClick={async () => {
+            await auth.signInGoogle();
+          }}
+        />
+      </div>
     </div>
   );
 };
 
-export default Register;
+export default LogIn;

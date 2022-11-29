@@ -1,7 +1,7 @@
 import moment from "moment";
-import { TweetProps } from "../Types/TweetProps";
-import ProfileImage from "./ProfileImage";
-import "./style/Tweet.css";
+import { TweetProps } from "../../../Types/TweetProps";
+import ProfileImage from "../../ProfileImage";
+import "../../style/Tweet.css";
 
 const Tweet: React.FC<TweetProps> = (props: TweetProps) => {
   return (

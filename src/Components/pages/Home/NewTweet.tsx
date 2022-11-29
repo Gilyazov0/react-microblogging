@@ -1,10 +1,10 @@
 import { useCallback, useContext, useState } from "react";
 import { Button, Alert } from "react-bootstrap";
 import TextBox from "./TextBox";
-import "./style/NewTweet.css";
+import "../../style/NewTweet.css";
 import { TweetsContext } from "./Home";
-import tweetsDB from "../lib/tweetsDB";
-import { UserContext } from "./App";
+import tweetsDB from "../../../lib/tweetsDB";
+import { UserContext } from "../../App";
 
 interface Props {
   setIsUpdating: Function;

@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { TweetProps } from "../Types/TweetProps";
+import { TweetProps } from "../../../Types/TweetProps";
 import { TweetsContext } from "./Home";
 import Loading from "./Loading";
 import Tweet from "./Tweet";
