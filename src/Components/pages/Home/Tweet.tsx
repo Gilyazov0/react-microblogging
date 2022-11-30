@@ -12,6 +12,7 @@ const Tweet: React.FC<TweetProps> = ({
   picture,
   date,
   tweetId,
+  like,
 }) => {
   const viewType = useContext(ViewTypeContext);
   const user = useContext(UserContext);
@@ -33,7 +34,7 @@ const Tweet: React.FC<TweetProps> = ({
       <img
         src="./like.svg"
         alt="like"
-        className="align-self-end"
+        className={`align-self-end ${like ? "like" : ""}`}
         onClick={(e) => {
           e.currentTarget.classList.toggle("like");
           tweetsDB.toggleLike(tweetId!, user!.uid);

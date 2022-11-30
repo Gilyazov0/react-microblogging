@@ -67,19 +67,19 @@ class TweetsDB extends Firebase {
     return unsubscribe;
   }
 
-  async getTweets(date: number, uid = "") {
+  async getTweets(date: number, uid: string = "", getAllTweets: boolean) {
     try {
-      const q = uid
+      const q = getAllTweets
         ? query(
             collection(this.db, this.collection),
             where("date", "<", date),
-            where("userId", "==", uid),
             orderBy("date", "desc"),
             limit(10)
           )
         : query(
             collection(this.db, this.collection),
             where("date", "<", date),
+            where("userId", "==", uid),
             orderBy("date", "desc"),
             limit(10)
           );
@@ -87,13 +87,18 @@ class TweetsDB extends Firebase {
 
       const res: TweetProps[] = [];
       querySnapshot.forEach((doc) => {
-        res.push(doc.data() as TweetProps);
+        const tweet = doc.data();
+        const like = this.checkLike(tweet, uid);
+        res.push({ ...tweet, like } as TweetProps);
       });
       return res;
     } catch (error) {
-      console.log(error);
       return [];
     }
+  }
+  private checkLike(data: { [key: string]: any }, uid: string) {
+    if (!data.likes) return false;
+    else return (data.likes as string[]).indexOf(uid) !== -1;
   }
 }
 const tweetsDB = new TweetsDB();
