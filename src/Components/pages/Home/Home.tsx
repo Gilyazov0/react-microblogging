@@ -53,7 +53,10 @@ export default function Home() {
   useEffect(() => {
     getTweets();
     const unsubscribe = tweetsDB.subscribeForUpdates(addTweet);
-    return () => unsubscribe();
+    return () => {
+      unsubscribe();
+      setTweets([]);
+    };
   }, []);
 
   if (tweets.length === 0) getTweets();
