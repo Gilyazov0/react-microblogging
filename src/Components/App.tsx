@@ -38,7 +38,6 @@ const App: React.FC = () => {
       setUser(uid);
       return;
     }
-
     async function setUserData(uid: string) {
       const data = (await userDB.getUserData(uid)) as UserData;
       data["uid"] = uid;

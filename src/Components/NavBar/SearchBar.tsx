@@ -39,7 +39,7 @@ const SearchBar: React.FC<{
       />
       <img
         src="./search_icon.svg"
-        className="ms-2 filter-wight"
+        className="ms-2 filter-white search-icon"
         onClick={handleClick}
         alt="icon"
       />

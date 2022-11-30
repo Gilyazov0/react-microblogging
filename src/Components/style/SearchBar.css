@@ -4,7 +4,11 @@
   width: 10rem;
 }
 
-.filter-wight {
+.filter-white {
   filter: invert(99%) sepia(1%) saturate(1295%) hue-rotate(213deg)
     brightness(117%) contrast(100%);
+}
+
+.search-icon {
+  cursor: pointer;
 }

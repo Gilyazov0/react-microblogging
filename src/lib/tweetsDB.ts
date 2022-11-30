@@ -57,6 +57,13 @@ class TweetsDB extends Firebase {
     return unsubscribe;
   }
 
+  searchInTweets(query: string) {
+    try {
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async getTweets(date: number, uid = "") {
     try {
       const q = uid
