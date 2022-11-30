@@ -5,4 +5,5 @@ export interface TweetProps {
   userId: string;
   picture?: string;
   tweetId?: string;
+  likes?: string[];
 }

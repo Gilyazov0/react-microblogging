@@ -1,12 +1,20 @@
 import moment from "moment";
 import { useContext } from "react";
 import { TweetProps } from "../../../Types/TweetProps";
-import { ViewTypeContext } from "../../App";
+import { ViewTypeContext, UserContext } from "../../App";
 import ProfileImage from "../../ProfileImage";
 import "../../style/Tweet.css";
+import tweetsDB from "../../../lib/tweetsDB";
 
-const Tweet: React.FC<TweetProps> = ({ content, userName, picture, date }) => {
+const Tweet: React.FC<TweetProps> = ({
+  content,
+  userName,
+  picture,
+  date,
+  tweetId,
+}) => {
   const viewType = useContext(ViewTypeContext);
+  const user = useContext(UserContext);
   return (
     <div
       className={`tweet ${
@@ -26,7 +34,10 @@ const Tweet: React.FC<TweetProps> = ({ content, userName, picture, date }) => {
         src="./like.svg"
         alt="like"
         className="align-self-end"
-        onClick={(e) => e.currentTarget.classList.toggle("like")}
+        onClick={(e) => {
+          e.currentTarget.classList.toggle("like");
+          tweetsDB.toggleLike(tweetId!, user!.uid);
+        }}
       />
     </div>
   );
