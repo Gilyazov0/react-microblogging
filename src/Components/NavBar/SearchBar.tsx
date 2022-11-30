@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import SearchAt from "./SearchAt";
 import "../style/SearchBar.css";
 import { SetPageContext } from "../App";
@@ -41,6 +41,7 @@ const SearchBar: React.FC<{
         src="./search_icon.svg"
         className="ms-2 filter-wight"
         onClick={handleClick}
+        alt="icon"
       />
     </div>
   );

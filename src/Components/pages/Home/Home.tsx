@@ -57,7 +57,8 @@ export default function Home() {
       unsubscribe();
       setTweets([]);
     };
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []); //need this to run only ones
 
   if (tweets.length === 0) getTweets();
 
