@@ -9,7 +9,6 @@ import {
   where,
   orderBy,
   limit,
-  setDoc,
 } from "firebase/firestore";
 import Firebase from "./Firebase";
 import { TweetProps } from "../Types/TweetProps";
@@ -24,15 +23,9 @@ class TweetsDB extends Firebase {
   }
 
   async postTweet(tweet: TweetProps) {
-    try {
-      const newDocRef = doc(collection(this.db, this.collection));
-      await setDoc(newDocRef, {
-        ...tweet,
-        tweetId: newDocRef.id,
-      });
-    } catch (e) {
-      throw e;
-    }
+    const newDocRef = doc(collection(this.db, this.collection));
+    const data = { ...tweet, tweetId: newDocRef.id };
+    await this.writeData(this.db, this.collection, newDocRef.id, data);
   }
 
   public subscribeForUpdates(callback: Function) {
@@ -55,13 +48,6 @@ class TweetsDB extends Firebase {
     });
 
     return unsubscribe;
-  }
-
-  searchInTweets(query: string) {
-    try {
-    } catch (error) {
-      console.log(error);
-    }
   }
 
   async getTweets(date: number, uid = "") {
