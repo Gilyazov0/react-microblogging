@@ -19,3 +19,12 @@
 .all-tweets {
   background-color: rgba(128, 128, 128, 0.4);
 }
+
+path {
+  stroke: blue !important;
+}
+
+.like {
+  filter: invert(9%) sepia(61%) saturate(3558%) hue-rotate(359deg)
+    brightness(94%) contrast(99%);
+}

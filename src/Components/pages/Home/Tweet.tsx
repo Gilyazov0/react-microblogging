@@ -22,6 +22,12 @@ const Tweet: React.FC<TweetProps> = ({ content, userName, picture, date }) => {
         </div>
       </div>
       <div>{content}</div>
+      <img
+        src="./like.svg"
+        alt="like"
+        className="align-self-end"
+        onClick={(e) => e.currentTarget.classList.toggle("like")}
+      />
     </div>
   );
 };
