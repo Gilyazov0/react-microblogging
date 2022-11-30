@@ -32,7 +32,7 @@ class Auth extends Firebase {
       userDB.writeUserData(userCredentials.user.uid, { email, displayName });
     } catch (error) {
       this.logError(error);
-      throw "Something went wrong. Check... everything";
+      throw Error("Something went wrong. Check... everything");
     }
 
     await this.setUserData({ displayName });
@@ -52,7 +52,7 @@ class Auth extends Firebase {
       await signInWithEmailAndPassword(this.auth, email, password);
     } catch (error) {
       this.logError(error);
-      throw "Something went wrong. Check... everything";
+      throw new Error("Something went wrong. Check... everything");
     }
   }
 
@@ -76,7 +76,7 @@ class Auth extends Firebase {
       const userCredentials = await signInWithPopup(this.auth, provider);
       let { uid, email, displayName } = userCredentials.user;
       displayName = displayName ? displayName : email;
-      userDB.writeIfNotExist(uid, { email, displayName });
+      userDB.createUserIfNotExist(uid, { email, displayName });
     } catch (error) {
       this.logError(error);
     }

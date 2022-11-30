@@ -12,16 +12,7 @@ const TweetList: React.FC<{ getTweets: Function; hasMore: boolean }> = ({
   const tweets = useContext(TweetsContext);
 
   const tweetComponents = tweets.map((tweet: TweetProps, index) => {
-    return (
-      <Tweet
-        content={tweet.content}
-        date={tweet.date}
-        userName={tweet.userName}
-        userId={tweet.userId}
-        picture={tweet.picture}
-        key={tweet.tweetId}
-      />
-    );
+    return <Tweet {...tweet} key={tweet.tweetId} />;
   });
 
   function next() {

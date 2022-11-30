@@ -1,10 +1,4 @@
-import {
-  getFirestore,
-  Firestore,
-  setDoc,
-  doc,
-  getDoc,
-} from "firebase/firestore";
+import { getFirestore, Firestore } from "firebase/firestore";
 import { TweetProps } from "../Types/TweetProps";
 import UserData from "../Types/userData";
 import Firebase from "./Firebase";
@@ -19,22 +13,16 @@ class UsersDB extends Firebase {
     this.collection = "users";
   }
   public async writeUserData(uid: string, data: object) {
-    const ref = doc(this.db, this.collection, uid);
-    try {
-      await setDoc(ref, data, { merge: true });
-    } catch (error) {
-      console.log(error);
-    }
+    await this.writeData(this.db, this.collection, uid, data);
   }
 
-  public async writeIfNotExist(uid: string, data: object) {
-    const dataSnap = await this.getDataSnap(uid);
-    if (!dataSnap?.exists()) this.writeUserData(uid, data);
+  public async createUserIfNotExist(uid: string, data: object) {
+    await this.writeIfNotExist(this.db, this.collection, uid, data);
   }
 
   public async getUserData(uid: string) {
-    const dataSnap = await this.getDataSnap(uid);
-    if (dataSnap?.exists()) return dataSnap.data() as UserData;
+    const data = await this.getData(this.db, this.collection, uid);
+    if (data) return data as UserData;
     return null;
   }
 
@@ -56,16 +44,6 @@ class UsersDB extends Firebase {
     const user = await this.getUserData(tweet.userId);
     tweet.picture = user?.picture;
     tweet.userName = user?.displayName;
-  }
-
-  private async getDataSnap(uid: string) {
-    try {
-      const docRef = doc(this.db, this.collection, uid);
-      const dataSnap = await getDoc(docRef);
-      return dataSnap;
-    } catch (error) {
-      console.log(error);
-    }
   }
 }
 

@@ -16,7 +16,7 @@ const LogIn: React.FC = () => {
       const alert = refAlert.current;
       if (!alert) return;
       alert.classList.remove("d-none");
-      alert.innerText! = error as string;
+      alert.innerText! = (error as Error).message;
     }
   }
 
@@ -47,6 +47,7 @@ const LogIn: React.FC = () => {
         <img
           role="button"
           src="../../Google__G__Logo.svg"
+          alt="google"
           className="ms-2"
           onClick={async () => {
             await auth.signInGoogle();
