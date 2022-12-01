@@ -6,8 +6,8 @@
   flex-direction: column;
   border: 0;
   border-radius: 6px;
-  padding: 20px;
-  gap: 16px;
+  padding: 10px 20px;
+  gap: 6px;
   margin: 10px;
   word-wrap: break-word;
 }
@@ -20,11 +20,18 @@
   background-color: rgba(128, 128, 128, 0.4);
 }
 
-path {
-  stroke: blue !important;
-}
-
 .like {
   filter: invert(9%) sepia(61%) saturate(3558%) hue-rotate(359deg)
     brightness(94%) contrast(99%);
+}
+
+.profile-img-container {
+  height: 30px;
+  width: 30px;
+  margin-right: 1rem;
+}
+
+.like-img {
+  height: 20px;
+  align-self: flex-end;
 }

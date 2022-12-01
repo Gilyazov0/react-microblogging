@@ -23,7 +23,10 @@ const Tweet: React.FC<TweetProps> = ({
       }`}
     >
       <div className="d-flex">
-        <ProfileImage pictureUrl={picture} />
+        <div className="profile-img-container">
+          <ProfileImage pictureUrl={picture} />
+        </div>
+
         <div className="text-secondary">{userName}</div>
         <div className="flex-grow-1"></div>
         <div className="text-secondary">
@@ -31,10 +34,11 @@ const Tweet: React.FC<TweetProps> = ({
         </div>
       </div>
       <div>{content}</div>
+
       <img
         src="./like.svg"
         alt="like"
-        className={`align-self-end ${like ? "like" : ""}`}
+        className={`like-img ${like ? "like" : ""}`}
         onClick={(e) => {
           e.currentTarget.classList.toggle("like");
           tweetsDB.toggleLike(tweetId!, user!.uid);

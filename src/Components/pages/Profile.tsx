@@ -3,6 +3,8 @@ import { Button } from "react-bootstrap";
 import userDB from "../../lib/usersDB";
 import { UserContext } from "../App";
 import UserData from "../../Types/userData";
+import ProfileImage from "../ProfileImage";
+import "../style/Profile.css";
 
 const Profile: React.FC<{ setUser: Function }> = ({ setUser }) => {
   const user = useContext(UserContext) as UserData;
@@ -33,6 +35,9 @@ const Profile: React.FC<{ setUser: Function }> = ({ setUser }) => {
     <div className="profile mt-5">
       <span className="mt-2">Avatar</span>
       <div className="d-flex align-items-center">
+        <div className="imgContainer">
+          <ProfileImage pictureUrl={user.picture} />
+        </div>
         <input type="file" className="flex-grow-1 me-2" ref={imgRef} />
         <Button
           variant="primary"
