@@ -5,5 +5,5 @@ export interface TweetProps {
   userId: string;
   picture?: string;
   tweetId?: string;
-  like: boolean;
+  like?: boolean;
 }
