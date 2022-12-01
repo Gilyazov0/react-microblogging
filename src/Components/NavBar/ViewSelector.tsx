@@ -2,8 +2,17 @@ import { useContext } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
 import { ViewTypeContext } from "../App";
 import "../style/ViewType.css";
+import ViewType from "../../Types/ViewType";
 const ViewSelector: React.FC<{ setViewType: Function }> = ({ setViewType }) => {
   const viewType = useContext(ViewTypeContext);
+
+  const views: ViewType[] = ["all tweets", "liked", "my tweets"];
+  const dropdowns = views.map((view) => {
+    if (view !== viewType)
+      return (
+        <Dropdown.Item onClick={() => setViewType(view)}>{view}</Dropdown.Item>
+      );
+  });
 
   return (
     <Dropdown>
@@ -14,16 +23,7 @@ const ViewSelector: React.FC<{ setViewType: Function }> = ({ setViewType }) => {
       >
         {viewType}
       </Dropdown.Toggle>
-
-      <Dropdown.Menu>
-        <Dropdown.Item
-          onClick={() =>
-            setViewType(viewType === "all tweets" ? "liked" : "all tweets")
-          }
-        >
-          {viewType === "all tweets" ? "my tweets" : "all tweets"}
-        </Dropdown.Item>
-      </Dropdown.Menu>
+      <Dropdown.Menu>{dropdowns}</Dropdown.Menu>
     </Dropdown>
   );
 };
