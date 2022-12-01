@@ -12,8 +12,7 @@ import userDB from "../lib/usersDB";
 import Search from "./pages/Search";
 import Pages from "../Types/Pages";
 import SearchProps from "../SearchTypes";
-
-export type ViewType = "all tweets" | "my tweets";
+import ViewType from "../Types/ViewType";
 
 export const SetPageContext = createContext<(page: Pages) => void>(
   (page: Pages) => {}

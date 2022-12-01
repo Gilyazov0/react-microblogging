@@ -12,7 +12,7 @@ import {
 } from "firebase/firestore";
 import Firebase from "./Firebase";
 import { TweetProps } from "../Types/TweetProps";
-import { ViewType } from "../Components/App";
+import ViewType from "../Types/ViewType";
 
 class TweetsDB extends Firebase {
   private db: Firestore;
@@ -74,7 +74,6 @@ class TweetsDB extends Firebase {
     try {
       const q = this.getQuery(date, uid, view);
       const querySnapshot = await getDocs(q);
-
       const res: TweetProps[] = [];
       querySnapshot.forEach((doc) => {
         const tweet = doc.data();
@@ -83,11 +82,12 @@ class TweetsDB extends Firebase {
       });
       return res;
     } catch (error) {
+      console.log(error);
       return [];
     }
   }
 
-  private getQuery(date: number, uid: string = "", view: ViewType) {
+  private getQuery(date: number, uid: string, view: ViewType) {
     switch (view) {
       case "all tweets":
         return query(
@@ -101,6 +101,14 @@ class TweetsDB extends Firebase {
           collection(this.db, this.collection),
           where("date", "<", date),
           where("userId", "==", uid),
+          orderBy("date", "desc"),
+          limit(this.queryLimit)
+        );
+      case "liked":
+        return query(
+          collection(this.db, this.collection),
+          where("date", "<", date),
+          where("likes", "array-contains", uid),
           orderBy("date", "desc"),
           limit(this.queryLimit)
         );

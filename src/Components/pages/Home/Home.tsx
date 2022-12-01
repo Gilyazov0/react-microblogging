@@ -1,10 +1,4 @@
-import {
-  useState,
-  useEffect,
-  useContext,
-  createContext,
-  useCallback,
-} from "react";
+import { useState, useEffect, useContext, createContext } from "react";
 import "../../style/Home.css";
 import NewTweet from "./NewTweet";
 import { TweetProps } from "../../../Types/TweetProps";
@@ -77,7 +71,7 @@ export default function Home() {
     };
   }, []);
 
-  if (tweets.length === 0) getTweets();
+  if (tweets.length === 0 && hasMore) getTweets();
 
   return (
     <TweetsContext.Provider value={tweets}>

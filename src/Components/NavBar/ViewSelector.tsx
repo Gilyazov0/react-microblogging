@@ -18,7 +18,7 @@ const ViewSelector: React.FC<{ setViewType: Function }> = ({ setViewType }) => {
       <Dropdown.Menu>
         <Dropdown.Item
           onClick={() =>
-            setViewType(viewType === "all tweets" ? "my tweets" : "all tweets")
+            setViewType(viewType === "all tweets" ? "liked" : "all tweets")
           }
         >
           {viewType === "all tweets" ? "my tweets" : "all tweets"}
