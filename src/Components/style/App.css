@@ -8,4 +8,5 @@
 
 input {
   border-color: rgba(255, 255, 255, 0.438);
+  border-radius: 6px;
 }
