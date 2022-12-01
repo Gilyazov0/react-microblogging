@@ -1,4 +1,10 @@
-import { useState, useEffect, useContext, createContext } from "react";
+import {
+  useState,
+  useEffect,
+  useContext,
+  createContext,
+  useCallback,
+} from "react";
 import "../../style/Home.css";
 import NewTweet from "./NewTweet";
 import { TweetProps } from "../../../Types/TweetProps";
@@ -33,20 +39,19 @@ export default function Home() {
     if (updating || !user) return;
 
     setUpdating(true);
-
     const getAllTweets = viewType === "all tweets" ? true : false;
     const newTweets = await tweetsDB.getTweets(
       lastTweetDate,
       user?.uid,
       getAllTweets
     );
+
     if (newTweets.length === 0) {
       setHasMore(false);
     } else {
       for (const tweet of newTweets) {
         await userDB.addUserDataToTweet(tweet);
       }
-
       setTweets((prevTweets) => [...prevTweets, ...newTweets]);
       const date = newTweets.length
         ? newTweets[newTweets.length - 1].date
@@ -61,23 +66,19 @@ export default function Home() {
     setTweets([]);
     setLastTweetDate(Date.now());
     setHasMore(true);
-  }, [viewType]);
+  }, [viewType, user]);
 
   useEffect(() => {
     if (!user) return;
-    getTweets();
+
     const unsubscribe = tweetsDB.subscribeForUpdates(addTweet);
     return () => {
       unsubscribe();
       setTweets([]);
     };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
-  useEffect(() => {
-    if (hasMore) getTweets();
-  }, [hasMore]);
+  if (tweets.length === 0) getTweets();
 
   return (
     <TweetsContext.Provider value={tweets}>

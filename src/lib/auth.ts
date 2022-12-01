@@ -65,9 +65,10 @@ class Auth extends Firebase {
   }
 
   public async getUserUid(cb: Function) {
-    onAuthStateChanged(this.auth, (user) => {
+    const unsubscribe = onAuthStateChanged(this.auth, (user) => {
       cb(user?.uid ? user.uid : null);
     });
+    return unsubscribe;
   }
 
   public async signInGoogle() {

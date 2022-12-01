@@ -4,6 +4,7 @@ import { TweetProps } from "../../../Types/TweetProps";
 import { TweetsContext } from "./Home";
 import Loading from "./Loading";
 import Tweet from "./Tweet";
+import "../../style/TweetList.css";
 
 const TweetList: React.FC<{ getTweets: Function; hasMore: boolean }> = ({
   getTweets,
@@ -18,8 +19,9 @@ const TweetList: React.FC<{ getTweets: Function; hasMore: boolean }> = ({
   function next() {
     getTweets();
   }
+
   return (
-    <div className="tweets-list">
+    <div>
       <InfiniteScroll
         dataLength={tweets.length}
         next={next}
