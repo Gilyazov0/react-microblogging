@@ -10,7 +10,9 @@ const ViewSelector: React.FC<{ setViewType: Function }> = ({ setViewType }) => {
   const dropdowns = views.map((view) => {
     if (view !== viewType)
       return (
-        <Dropdown.Item onClick={() => setViewType(view)}>{view}</Dropdown.Item>
+        <Dropdown.Item onClick={() => setViewType(view)} key={view}>
+          {view}
+        </Dropdown.Item>
       );
   });
 
@@ -20,6 +22,7 @@ const ViewSelector: React.FC<{ setViewType: Function }> = ({ setViewType }) => {
         variant={"secondary"}
         className={viewType === "all tweets" ? "all-tweets" : "my-tweets"}
         id="dropdown-basic"
+        style={{ width: "7rem" }}
       >
         {viewType}
       </Dropdown.Toggle>
