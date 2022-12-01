@@ -39,11 +39,10 @@ export default function Home() {
     if (updating || !user) return;
 
     setUpdating(true);
-    const getAllTweets = viewType === "all tweets" ? true : false;
     const newTweets = await tweetsDB.getTweets(
       lastTweetDate,
       user?.uid,
-      getAllTweets
+      viewType
     );
 
     if (newTweets.length === 0) {
@@ -62,21 +61,21 @@ export default function Home() {
     setUpdating(false);
   };
 
-  useEffect(() => {
-    setTweets([]);
-    setLastTweetDate(Date.now());
-    setHasMore(true);
-  }, [viewType, user]);
+  useEffect(
+    function resetTweets() {
+      setTweets([]);
+      setLastTweetDate(Date.now());
+      setHasMore(true);
+    },
+    [viewType, user]
+  );
 
   useEffect(() => {
-    if (!user) return;
-
     const unsubscribe = tweetsDB.subscribeForUpdates(addTweet);
     return () => {
       unsubscribe();
-      setTweets([]);
     };
-  }, [user]);
+  }, []);
 
   if (tweets.length === 0) getTweets();
 

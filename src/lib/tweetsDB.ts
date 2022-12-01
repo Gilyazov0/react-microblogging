@@ -12,14 +12,17 @@ import {
 } from "firebase/firestore";
 import Firebase from "./Firebase";
 import { TweetProps } from "../Types/TweetProps";
+import { ViewType } from "../Components/App";
 
 class TweetsDB extends Firebase {
   private db: Firestore;
   private collection: string;
+  private queryLimit: number;
   constructor() {
     super();
     this.db = getFirestore(this.app);
     this.collection = "tweets";
+    this.queryLimit = 10;
   }
 
   public async postTweet(tweet: TweetProps) {
@@ -67,22 +70,9 @@ class TweetsDB extends Firebase {
     return unsubscribe;
   }
 
-  async getTweets(date: number, uid: string = "", getAllTweets: boolean) {
+  public async getTweets(date: number, uid: string = "", view: ViewType) {
     try {
-      const q = getAllTweets
-        ? query(
-            collection(this.db, this.collection),
-            where("date", "<", date),
-            orderBy("date", "desc"),
-            limit(10)
-          )
-        : query(
-            collection(this.db, this.collection),
-            where("date", "<", date),
-            where("userId", "==", uid),
-            orderBy("date", "desc"),
-            limit(10)
-          );
+      const q = this.getQuery(date, uid, view);
       const querySnapshot = await getDocs(q);
 
       const res: TweetProps[] = [];
@@ -96,10 +86,32 @@ class TweetsDB extends Firebase {
       return [];
     }
   }
+
+  private getQuery(date: number, uid: string = "", view: ViewType) {
+    switch (view) {
+      case "all tweets":
+        return query(
+          collection(this.db, this.collection),
+          where("date", "<", date),
+          orderBy("date", "desc"),
+          limit(this.queryLimit)
+        );
+      case "my tweets":
+        return query(
+          collection(this.db, this.collection),
+          where("date", "<", date),
+          where("userId", "==", uid),
+          orderBy("date", "desc"),
+          limit(this.queryLimit)
+        );
+    }
+  }
+
   private checkLike(data: { [key: string]: any }, uid: string) {
     if (!data.likes) return false;
     else return (data.likes as string[]).indexOf(uid) !== -1;
   }
 }
+
 const tweetsDB = new TweetsDB();
 export default tweetsDB;
