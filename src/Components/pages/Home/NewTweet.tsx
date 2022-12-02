@@ -32,7 +32,7 @@ const NewTweet: React.FC<{ setServerError: Function }> = ({
         setServerError("server error:" + e?.message);
       }
     },
-    [user]
+    [setServerError, user]
   );
 
   return (

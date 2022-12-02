@@ -7,6 +7,7 @@ const ViewSelector: React.FC<{ setViewType: Function }> = ({ setViewType }) => {
   const viewType = useContext(ViewTypeContext);
 
   const views: ViewType[] = ["all tweets", "liked", "my tweets"];
+  // eslint-disable-next-line array-callback-return
   const dropdowns = views.map((view) => {
     if (view !== viewType)
       return (
