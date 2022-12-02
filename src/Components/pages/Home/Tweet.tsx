@@ -5,6 +5,7 @@ import { ViewTypeContext, UserContext } from "../../App";
 import ProfileImage from "../../ProfileImage";
 import "../../style/Tweet.css";
 import tweetsDB from "../../../lib/tweetsDB";
+import Link from "../../NavBar/Link";
 
 const Tweet: React.FC<TweetProps> = ({
   content,
@@ -27,7 +28,7 @@ const Tweet: React.FC<TweetProps> = ({
           <ProfileImage pictureUrl={picture} />
         </div>
 
-        <div className="text-secondary">{userName}</div>
+        <Link isActive={false} pageName={"Profile"} text={userName!} />
         <div className="flex-grow-1"></div>
         <div className="text-secondary">
           {moment(date).format("MMM Mo HH:mm A")}

@@ -1,23 +1,26 @@
 import { useContext, useState } from "react";
 import SearchAt from "./SearchAt";
 import "../style/SearchBar.css";
-import { SetPageContext } from "../App";
 import SearchProps, { SearchAtType } from "../../SearchTypes";
+import { useAppDispatch } from "../../hooks/redux";
+import { pageSlice } from "../../store/reducers/PageSlice";
 
 const SearchBar: React.FC<{
   isActive: boolean;
   setSearchData: React.Dispatch<React.SetStateAction<SearchProps>>;
   searchAt: SearchAtType;
 }> = ({ isActive, setSearchData, searchAt }) => {
-  const setPage = useContext(SetPageContext);
   const [inputValue, setInputValue] = useState("");
+
+  const { setPage } = pageSlice.actions;
+  const dispatch = useAppDispatch();
 
   function handleClick() {
     setSearchData((prev) => {
       return { ...prev, query: inputValue };
     });
     setInputValue("");
-    setPage("Search");
+    dispatch(setPage("Search"));
   }
 
   function setSearchAt(searchAt: SearchAtType) {

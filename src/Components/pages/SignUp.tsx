@@ -1,12 +1,14 @@
-import { FormEvent, useContext, useRef } from "react";
+import { FormEvent, useRef } from "react";
 import "../style/SignUp.css";
 import { Button } from "react-bootstrap";
 import auth from "../../lib/auth";
-import { SetPageContext } from "../App";
+import { useAppDispatch } from "../../hooks/redux";
+import { pageSlice } from "../../store/reducers/PageSlice";
 
 const SignUp: React.FC = () => {
-  const setPage = useContext(SetPageContext);
   const refAlert = useRef<HTMLDivElement>(null);
+  const { setPage } = pageSlice.actions;
+  const dispatch = useAppDispatch();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -17,7 +19,7 @@ const SignUp: React.FC = () => {
       if (password.value.length < 5)
         throw "Password length should be bigger than 7";
       await auth.createUser(email.value, password.value, name.value);
-      setPage("Home");
+      dispatch(setPage("Home"));
     } catch (error) {
       const alert = refAlert.current;
       if (!alert) return;

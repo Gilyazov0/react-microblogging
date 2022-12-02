@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "-": "^0.0.1",
+    "@reduxjs/toolkit": "^1.9.1",
+    "@types/react-redux": "^7.1.24",
     "bootstrap": "^5.2.2",
     "firebase": "^9.14.0",
     "firebase-tools": "^11.16.1",
@@ -20,6 +22,8 @@
     "react-bootstrap": "^2.6.0",
     "react-dom": "^18.2.0",
     "react-infinite-scroll-component": "^6.1.0",
+    "react-redux": "^8.0.5",
+    "redux": "^4.2.0",
     "use-local-storage-state": "^18.1.1"
   },
   "devDependencies": {

@@ -1,6 +1,6 @@
-import { useContext } from "react";
+import { useAppDispatch } from "../../hooks/redux";
+import { pageSlice } from "../../store/reducers/PageSlice";
 import Pages from "../../Types/Pages";
-import { SetPageContext } from "../App";
 interface LinkProps {
   isActive: boolean;
   text: string;
@@ -8,11 +8,12 @@ interface LinkProps {
 }
 
 const Link: React.FC<LinkProps> = ({ isActive, pageName, text }) => {
-  const setPage = useContext(SetPageContext);
+  const { setPage } = pageSlice.actions;
+  const dispatch = useAppDispatch();
 
   return (
     <span
-      onClick={() => setPage(pageName)}
+      onClick={() => dispatch(setPage(pageName))}
       className={`link ${isActive ? "" : "text-secondary"}`}
     >
       {text}

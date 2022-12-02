@@ -10,20 +10,21 @@ import Profile from "./pages/Profile";
 import UserData from "../Types/userData";
 import userDB from "../lib/usersDB";
 import Search from "./pages/Search";
-import Pages from "../Types/Pages";
 import SearchProps from "../SearchTypes";
 import ViewType from "../Types/ViewType";
+import { useAppSelector, useAppDispatch } from "../hooks/redux";
+import { pageSlice } from "../store/reducers/PageSlice";
 
-export const SetPageContext = createContext<(page: Pages) => void>(
-  (page: Pages) => {}
-);
 export const UserContext = createContext<UserData | null | undefined>(
   undefined
 );
 export const ViewTypeContext = createContext<ViewType>("all tweets");
 
 const App: React.FC = () => {
-  const [page, setPage] = useState<Pages>("Home");
+  const { page } = useAppSelector((state) => state.pageReducer);
+  const { setPage } = pageSlice.actions;
+  const dispatch = useAppDispatch();
+
   const [uid, setUid] = useState<string | null | undefined>(undefined);
   const [user, setUser] = useState<UserData | null | undefined>(undefined);
   const [viewType, setViewType] = useState<ViewType>("all tweets");
@@ -52,17 +53,17 @@ const App: React.FC = () => {
   useEffect(() => {
     switch (page) {
       case "SignOut":
-        setPage("SignIn");
+        dispatch(setPage("SignIn"));
         auth.logOut();
         setViewType("all tweets");
         break;
 
       case "Home":
-        if (user === null) setPage("SignIn");
+        if (user === null) dispatch(setPage("SignIn"));
         break;
 
       case "SignIn":
-        if (user) setPage("Home");
+        if (user) dispatch(setPage("Home"));
     }
   }, [page, user]);
 
@@ -70,21 +71,19 @@ const App: React.FC = () => {
     <ErrorBoundary>
       <div className="app">
         <UserContext.Provider value={user}>
-          <SetPageContext.Provider value={setPage}>
-            <ViewTypeContext.Provider value={viewType}>
-              <NavBar
-                page={page}
-                setViewType={setViewType}
-                setSearchData={setSearchData}
-                searchAt={searchData.searchAt}
-              />
-              {page === "Home" && <Home />}
-              {page === "SignUp" && <SignUp />}
-              {page === "SignIn" && <SignIn />}
-              {page === "Profile" && <Profile setUser={setUser} />}
-              {page === "Search" && <Search {...searchData} />}
-            </ViewTypeContext.Provider>
-          </SetPageContext.Provider>
+          <ViewTypeContext.Provider value={viewType}>
+            <NavBar
+              page={page}
+              setViewType={setViewType}
+              setSearchData={setSearchData}
+              searchAt={searchData.searchAt}
+            />
+            {page === "Home" && <Home />}
+            {page === "SignUp" && <SignUp />}
+            {page === "SignIn" && <SignIn />}
+            {page === "Profile" && <Profile setUser={setUser} />}
+            {page === "Search" && <Search {...searchData} />}
+          </ViewTypeContext.Provider>
         </UserContext.Provider>
       </div>
     </ErrorBoundary>
