@@ -9,6 +9,7 @@ import {
   signInWithEmailAndPassword,
   Auth as AuthFB,
 } from "firebase/auth";
+import UserData from "../Types/userData";
 import Firebase from "./Firebase";
 import userDB from "./usersDB";
 class Auth extends Firebase {
@@ -65,10 +66,14 @@ class Auth extends Firebase {
   }
 
   public async getUserUid(cb: Function) {
-    const unsubscribe = onAuthStateChanged(this.auth, (user) => {
-      cb(user?.uid ? user.uid : null);
+    onAuthStateChanged(this.auth, async (user) => {
+      if (!user?.uid) cb(null);
+      else {
+        const data = (await userDB.getUserData(user.uid)) as UserData;
+        data["uid"] = user.uid;
+        cb(data);
+      }
     });
-    return unsubscribe;
   }
 
   public async signInGoogle() {

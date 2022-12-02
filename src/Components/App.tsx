@@ -8,7 +8,6 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Profile from "./pages/Profile";
 import UserData from "../Types/userData";
-import userDB from "../lib/usersDB";
 import Search from "./pages/Search";
 import SearchProps from "../SearchTypes";
 import { useAppSelector, useAppDispatch } from "../hooks/redux";
@@ -24,7 +23,7 @@ const App: React.FC = () => {
   const { page } = useAppSelector((state) => state.pageReducer);
   const { setPage } = pageSlice.actions;
   const { setView } = viewSlice.actions;
-  const [uid, setUid] = useState<string | null | undefined>(undefined);
+
   const [user, setUser] = useState<UserData | null | undefined>(undefined);
   const [searchData, setSearchData] = useState<SearchProps>({
     searchAt: "tweets",
@@ -32,20 +31,7 @@ const App: React.FC = () => {
   });
 
   useEffect(() => {
-    if (typeof uid !== "string") {
-      setUser(uid);
-      return;
-    }
-    async function setUserData(uid: string) {
-      const data = (await userDB.getUserData(uid)) as UserData;
-      data["uid"] = uid;
-      setUser(data);
-    }
-    setUserData(uid);
-  }, [uid]);
-
-  useEffect(() => {
-    auth.getUserUid(setUid);
+    auth.getUserUid(setUser);
   }, []);
 
   useEffect(() => {
