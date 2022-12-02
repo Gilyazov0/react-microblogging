@@ -3,16 +3,11 @@ import Link from "./Link";
 import ProfileImage from "../ProfileImage";
 import ViewSelector from "./ViewSelector";
 import SearchBar from "./SearchBar";
-import Pages from "../../Types/Pages";
-import SearchProps, { SearchAtType } from "../../SearchTypes";
 import { useAppSelector } from "../../hooks/redux";
 
-const NavBar: React.FC<{
-  page: Pages;
-  setSearchData: React.Dispatch<React.SetStateAction<SearchProps>>;
-  searchAt: SearchAtType;
-}> = ({ page, setSearchData, searchAt }) => {
+const NavBar: React.FC = () => {
   const { user } = useAppSelector((state) => state.userReducer);
+  const { page } = useAppSelector((state) => state.pageReducer);
   const userName = user
     ? user.displayName
       ? user.displayName
@@ -25,11 +20,7 @@ const NavBar: React.FC<{
       <ViewSelector />
       <div className="flex-grow-1"></div>
       <div>
-        <SearchBar
-          isActive={page === "Search"}
-          setSearchData={setSearchData}
-          searchAt={searchAt}
-        />
+        <SearchBar />
       </div>
       <div className="flex-grow-1"></div>
       {!user && (

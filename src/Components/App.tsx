@@ -8,7 +8,6 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Profile from "./pages/Profile";
 import Search from "./pages/Search";
-import SearchProps from "../SearchTypes";
 import { useAppSelector, useAppDispatch } from "../hooks/redux";
 import { pageSlice } from "../store/reducers/PageSlice";
 import { viewSlice } from "../store/reducers/ViewSlice";
@@ -22,11 +21,6 @@ const App: React.FC = () => {
   const { setView } = viewSlice.actions;
   const { user } = useAppSelector((state) => state.userReducer);
   const { setUser } = userSlice.actions;
-
-  const [searchData, setSearchData] = useState<SearchProps>({
-    searchAt: "tweets",
-    query: "",
-  });
 
   useEffect(() => {
     auth.getUserUid((newUser: UserData | null | undefined) =>
@@ -56,16 +50,12 @@ const App: React.FC = () => {
   return (
     <ErrorBoundary>
       <div className="app">
-        <NavBar
-          page={page}
-          setSearchData={setSearchData}
-          searchAt={searchData.searchAt}
-        />
+        <NavBar />
         {page === "Home" && <Home />}
         {page === "SignUp" && <SignUp />}
         {page === "SignIn" && <SignIn />}
         {page === "Profile" && <Profile />}
-        {page === "Search" && <Search {...searchData} />}
+        {page === "Search" && <Search />}
       </div>
     </ErrorBoundary>
   );

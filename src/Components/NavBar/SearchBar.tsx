@@ -1,39 +1,30 @@
-import { useContext, useState } from "react";
+import { useState } from "react";
 import SearchAt from "./SearchAt";
 import "../style/SearchBar.css";
-import SearchProps, { SearchAtType } from "../../SearchTypes";
-import { useAppDispatch } from "../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { pageSlice } from "../../store/reducers/PageSlice";
+import { searchSlice } from "../../store/reducers/SearchSlice";
 
-const SearchBar: React.FC<{
-  isActive: boolean;
-  setSearchData: React.Dispatch<React.SetStateAction<SearchProps>>;
-  searchAt: SearchAtType;
-}> = ({ isActive, setSearchData, searchAt }) => {
+const SearchBar: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
 
+  const { page } = useAppSelector((state) => state.pageReducer);
   const { setPage } = pageSlice.actions;
   const dispatch = useAppDispatch();
+  const { setSearchParams } = searchSlice.actions;
 
   function handleClick() {
-    setSearchData((prev) => {
-      return { ...prev, query: inputValue };
-    });
+    dispatch(setSearchParams({ query: inputValue }));
     setInputValue("");
     dispatch(setPage("Search"));
   }
 
-  function setSearchAt(searchAt: SearchAtType) {
-    setSearchData((prev) => {
-      return { ...prev, searchAt };
-    });
-  }
   return (
     <div className="d-flex align-items-center">
-      <span className={`me-2  ${isActive ? "" : "text-secondary"}`}>
+      <span className={`me-2  ${page === "Search" ? "" : "text-secondary"}`}>
         Search at
       </span>
-      <SearchAt setSearchAt={setSearchAt} searchAt={searchAt} />
+      <SearchAt />
       <input
         type={"text"}
         className="ms-2 search-input"

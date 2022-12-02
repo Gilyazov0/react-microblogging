@@ -1,6 +1,7 @@
-import SearchProps from "../../SearchTypes";
+import { useAppSelector } from "../../hooks/redux";
+const Search: React.FC = () => {
+  const { query, searchAt } = useAppSelector((state) => state.searchSlice);
 
-const Search: React.FC<SearchProps> = ({ query, searchAt }) => {
   console.log(query, searchAt);
   return <>Search</>;
 };

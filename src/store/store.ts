@@ -2,8 +2,14 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import pageReducer from "./reducers/PageSlice";
 import viewReducer from "./reducers/ViewSlice";
 import userReducer from "./reducers/UserSlice";
+import searchSlice from "./reducers/SearchSlice";
 
-const rootReducer = combineReducers({ pageReducer, viewReducer, userReducer });
+const rootReducer = combineReducers({
+  pageReducer,
+  viewReducer,
+  userReducer,
+  searchSlice,
+});
 
 export const setupStore = () => {
   return configureStore({ reducer: rootReducer });

@@ -1,10 +1,13 @@
 import Dropdown from "react-bootstrap/Dropdown";
-import { SearchAtType } from "../../SearchTypes";
 import "../style/SearchAt.css";
-const SearchAt: React.FC<{
-  setSearchAt: Function;
-  searchAt: SearchAtType;
-}> = ({ setSearchAt, searchAt }) => {
+import { useAppSelector, useAppDispatch } from "../../hooks/redux";
+import { searchSlice } from "../../store/reducers/SearchSlice";
+
+const SearchAt: React.FC = () => {
+  const { searchAt } = useAppSelector((state) => state.searchSlice);
+  const dispatch = useAppDispatch();
+  const { setSearchParams } = searchSlice.actions;
+
   return (
     <Dropdown>
       <Dropdown.Toggle
@@ -18,7 +21,11 @@ const SearchAt: React.FC<{
       <Dropdown.Menu>
         <Dropdown.Item
           onClick={() =>
-            setSearchAt(searchAt === "tweets" ? "users" : "tweets")
+            dispatch(
+              setSearchParams({
+                searchAt: searchAt === "tweets" ? "users" : "tweets",
+              })
+            )
           }
         >
           {searchAt === "tweets" ? "users" : "tweets"}
