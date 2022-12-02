@@ -1,19 +1,18 @@
-import { useContext } from "react";
 import "../style/NavBar.css";
 import Link from "./Link";
-import { UserContext } from "../App";
 import ProfileImage from "../ProfileImage";
 import ViewSelector from "./ViewSelector";
 import SearchBar from "./SearchBar";
 import Pages from "../../Types/Pages";
 import SearchProps, { SearchAtType } from "../../SearchTypes";
+import { useAppSelector } from "../../hooks/redux";
 
 const NavBar: React.FC<{
   page: Pages;
   setSearchData: React.Dispatch<React.SetStateAction<SearchProps>>;
   searchAt: SearchAtType;
 }> = ({ page, setSearchData, searchAt }) => {
-  const user = useContext(UserContext);
+  const { user } = useAppSelector((state) => state.userReducer);
   const userName = user
     ? user.displayName
       ? user.displayName

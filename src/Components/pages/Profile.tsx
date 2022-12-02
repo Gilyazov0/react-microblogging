@@ -1,13 +1,13 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { Button } from "react-bootstrap";
 import userDB from "../../lib/usersDB";
-import { UserContext } from "../App";
 import UserData from "../../Types/userData";
 import ProfileImage from "../ProfileImage";
 import "../style/Profile.css";
+import { useAppSelector } from "../../hooks/redux";
 
 const Profile: React.FC<{ setUser: Function }> = ({ setUser }) => {
-  const user = useContext(UserContext) as UserData;
+  const user = useAppSelector((state) => state.userReducer.user as UserData);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);

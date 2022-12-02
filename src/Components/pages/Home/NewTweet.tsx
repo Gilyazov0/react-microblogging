@@ -1,15 +1,15 @@
-import { useCallback, useContext, useState } from "react";
+import { useCallback, useState } from "react";
 import { Button, Alert } from "react-bootstrap";
 import TextBox from "./TextBox";
 import "../../style/NewTweet.css";
 import tweetsDB from "../../../lib/tweetsDB";
-import { UserContext } from "../../App";
+import { useAppSelector } from "../../../hooks/redux";
 
 const NewTweet: React.FC<{ setServerError: Function }> = ({
   setServerError,
 }) => {
   const [tweetLength, setTweetLength] = useState(0);
-  const user = useContext(UserContext);
+  const { user } = useAppSelector((state) => state.userReducer);
 
   const handleClick = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {

@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext, createContext } from "react";
+import { useState, useEffect, createContext } from "react";
 import "../../style/Home.css";
 import NewTweet from "./NewTweet";
 import { TweetProps } from "../../../Types/TweetProps";
@@ -6,7 +6,6 @@ import { Alert } from "react-bootstrap";
 import TweetList from "./TweetsList";
 import tweetsDB from "../../../lib/tweetsDB";
 import userDB from "../../../lib/usersDB";
-import { UserContext } from "../../App";
 import { useAppSelector } from "../../../hooks/redux";
 
 export const TweetsContext = createContext<TweetProps[]>([]);
@@ -18,8 +17,7 @@ export default function Home() {
   const [lastTweetDate, setLastTweetDate] = useState<number>(Date.now());
 
   const { view } = useAppSelector((state) => state.viewReducer);
-  const user = useContext(UserContext);
-
+  const { user } = useAppSelector((state) => state.userReducer);
   const addTweet = async (tweet: TweetProps) => {
     await userDB.addUserDataToTweet(tweet);
     setTweets((prev) => {

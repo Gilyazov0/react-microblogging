@@ -1,7 +1,5 @@
 import moment from "moment";
-import { useContext } from "react";
 import { TweetProps } from "../../../Types/TweetProps";
-import { UserContext } from "../../App";
 import ProfileImage from "../../ProfileImage";
 import "../../style/Tweet.css";
 import tweetsDB from "../../../lib/tweetsDB";
@@ -17,7 +15,7 @@ const Tweet: React.FC<TweetProps> = ({
   like,
 }) => {
   const { view } = useAppSelector((state) => state.viewReducer);
-  const user = useContext(UserContext);
+  const { user } = useAppSelector((state) => state.userReducer);
   return (
     <div
       className={`tweet ${view === "all tweets" ? "all-tweets" : "my-tweets"}`}
