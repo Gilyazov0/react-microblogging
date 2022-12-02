@@ -9,6 +9,7 @@ import userDB from "../../../lib/usersDB";
 import { useAppSelector } from "../../../hooks/redux";
 
 export const TweetsContext = createContext<TweetProps[]>([]);
+
 export default function Home() {
   const [serverError, setServerError] = useState<string>("");
   const [hasMore, setHasMore] = useState(true);

@@ -64,7 +64,7 @@ const App: React.FC = () => {
         {page === "Home" && <Home />}
         {page === "SignUp" && <SignUp />}
         {page === "SignIn" && <SignIn />}
-        {page === "Profile" && <Profile setUser={setUser} />}
+        {page === "Profile" && <Profile />}
         {page === "Search" && <Search {...searchData} />}
       </div>
     </ErrorBoundary>

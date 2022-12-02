@@ -4,14 +4,18 @@ import userDB from "../../lib/usersDB";
 import UserData from "../../Types/userData";
 import ProfileImage from "../ProfileImage";
 import "../style/Profile.css";
-import { useAppSelector } from "../../hooks/redux";
+import { useAppSelector, useAppDispatch } from "../../hooks/redux";
+import { userSlice } from "../../store/reducers/UserSlice";
 
-const Profile: React.FC<{ setUser: Function }> = ({ setUser }) => {
+const Profile: React.FC = () => {
   const user = useAppSelector((state) => state.userReducer.user as UserData);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const imgRef = useRef<HTMLInputElement>(null);
+
+  const setUser = userSlice.actions.setUser;
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     nameRef.current!.value = user.displayName;
@@ -23,7 +27,7 @@ const Profile: React.FC<{ setUser: Function }> = ({ setUser }) => {
       displayName: nameRef.current?.value,
     });
     const newUserData = await userDB.getUserData(user.uid);
-    setUser(newUserData);
+    dispatch(setUser(newUserData));
   }
 
   async function handleUploadPicClick() {
