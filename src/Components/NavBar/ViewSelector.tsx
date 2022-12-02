@@ -1,18 +1,20 @@
-import { useContext } from "react";
 import Dropdown from "react-bootstrap/Dropdown";
-import { ViewTypeContext } from "../App";
 import "../style/ViewType.css";
 import ViewType from "../../Types/ViewType";
-const ViewSelector: React.FC<{ setViewType: Function }> = ({ setViewType }) => {
-  const viewType = useContext(ViewTypeContext);
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import { viewSlice } from "../../store/reducers/ViewSlice";
+const ViewSelector: React.FC = () => {
+  const dispatch = useAppDispatch();
+  const { setView } = viewSlice.actions;
+  const { view } = useAppSelector((state) => state.viewReducer);
 
   const views: ViewType[] = ["all tweets", "liked", "my tweets"];
   // eslint-disable-next-line array-callback-return
-  const dropdowns = views.map((view) => {
-    if (view !== viewType)
+  const dropdowns = views.map((v) => {
+    if (v !== view)
       return (
-        <Dropdown.Item onClick={() => setViewType(view)} key={view}>
-          {view}
+        <Dropdown.Item onClick={() => dispatch(setView(v))} key={v}>
+          {v}
         </Dropdown.Item>
       );
   });
@@ -21,11 +23,11 @@ const ViewSelector: React.FC<{ setViewType: Function }> = ({ setViewType }) => {
     <Dropdown>
       <Dropdown.Toggle
         variant={"secondary"}
-        className={viewType === "all tweets" ? "all-tweets" : "my-tweets"}
+        className={view === "all tweets" ? "all-tweets" : "my-tweets"}
         id="dropdown-basic"
         style={{ width: "7rem" }}
       >
-        {viewType}
+        {view}
       </Dropdown.Toggle>
       <Dropdown.Menu>{dropdowns}</Dropdown.Menu>
     </Dropdown>

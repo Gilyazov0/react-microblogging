@@ -7,14 +7,12 @@ import ViewSelector from "./ViewSelector";
 import SearchBar from "./SearchBar";
 import Pages from "../../Types/Pages";
 import SearchProps, { SearchAtType } from "../../SearchTypes";
-import ViewType from "../../Types/ViewType";
 
 const NavBar: React.FC<{
   page: Pages;
-  setViewType: React.Dispatch<React.SetStateAction<ViewType>>;
   setSearchData: React.Dispatch<React.SetStateAction<SearchProps>>;
   searchAt: SearchAtType;
-}> = ({ page, setViewType, setSearchData, searchAt }) => {
+}> = ({ page, setSearchData, searchAt }) => {
   const user = useContext(UserContext);
   const userName = user
     ? user.displayName
@@ -25,7 +23,7 @@ const NavBar: React.FC<{
   return (
     <div className="nav-bar">
       <Link isActive={page === "Home"} text={"Home"} pageName={"Home"} />
-      <ViewSelector setViewType={setViewType} />
+      <ViewSelector />
       <div className="flex-grow-1"></div>
       <div>
         <SearchBar

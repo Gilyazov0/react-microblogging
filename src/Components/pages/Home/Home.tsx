@@ -6,7 +6,8 @@ import { Alert } from "react-bootstrap";
 import TweetList from "./TweetsList";
 import tweetsDB from "../../../lib/tweetsDB";
 import userDB from "../../../lib/usersDB";
-import { UserContext, ViewTypeContext } from "../../App";
+import { UserContext } from "../../App";
+import { useAppSelector } from "../../../hooks/redux";
 
 export const TweetsContext = createContext<TweetProps[]>([]);
 export default function Home() {
@@ -16,7 +17,7 @@ export default function Home() {
   const [updating, setUpdating] = useState<boolean>(false);
   const [lastTweetDate, setLastTweetDate] = useState<number>(Date.now());
 
-  const viewType = useContext(ViewTypeContext);
+  const { view } = useAppSelector((state) => state.viewReducer);
   const user = useContext(UserContext);
 
   const addTweet = async (tweet: TweetProps) => {
@@ -33,11 +34,7 @@ export default function Home() {
     if (updating || !user) return;
 
     setUpdating(true);
-    const newTweets = await tweetsDB.getTweets(
-      lastTweetDate,
-      user?.uid,
-      viewType
-    );
+    const newTweets = await tweetsDB.getTweets(lastTweetDate, user?.uid, view);
 
     if (newTweets.length === 0) {
       setHasMore(false);
@@ -61,7 +58,7 @@ export default function Home() {
       setLastTweetDate(Date.now());
       setHasMore(true);
     },
-    [viewType, user]
+    [view, user]
   );
 
   useEffect(() => {

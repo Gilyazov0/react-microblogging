@@ -1,11 +1,12 @@
 import moment from "moment";
 import { useContext } from "react";
 import { TweetProps } from "../../../Types/TweetProps";
-import { ViewTypeContext, UserContext } from "../../App";
+import { UserContext } from "../../App";
 import ProfileImage from "../../ProfileImage";
 import "../../style/Tweet.css";
 import tweetsDB from "../../../lib/tweetsDB";
 import Link from "../../NavBar/Link";
+import { useAppSelector } from "../../../hooks/redux";
 
 const Tweet: React.FC<TweetProps> = ({
   content,
@@ -15,13 +16,11 @@ const Tweet: React.FC<TweetProps> = ({
   tweetId,
   like,
 }) => {
-  const viewType = useContext(ViewTypeContext);
+  const { view } = useAppSelector((state) => state.viewReducer);
   const user = useContext(UserContext);
   return (
     <div
-      className={`tweet ${
-        viewType === "all tweets" ? "all-tweets" : "my-tweets"
-      }`}
+      className={`tweet ${view === "all tweets" ? "all-tweets" : "my-tweets"}`}
     >
       <div className="d-flex">
         <div className="profile-img-container">
