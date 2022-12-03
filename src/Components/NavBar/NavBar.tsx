@@ -6,8 +6,8 @@ import SearchBar from "./SearchBar";
 import { useAppSelector } from "../../hooks/redux";
 
 const NavBar: React.FC = () => {
-  const { user } = useAppSelector((state) => state.userReducer);
-  const { page } = useAppSelector((state) => state.pageReducer);
+  const { user } = useAppSelector((state) => state.user);
+  const { page } = useAppSelector((state) => state.page);
   const userName = user
     ? user.displayName
       ? user.displayName

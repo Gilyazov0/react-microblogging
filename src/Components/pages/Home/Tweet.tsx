@@ -14,8 +14,8 @@ const Tweet: React.FC<TweetProps> = ({
   tweetId,
   like,
 }) => {
-  const { view } = useAppSelector((state) => state.viewReducer);
-  const { user } = useAppSelector((state) => state.userReducer);
+  const { view } = useAppSelector((state) => state.view);
+  const { user } = useAppSelector((state) => state.user);
   return (
     <div
       className={`tweet ${view === "all tweets" ? "all-tweets" : "my-tweets"}`}

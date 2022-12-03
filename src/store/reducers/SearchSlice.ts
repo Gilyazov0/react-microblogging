@@ -4,7 +4,7 @@ interface SearchState {
   searchAt?: "tweets" | "users";
   query?: string;
 }
-const initialState = {
+const initialState: SearchState = {
   searchAt: "tweets",
   query: "",
 };

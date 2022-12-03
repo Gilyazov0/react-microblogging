@@ -17,8 +17,8 @@ export default function Home() {
   const [updating, setUpdating] = useState<boolean>(false);
   const [lastTweetDate, setLastTweetDate] = useState<number>(Date.now());
 
-  const { view } = useAppSelector((state) => state.viewReducer);
-  const { user } = useAppSelector((state) => state.userReducer);
+  const { view } = useAppSelector((state) => state.view);
+  const { user } = useAppSelector((state) => state.user);
   const addTweet = async (tweet: TweetProps) => {
     await userDB.addUserDataToTweet(tweet);
     setTweets((prev) => {

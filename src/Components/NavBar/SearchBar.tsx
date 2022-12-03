@@ -8,7 +8,7 @@ import { searchSlice } from "../../store/reducers/SearchSlice";
 const SearchBar: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
 
-  const { page } = useAppSelector((state) => state.pageReducer);
+  const { page } = useAppSelector((state) => state.page);
   const { setPage } = pageSlice.actions;
   const dispatch = useAppDispatch();
   const { setSearchParams } = searchSlice.actions;

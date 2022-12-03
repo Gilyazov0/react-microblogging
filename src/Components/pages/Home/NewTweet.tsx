@@ -9,7 +9,7 @@ const NewTweet: React.FC<{ setServerError: Function }> = ({
   setServerError,
 }) => {
   const [tweetLength, setTweetLength] = useState(0);
-  const { user } = useAppSelector((state) => state.userReducer);
+  const { user } = useAppSelector((state) => state.user);
 
   const handleClick = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {

@@ -1,6 +1,7 @@
 {
   "extends": "react-app",
    "settings": {
+    "eslint.lintTask.enable": true,
         "import/parsers": {
             "@typescript-eslint/parser": [".ts", ".tsx"]
         },

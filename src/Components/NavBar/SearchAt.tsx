@@ -4,7 +4,7 @@ import { useAppSelector, useAppDispatch } from "../../hooks/redux";
 import { searchSlice } from "../../store/reducers/SearchSlice";
 
 const SearchAt: React.FC = () => {
-  const { searchAt } = useAppSelector((state) => state.searchSlice);
+  const { searchAt } = useAppSelector((state) => state.search);
   const dispatch = useAppDispatch();
   const { setSearchParams } = searchSlice.actions;
 

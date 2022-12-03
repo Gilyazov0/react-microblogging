@@ -6,7 +6,7 @@ import { viewSlice } from "../../store/reducers/ViewSlice";
 const ViewSelector: React.FC = () => {
   const dispatch = useAppDispatch();
   const { setView } = viewSlice.actions;
-  const { view } = useAppSelector((state) => state.viewReducer);
+  const { view } = useAppSelector((state) => state.view);
 
   const views: ViewType[] = ["all tweets", "liked", "my tweets"];
   // eslint-disable-next-line array-callback-return

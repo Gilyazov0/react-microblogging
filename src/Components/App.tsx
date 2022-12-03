@@ -1,6 +1,6 @@
 import Home from "./pages/Home/Home";
 import NavBar from "./NavBar/NavBar";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import "./style/App.css";
 import ErrorBoundary from "./ErrorBoundary";
 import auth from "../lib/auth";
@@ -16,10 +16,10 @@ import UserData from "../Types/userData";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { page } = useAppSelector((state) => state.pageReducer);
+  const { page } = useAppSelector((state) => state.page);
   const { setPage } = pageSlice.actions;
   const { setView } = viewSlice.actions;
-  const { user } = useAppSelector((state) => state.userReducer);
+  const { user } = useAppSelector((state) => state.user);
   const { setUser } = userSlice.actions;
 
   useEffect(() => {

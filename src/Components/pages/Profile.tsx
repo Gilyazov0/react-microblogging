@@ -8,7 +8,7 @@ import { useAppSelector, useAppDispatch } from "../../hooks/redux";
 import { userSlice } from "../../store/reducers/UserSlice";
 
 const Profile: React.FC = () => {
-  const user = useAppSelector((state) => state.userReducer.user as UserData);
+  const user = useAppSelector((state) => state.user.user as UserData);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
