@@ -3,7 +3,6 @@ import { TweetProps } from "../../Types/TweetProps";
 import tweetsDB from "../../lib/tweetsDB";
 import ViewType from "../../Types/ViewType";
 import userDB from "../../lib/usersDB";
-import { useAppSelector } from "../../hooks/redux";
 import { RootState } from "../store";
 
 interface TweetState {
@@ -22,18 +21,18 @@ const initialState: TweetState = {
 
 export const getTweets = createAsyncThunk(
   "tweet/get",
-  async (
-    params: { date: number; uid: string | undefined; view: ViewType },
-    thunkAPI
-  ) => {
-    const { date, uid, view } = { ...params };
+  async function a(_, { getState }): Promise<TweetProps[]> {
+    const state = getState() as RootState;
+    const date = state.tweet.lastTweetDate;
+    const uid = state.user.user?.uid;
+    const view = state.view.view;
 
     const newTweets = await tweetsDB.getTweets(date, uid, view);
     for (const tweet of newTweets) {
       await userDB.addUserDataToTweet(tweet);
     }
 
-    return newTweets;
+    return newTweets as TweetProps[];
   }
 );
 

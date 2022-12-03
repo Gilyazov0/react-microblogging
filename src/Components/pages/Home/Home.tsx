@@ -15,14 +15,13 @@ export default function Home() {
   const { view } = useAppSelector((state) => state.view);
   const { user } = useAppSelector((state) => state.user);
 
-  const { lastTweetDate, isLoading } = useAppSelector((state) => state.tweet);
+  const { isLoading } = useAppSelector((state) => state.tweet);
   const { setHasMore, addTweet } = tweetSlice.actions;
   const dispatch = useAppDispatch();
 
   useEffect(
     function reset() {
-      if (!isLoading)
-        dispatch(getTweets({ date: lastTweetDate, view, uid: user?.uid }));
+      if (!isLoading) dispatch(getTweets());
       dispatch(setHasMore(true));
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

@@ -8,9 +8,7 @@ import { getTweets } from "../../../store/reducers/TweetSlice";
 const TweetList: React.FC = () => {
   const { tweets } = useAppSelector((state) => state.tweet);
 
-  const { view } = useAppSelector((state) => state.view);
-  const { user } = useAppSelector((state) => state.user);
-  const { lastTweetDate, hasMore } = useAppSelector((state) => state.tweet);
+  const { hasMore } = useAppSelector((state) => state.tweet);
   const dispatch = useAppDispatch();
 
   const tweetComponents = tweets.map((tweet: TweetProps, index) => {
@@ -18,7 +16,7 @@ const TweetList: React.FC = () => {
   });
 
   function next() {
-    dispatch(getTweets({ date: lastTweetDate, view, uid: user?.uid }));
+    dispatch(getTweets());
   }
 
   return (
