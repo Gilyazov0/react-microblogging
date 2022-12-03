@@ -13,6 +13,7 @@ import {
 import Firebase from "./Firebase";
 import { TweetProps } from "../Types/TweetProps";
 import ViewType from "../Types/ViewType";
+import userDB from "./usersDB";
 
 class TweetsDB extends Firebase {
   private db: Firestore;
@@ -56,9 +57,11 @@ class TweetsDB extends Firebase {
     );
     const unsubscribe = onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach(
-        (change) => {
+        async (change) => {
           if (change.type === "added") {
-            callback(change.doc.data());
+            const tweet = change.doc.data() as TweetProps;
+            await userDB.addUserDataToTweet(tweet);
+            callback(tweet);
           }
         },
         (error: unknown) => {

@@ -16,6 +16,7 @@ const Tweet: React.FC<TweetProps> = ({
 }) => {
   const { view } = useAppSelector((state) => state.view);
   const { user } = useAppSelector((state) => state.user);
+  console.log("rendering");
   return (
     <div
       className={`tweet ${view === "all tweets" ? "all-tweets" : "my-tweets"}`}

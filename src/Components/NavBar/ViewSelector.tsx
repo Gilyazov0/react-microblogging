@@ -3,17 +3,26 @@ import "../style/ViewType.css";
 import ViewType from "../../Types/ViewType";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { viewSlice } from "../../store/reducers/ViewSlice";
+import { tweetSlice } from "../../store/reducers/TweetSlice";
 const ViewSelector: React.FC = () => {
   const dispatch = useAppDispatch();
   const { setView } = viewSlice.actions;
   const { view } = useAppSelector((state) => state.view);
+  const { resetTweets } = tweetSlice.actions;
 
   const views: ViewType[] = ["all tweets", "liked", "my tweets"];
+
   // eslint-disable-next-line array-callback-return
   const dropdowns = views.map((v) => {
     if (v !== view)
       return (
-        <Dropdown.Item onClick={() => dispatch(setView(v))} key={v}>
+        <Dropdown.Item
+          onClick={() => {
+            dispatch(setView(v));
+            dispatch(resetTweets());
+          }}
+          key={v}
+        >
           {v}
         </Dropdown.Item>
       );

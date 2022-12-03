@@ -1,22 +1,24 @@
-import { useContext } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TweetProps } from "../../../Types/TweetProps";
-import { TweetsContext } from "./Home";
 import Loading from "./Loading";
 import Tweet from "./Tweet";
+import { useAppSelector, useAppDispatch } from "../../../hooks/redux";
+import { getTweets } from "../../../store/reducers/TweetSlice";
 
-const TweetList: React.FC<{ getTweets: Function; hasMore: boolean }> = ({
-  getTweets,
-  hasMore,
-}) => {
-  const tweets = useContext(TweetsContext);
+const TweetList: React.FC = () => {
+  const { tweets } = useAppSelector((state) => state.tweet);
+
+  const { view } = useAppSelector((state) => state.view);
+  const { user } = useAppSelector((state) => state.user);
+  const { lastTweetDate, hasMore } = useAppSelector((state) => state.tweet);
+  const dispatch = useAppDispatch();
 
   const tweetComponents = tweets.map((tweet: TweetProps, index) => {
     return <Tweet {...tweet} key={tweet.tweetId} />;
   });
 
   function next() {
-    getTweets();
+    dispatch(getTweets({ date: lastTweetDate, view, uid: user?.uid }));
   }
 
   return (
