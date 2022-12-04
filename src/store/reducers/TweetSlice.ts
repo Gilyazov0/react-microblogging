@@ -22,8 +22,11 @@ export const getTweets = createAsyncThunk(
   "tweet/get",
   async function a(_, { getState }): Promise<TweetProps[]> {
     const state = getState() as RootState;
-    const date = state.tweet.lastTweetDate;
+
     const uid = state.user.user?.uid;
+    if (!uid) return [];
+
+    const date = state.tweet.lastTweetDate;
     const view = state.view.view;
 
     const newTweets = await tweetsDB.getTweets(date, uid, view);
