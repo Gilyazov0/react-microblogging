@@ -26,7 +26,7 @@ const Tweet: React.FC<TweetProps> = ({
           <ProfileImage pictureUrl={picture} />
         </div>
 
-        <Link isActive={false} pageName={"Profile"} text={userName!} />
+        <Link pageName={"Profile"} text={userName!} />
         <div className="flex-grow-1"></div>
         <div className="text-secondary">
           {moment(date).format("MMM Mo HH:mm A")}

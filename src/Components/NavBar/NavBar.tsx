@@ -7,7 +7,6 @@ import { useAppSelector } from "../../hooks/redux";
 
 const NavBar: React.FC = () => {
   const { user } = useAppSelector((state) => state.user);
-  const { page } = useAppSelector((state) => state.page);
   const userName = user
     ? user.displayName
       ? user.displayName
@@ -16,7 +15,7 @@ const NavBar: React.FC = () => {
 
   return (
     <div className="nav-bar">
-      <Link isActive={page === "Home"} text={"Home"} pageName={"Home"} />
+      <Link text={"Home"} pageName={"Home"} />
       <ViewSelector />
       <div className="flex-grow-1"></div>
       <div>
@@ -25,28 +24,15 @@ const NavBar: React.FC = () => {
       <div className="flex-grow-1"></div>
       {!user && (
         <>
-          <Link
-            isActive={page === "SignUp"}
-            text={"Sign up"}
-            pageName={"SignUp"}
-          />
-          <Link
-            isActive={page === "SignIn"}
-            text={"Sign in"}
-            pageName={"SignIn"}
-          />
+          <Link text={"Sign up"} pageName={"SignUp"} />
+          <Link text={"Sign in"} pageName={"SignIn"} />
         </>
       )}
       {user && (
         <>
           <ProfileImage pictureUrl={user.picture} />
-          <Link
-            isActive={page === "Profile"}
-            text={userName}
-            pageName={"Profile"}
-          />
-
-          <Link isActive={false} text={"Sign out"} pageName={"SignOut"} />
+          <Link text={userName} pageName={"Profile"} />
+          <Link text={"Sign out"} pageName={"SignOut"} />
         </>
       )}
     </div>
