@@ -12,7 +12,7 @@ const TweetList: React.FC = () => {
   const dispatch = useAppDispatch();
 
   const tweetComponents = tweets.map((tweet: TweetProps) => {
-    return <Tweet {...tweet} key={tweet.tweetId} />;
+    return <Tweet {...tweet} key={tweet.id} />;
   });
 
   function next() {

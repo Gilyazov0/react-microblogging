@@ -19,24 +19,22 @@ class Auth extends Firebase {
     this.auth = getAuth(this.app);
   }
 
-  public async createUser(
-    email: string,
-    password: string,
-    displayName: string
-  ) {
+  public async createUser(email: string, password: string) {
     try {
       const userCredentials = await createUserWithEmailAndPassword(
         this.auth,
         email,
         password
       );
-      userDB.writeUserData(userCredentials.user.uid, { email, displayName });
+      const uid = userCredentials.user.uid;
+      await userDB.createUserIfNotExist(uid, {
+        email,
+        uid,
+      });
     } catch (error) {
       this.logError(error);
       throw Error("Something went wrong. Check... everything");
     }
-
-    await this.setUserData({ displayName });
   }
 
   public async setUserData(data: object) {
@@ -69,7 +67,15 @@ class Auth extends Firebase {
     onAuthStateChanged(this.auth, async (user) => {
       if (!user?.uid) cb(null);
       else {
-        const data = (await userDB.getUserData(user.uid)) as UserData;
+        let data: UserData = {
+          email: user.email!,
+          displayName: user.displayName!,
+          uid: user.uid,
+        };
+        const dbData = (await userDB.getUserData(user.uid)) as UserData;
+
+        if (dbData) data = { ...data, ...dbData };
+
         data["uid"] = user.uid;
         cb(data);
       }
@@ -82,7 +88,7 @@ class Auth extends Firebase {
       const userCredentials = await signInWithPopup(this.auth, provider);
       let { uid, email, displayName } = userCredentials.user;
       displayName = displayName ? displayName : email;
-      userDB.createUserIfNotExist(uid, { email, displayName });
+      await userDB.createUserIfNotExist(uid, { email, displayName, uid: uid });
     } catch (error) {
       this.logError(error);
     }

@@ -1,5 +1,5 @@
 import { FirebaseApp, initializeApp } from "firebase/app";
-import { doc, Firestore, getDoc, setDoc } from "firebase/firestore";
+import { collection, doc, Firestore, getDoc, setDoc } from "firebase/firestore";
 import FIREBASE_CONFIG from "./config_firebase";
 
 abstract class Firebase {
@@ -25,6 +25,16 @@ abstract class Firebase {
     const ref = doc(db, collection, document);
     try {
       await setDoc(ref, data, { merge: true });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  protected async writeDataWithId(db: Firestore, col: string, data: object) {
+    const newDocRef = doc(collection(db, col));
+    const newData = { ...data, id: newDocRef.id };
+    try {
+      await setDoc(newDocRef, newData, { merge: true });
     } catch (error) {
       console.log(error);
     }

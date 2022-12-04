@@ -11,7 +11,7 @@ const Tweet: React.FC<TweetProps> = ({
   userName,
   picture,
   date,
-  tweetId,
+  id,
   like,
 }) => {
   const { view } = useAppSelector((state) => state.view);
@@ -40,7 +40,7 @@ const Tweet: React.FC<TweetProps> = ({
         className={`like-img ${like ? "like" : ""}`}
         onClick={(e) => {
           e.currentTarget.classList.toggle("like");
-          tweetsDB.toggleLike(tweetId!, user!.uid);
+          tweetsDB.toggleLike(id!, user!.uid);
         }}
       />
     </div>
