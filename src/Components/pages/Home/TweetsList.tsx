@@ -11,7 +11,7 @@ const TweetList: React.FC = () => {
   const { hasMore } = useAppSelector((state) => state.tweet);
   const dispatch = useAppDispatch();
 
-  const tweetComponents = tweets.map((tweet: TweetProps, index) => {
+  const tweetComponents = tweets.map((tweet: TweetProps) => {
     return <Tweet {...tweet} key={tweet.tweetId} />;
   });
 
