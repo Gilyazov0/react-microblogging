@@ -34,7 +34,7 @@ const ProfileAvatar: React.FC<ProfileAvatarProps> = ({ user, isOwner }) => {
     <>
       <span className="mt-2">Avatar</span>
       <div className="d-flex align-items-center">
-        <div className="imgContainer">
+        <div className="imgContainer me-3">
           <ProfileImage pictureUrl={user.picture} />
         </div>
         {isOwner && (
