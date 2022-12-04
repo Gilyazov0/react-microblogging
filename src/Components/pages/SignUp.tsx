@@ -13,12 +13,11 @@ const SignUp: React.FC = () => {
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const elements = e.currentTarget.elements;
-    const [name, email, password] = [...elements] as HTMLInputElement[];
+    const [email, password] = [...elements] as HTMLInputElement[];
     try {
-      if (name.value.length < 5) throw "Name length should be bigger than 4";
       if (password.value.length < 5)
         throw "Password length should be bigger than 7";
-      await auth.createUser(email.value, password.value, name.value);
+      await auth.createUser(email.value, password.value);
       dispatch(setPage("Home"));
     } catch (error) {
       const alert = refAlert.current;
@@ -32,8 +31,6 @@ const SignUp: React.FC = () => {
     <div className="profile">
       <div className="title">Sign in</div>
       <form className="d-flex flex-column" onSubmit={handleSubmit}>
-        <label htmlFor="name">User name</label>
-        <input type={"text"} name="name" />
         <label htmlFor="email" className="mt-2">
           Email
         </label>

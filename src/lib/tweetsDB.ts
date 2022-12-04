@@ -4,7 +4,6 @@ import {
   Firestore,
   getDocs,
   onSnapshot,
-  doc,
   query,
   where,
   orderBy,
@@ -27,9 +26,7 @@ class TweetsDB extends Firebase {
   }
 
   public async postTweet(tweet: TweetProps) {
-    const newDocRef = doc(collection(this.db, this.collection));
-    const data = { ...tweet, tweetId: newDocRef.id };
-    await this.writeData(this.db, this.collection, newDocRef.id, data);
+    await this.writeDataWithId(this.db, this.collection, tweet);
   }
 
   public async toggleLike(tweetId: string, uid: string) {
