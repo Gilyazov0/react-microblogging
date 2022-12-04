@@ -25,7 +25,8 @@ const ProfileName: React.FC<ProfileNameProps> = ({ user, isOwner }) => {
   }
 
   useEffect(() => {
-    nameRef.current!.value = user.displayName;
+    nameRef.current!.value = user.displayName ? user.displayName : user.email;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -38,13 +39,15 @@ const ProfileName: React.FC<ProfileNameProps> = ({ user, isOwner }) => {
           ref={nameRef}
           disabled={!isOwner}
         />
-        <Button
-          variant="primary"
-          className="align-self-center"
-          onClick={handleChangeNameClick}
-        >
-          Change
-        </Button>
+        {isOwner && (
+          <Button
+            variant="primary"
+            className="align-self-center"
+            onClick={handleChangeNameClick}
+          >
+            Change
+          </Button>
+        )}
       </div>
     </>
   );

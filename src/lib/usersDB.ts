@@ -22,6 +22,7 @@ class UsersDB extends Firebase {
 
   public async getUserData(uid: string) {
     const data = await this.getData(this.db, this.collection, uid);
+    console.log(data);
     if (data) return data as UserData;
     return null;
   }
@@ -29,11 +30,12 @@ class UsersDB extends Firebase {
   public async addProfileImg(uid: string, file: File) {
     const userData = await this.getUserData(uid);
     if (!userData) return;
-
-    //for code reviewer: is it a bad practice to skip await?
-    if (userData.picture) storage.delFile(userData.picture);
+    debugger;
+    if (userData.picture) await storage.delFile(userData.picture);
     const fileName = await storage.storeFile(file);
-    this.writeUserData(uid, { picture: fileName });
+    const data = { picture: fileName };
+    await this.writeUserData(uid, data);
+    return data;
   }
 
   public async getProfilePicUrl(fileName: string) {

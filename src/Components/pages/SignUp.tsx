@@ -15,7 +15,7 @@ const SignUp: React.FC = () => {
     const elements = e.currentTarget.elements;
     const [email, password] = [...elements] as HTMLInputElement[];
     try {
-      if (password.value.length < 5)
+      if (password.value.length < 7)
         throw "Password length should be bigger than 7";
       await auth.createUser(email.value, password.value);
       dispatch(setPage("Home"));

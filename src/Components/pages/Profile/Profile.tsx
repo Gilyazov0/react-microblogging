@@ -14,20 +14,12 @@ const Profile: React.FC = () => {
 
   const [profileUser, setProfileUser] = useState<UserData | null>(null);
 
-  const emailRef = useRef<HTMLInputElement>(null);
-
   useEffect(() => {
     (async (uid: string) => {
       const user = await userDB.getUserData(uid);
       setProfileUser(user);
     })(profileUid);
   }, [profileUid]);
-
-  useEffect(() => {
-    if (!profileUser) return;
-
-    emailRef.current!.value = profileUser.email;
-  }, [profileUser]);
 
   const isOwner = profileUid === user.uid;
 
@@ -40,25 +32,11 @@ const Profile: React.FC = () => {
       )}
       {profileUser && (
         <>
-          <ProfileAvatar isOwner={isOwner} user={profileUser} />
+          <ProfileAvatar
+            isOwner={isOwner}
+            user={isOwner ? user : profileUser}
+          />
           <ProfileName isOwner={isOwner} user={profileUser} />
-
-          <span className="mt-2">Email</span>
-          <div className="d-flex align-items-center">
-            <input
-              type={"email"}
-              className="flex-grow-1"
-              ref={emailRef}
-              disabled
-            />
-            <Button
-              variant="primary"
-              className="align-self-center ms-2"
-              disabled
-            >
-              Change
-            </Button>
-          </div>
         </>
       )}
     </div>
