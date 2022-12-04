@@ -6,7 +6,7 @@ import ErrorBoundary from "./ErrorBoundary";
 import auth from "../lib/auth";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
-import Profile from "./pages/Profile";
+import Profile from "./pages/Profile/Profile";
 import Search from "./pages/Search";
 import { useAppSelector, useAppDispatch } from "../hooks/redux";
 import { pageSlice } from "../store/reducers/PageSlice";

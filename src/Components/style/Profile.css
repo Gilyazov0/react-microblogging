@@ -2,3 +2,7 @@
   height: 62px;
   width: 62px;
 }
+
+.profile {
+  display: flex;
+}
