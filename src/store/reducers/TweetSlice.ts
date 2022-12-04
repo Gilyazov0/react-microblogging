@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TweetProps } from "../../Types/TweetProps";
 import tweetsDB from "../../lib/tweetsDB";
-import ViewType from "../../Types/ViewType";
 import userDB from "../../lib/usersDB";
 import { RootState } from "../store";
 

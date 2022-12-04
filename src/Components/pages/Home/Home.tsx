@@ -1,8 +1,7 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import "../../style/Home.css";
 import NewTweet from "./NewTweet";
 import { TweetProps } from "../../../Types/TweetProps";
-import { Alert } from "react-bootstrap";
 import TweetList from "./TweetsList";
 import tweetsDB from "../../../lib/tweetsDB";
 import { useAppSelector, useAppDispatch } from "../../../hooks/redux";
@@ -10,8 +9,6 @@ import { getTweets } from "../../../store/reducers/TweetSlice";
 import { tweetSlice } from "../../../store/reducers/TweetSlice";
 
 export default function Home() {
-  const [serverError, setServerError] = useState<string>("");
-
   const { view } = useAppSelector((state) => state.view);
   const { user } = useAppSelector((state) => state.user);
 
@@ -39,12 +36,7 @@ export default function Home() {
 
   return (
     <>
-      <NewTweet setServerError={setServerError} />
-      {serverError && (
-        <Alert variant="danger" className="m-0 p-1 ">
-          {serverError}
-        </Alert>
-      )}
+      <NewTweet />
       <TweetList />
     </>
   );
