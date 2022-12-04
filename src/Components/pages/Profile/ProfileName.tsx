@@ -27,8 +27,7 @@ const ProfileName: React.FC<ProfileNameProps> = ({ user, isOwner }) => {
 
   useEffect(() => {
     nameRef.current!.value = user.displayName ? user.displayName : user.email;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [user.displayName, user.email]);
 
   return (
     <>
