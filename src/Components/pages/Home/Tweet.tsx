@@ -4,7 +4,8 @@ import ProfileImage from "../../ProfileImage";
 import "../../style/Tweet.css";
 import tweetsDB from "../../../lib/tweetsDB";
 import Link from "../../NavBar/Link";
-import { useAppSelector } from "../../../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
+import { profileSlice } from "../../../store/reducers/ProfileSlice";
 
 const Tweet: React.FC<TweetProps> = ({
   content,
@@ -13,10 +14,13 @@ const Tweet: React.FC<TweetProps> = ({
   date,
   tweetId,
   like,
+  userId,
 }) => {
   const { view } = useAppSelector((state) => state.view);
   const { user } = useAppSelector((state) => state.user);
-  console.log("rendering");
+  const { setProfileUid } = profileSlice.actions;
+
+  const dispatch = useAppDispatch();
   return (
     <div
       className={`tweet ${view === "all tweets" ? "all-tweets" : "my-tweets"}`}
@@ -26,7 +30,11 @@ const Tweet: React.FC<TweetProps> = ({
           <ProfileImage pictureUrl={picture} />
         </div>
 
-        <Link pageName={"Profile"} text={userName!} />
+        <Link
+          pageName={"Profile"}
+          text={userName!}
+          onClickExtra={() => dispatch(setProfileUid(userId))}
+        />
         <div className="flex-grow-1"></div>
         <div className="text-secondary">
           {moment(date).format("MMM Mo HH:mm A")}
