@@ -6,4 +6,5 @@ export interface TweetProps {
   picture?: string;
   id?: string;
   like?: boolean;
+  follow?: boolean;
 }

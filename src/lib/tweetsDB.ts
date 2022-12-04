@@ -30,21 +30,13 @@ class TweetsDB extends Firebase {
   }
 
   public async toggleLike(tweetId: string, uid: string) {
-    this.toggleDataInArray("likes", this.db, this.collection, tweetId, uid);
-    // const likes = await this.getLikes(tweetId);
-    // const index = likes.indexOf(uid);
-    // if (index === -1) {
-    //   likes.push(uid);
-    //   await this.writeData(this.db, this.collection, tweetId, { likes: likes });
-    // } else {
-    //   likes.splice(index, 1);
-    //   await this.writeData(this.db, this.collection, tweetId, { likes: likes });
-    // }
-  }
-
-  private async getLikes(tweetId: string) {
-    const data = await this.getData(this.db, this.collection, tweetId);
-    return (data?.likes ? data.likes : []) as string[];
+    await this.toggleDataInArray(
+      "likes",
+      this.db,
+      this.collection,
+      tweetId,
+      uid
+    );
   }
 
   public subscribeForUpdates(callback: Function) {
@@ -78,7 +70,7 @@ class TweetsDB extends Firebase {
       const res: TweetProps[] = [];
       querySnapshot.forEach((doc) => {
         const tweet = doc.data();
-        const like = this.checkLike(tweet, uid);
+        const like = this.checkDataInArray(tweet, uid, "likes");
         res.push({ ...tweet, like } as TweetProps);
       });
       return res;
@@ -116,9 +108,13 @@ class TweetsDB extends Firebase {
     }
   }
 
-  private checkLike(data: { [key: string]: any }, uid: string) {
-    if (!data.likes) return false;
-    else return (data.likes as string[]).indexOf(uid) !== -1;
+  private checkDataInArray(
+    data: { [key: string]: any },
+    uid: string,
+    fieldName: string
+  ) {
+    if (!data[fieldName]) return false;
+    return (data[fieldName] as string[]).indexOf(uid) !== -1;
   }
 }
 

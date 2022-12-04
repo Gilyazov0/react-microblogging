@@ -47,14 +47,22 @@ class UsersDB extends Firebase {
     tweet.userName = user.displayName;
   }
 
-  private async getFollowers(uid: string) {
-    const data = await this.getData(this.db, this.collection, uid);
-    return (data?.followers ? data.followers : []) as string[];
-  }
+  public async toggleFollow(authorId: string, userId: string) {
+    await this.toggleDataInArray(
+      "followers",
+      this.db,
+      this.collection,
+      authorId,
+      userId
+    );
 
-  private async getFollow(uid: string) {
-    const data = await this.getData(this.db, this.collection, uid);
-    return (data?.follow ? data.follow : []) as string[];
+    await this.toggleDataInArray(
+      "follow",
+      this.db,
+      this.collection,
+      userId,
+      authorId
+    );
   }
 }
 

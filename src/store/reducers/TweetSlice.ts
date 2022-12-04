@@ -33,7 +33,6 @@ export const getTweets = createAsyncThunk(
     for (const tweet of newTweets) {
       await userDB.addUserDataToTweet(tweet);
     }
-
     return newTweets as TweetProps[];
   }
 );

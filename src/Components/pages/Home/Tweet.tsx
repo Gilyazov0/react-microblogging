@@ -6,6 +6,7 @@ import tweetsDB from "../../../lib/tweetsDB";
 import Link from "../../NavBar/Link";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { profileSlice } from "../../../store/reducers/ProfileSlice";
+import FollowIcon from "./FollowIcon";
 
 const Tweet: React.FC<TweetProps> = ({
   content,
@@ -15,6 +16,7 @@ const Tweet: React.FC<TweetProps> = ({
   id,
   like,
   userId,
+  follow,
 }) => {
   const { view } = useAppSelector((state) => state.view);
   const { user } = useAppSelector((state) => state.user);
@@ -42,15 +44,7 @@ const Tweet: React.FC<TweetProps> = ({
       </div>
       <div>{content}</div>
       <div className="img-container">
-        <img
-          src="./follow.svg"
-          alt="follow"
-          className={`icon-img ${like ? "selected" : ""}`}
-          onClick={(e) => {
-            e.currentTarget.classList.toggle("selected");
-            tweetsDB.toggleLike(id!, user!.uid);
-          }}
-        />
+        {userId !== user?.uid && <FollowIcon authorId={userId} />}
         <img
           src="./like.svg"
           alt="like"

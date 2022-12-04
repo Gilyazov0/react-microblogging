@@ -3,4 +3,6 @@ export default interface UserData {
   picture?: string;
   displayName: string;
   uid: string;
+  followers?: string[];
+  follow?: string[];
 }
