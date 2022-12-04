@@ -44,7 +44,6 @@ const Tweet: React.FC<TweetProps> = ({
       </div>
       <div>{content}</div>
       <div className="img-container">
-        {userId !== user?.uid && <FollowIcon authorId={userId} />}
         <img
           src="./like.svg"
           alt="like"
@@ -54,6 +53,7 @@ const Tweet: React.FC<TweetProps> = ({
             tweetsDB.toggleLike(id!, user!.uid);
           }}
         />
+        {userId !== user?.uid && <FollowIcon authorId={userId} />}
       </div>
     </div>
   );
