@@ -8,6 +8,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   Auth as AuthFB,
+  updatePassword,
 } from "firebase/auth";
 import UserData from "../Types/userData";
 import Firebase from "./Firebase";
@@ -34,6 +35,15 @@ class Auth extends Firebase {
     } catch (error) {
       this.logError(error);
       throw Error("Something went wrong. Check... everything");
+    }
+  }
+
+  public async updatePassword(password: string) {
+    const user = this.auth.currentUser!;
+    try {
+      await updatePassword(user, password);
+    } catch (error) {
+      console.log(error);
     }
   }
 

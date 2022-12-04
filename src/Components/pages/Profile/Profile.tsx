@@ -7,6 +7,7 @@ import { useAppSelector } from "../../../hooks/redux";
 import Loading from "../../Loading";
 import ProfileAvatar from "./ProfileAvatar";
 import ProfileName from "./ProfileName";
+import ProfilePassword from "./ProfilePassword";
 
 const Profile: React.FC = () => {
   const user = useAppSelector((state) => state.user.user as UserData);
@@ -37,6 +38,7 @@ const Profile: React.FC = () => {
             user={isOwner ? user : profileUser}
           />
           <ProfileName isOwner={isOwner} user={profileUser} />
+          <ProfilePassword />
         </>
       )}
     </div>
