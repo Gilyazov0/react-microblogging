@@ -7,6 +7,7 @@ import Loading from "../../Loading";
 import ProfileAvatar from "./ProfileAvatar";
 import ProfileName from "./ProfileName";
 import ProfilePassword from "./ProfilePassword";
+import UsersList from "./UsersList";
 
 const Profile: React.FC = () => {
   const user = useAppSelector((state) => state.user.user as UserData);
@@ -38,6 +39,14 @@ const Profile: React.FC = () => {
           />
           <ProfileName isOwner={isOwner} user={profileUser} />
           {isOwner && <ProfilePassword />}
+          <div className="d-flex">
+            <div className="col">
+              <UsersList uids={profileUser!.follow} title="Follow:" />
+            </div>
+            <div className="col">
+              <UsersList uids={profileUser!.followers} title="Followers:" />
+            </div>
+          </div>
         </>
       )}
     </div>

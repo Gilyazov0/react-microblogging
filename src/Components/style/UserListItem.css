@@ -1,0 +1,6 @@
+.user-list-item {
+  height: 30px;
+  width: auto;
+  display: flex;
+  align-items: center;
+}

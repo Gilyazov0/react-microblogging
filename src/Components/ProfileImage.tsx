@@ -8,7 +8,10 @@ const ProfileImage: React.FC<{ pictureUrl: string | undefined }> = ({
   const [url, setUrl] = useState("");
   useEffect(() => {
     async function getUrl() {
-      if (!pictureUrl) return;
+      if (!pictureUrl) {
+        setUrl("");
+        return;
+      }
       const url = await userDB.getProfilePicUrl(pictureUrl);
       setUrl(url);
     }
