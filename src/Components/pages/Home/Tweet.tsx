@@ -56,7 +56,7 @@ const Tweet: React.FC<TweetProps> = ({
           alt="like"
           className={`icon-img ${like ? "selected" : ""}`}
           onClick={(e) => {
-            e.currentTarget.classList.toggle("like");
+            e.currentTarget.classList.toggle("selected");
             tweetsDB.toggleLike(id!, user!.uid);
           }}
         />

@@ -7,6 +7,7 @@
   align-items: center;
   max-width: 1076px;
   width: 100%;
+  border-radius: 0 0 6px 6px;
 }
 
 .link {

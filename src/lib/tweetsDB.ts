@@ -30,15 +30,16 @@ class TweetsDB extends Firebase {
   }
 
   public async toggleLike(tweetId: string, uid: string) {
-    const likes = await this.getLikes(tweetId);
-    const index = likes.indexOf(uid);
-    if (index === -1) {
-      likes.push(uid);
-      await this.writeData(this.db, this.collection, tweetId, { likes: likes });
-    } else {
-      likes.splice(index, 1);
-      await this.writeData(this.db, this.collection, tweetId, { likes: likes });
-    }
+    this.toggleDataInArray("likes", this.db, this.collection, tweetId, uid);
+    // const likes = await this.getLikes(tweetId);
+    // const index = likes.indexOf(uid);
+    // if (index === -1) {
+    //   likes.push(uid);
+    //   await this.writeData(this.db, this.collection, tweetId, { likes: likes });
+    // } else {
+    //   likes.splice(index, 1);
+    //   await this.writeData(this.db, this.collection, tweetId, { likes: likes });
+    // }
   }
 
   private async getLikes(tweetId: string) {

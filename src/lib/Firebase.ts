@@ -21,7 +21,7 @@ abstract class Firebase {
     collection: string,
     document: string,
     data: object
-  ) {
+  ): Promise<void> {
     const ref = doc(db, collection, document);
     try {
       await setDoc(ref, data, { merge: true });
@@ -63,6 +63,36 @@ abstract class Firebase {
       console.log(error);
     }
   }
-}
 
+  protected async toggleDataInArray(
+    fieldName: string,
+    db: Firestore,
+    collection: string,
+    document: string,
+    data: string
+  ) {
+    const arr = await this.getField(fieldName, db, collection, document);
+
+    const index = arr.indexOf(data);
+    index === -1 ? arr.push(data) : arr.splice(index, 1);
+
+    await this.writeData(db, collection, document, { [fieldName]: arr });
+  }
+
+  private async getField(
+    fieldName: string,
+    db: Firestore,
+    collection: string,
+    document: string
+  ): Promise<string[]> {
+    try {
+      const data = await this.getData(db, collection, document);
+      if (!data || !data[fieldName]) return [] as string[];
+      return data[fieldName] as string[];
+    } catch (error) {
+      console.log(error);
+      return [];
+    }
+  }
+}
 export default Firebase;
