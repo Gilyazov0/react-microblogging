@@ -20,7 +20,7 @@ const initialState: TweetState = {
 
 export const getTweets = createAsyncThunk(
   "tweet/get",
-  async function a(_, { getState }): Promise<TweetProps[]> {
+  async (_, { getState }): Promise<TweetProps[]> => {
     const state = getState() as RootState;
 
     const uid = state.user.user?.uid;
@@ -35,6 +35,20 @@ export const getTweets = createAsyncThunk(
     }
 
     return newTweets as TweetProps[];
+  }
+);
+
+export const updateUserData = createAsyncThunk(
+  "tweet/updateUserData",
+  async (_, { getState }): Promise<TweetProps[]> => {
+    const state = getState() as RootState;
+    const newTweets = [];
+    for (const tweet of state.tweet.tweets) {
+      const newTweet = { ...tweet };
+      await userDB.addUserDataToTweet(newTweet);
+      newTweets.push(newTweet);
+    }
+    return newTweets;
   }
 );
 
@@ -56,6 +70,12 @@ export const tweetSlice = createSlice({
     },
   },
   extraReducers: {
+    [updateUserData.fulfilled.type]: (
+      state,
+      action: PayloadAction<TweetProps[]>
+    ) => {
+      state.tweets = action.payload;
+    },
     [getTweets.fulfilled.type]: (
       state,
       action: PayloadAction<TweetProps[]>

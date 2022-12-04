@@ -5,6 +5,7 @@ import { userSlice } from "../../../store/reducers/UserSlice";
 import UserData from "../../../Types/userData";
 import { useAppDispatch } from "../../../hooks/redux";
 import { useEffect } from "react";
+import { updateUserData } from "../../../store/reducers/TweetSlice";
 
 interface ProfileNameProps {
   isOwner: boolean;
@@ -16,12 +17,12 @@ const ProfileName: React.FC<ProfileNameProps> = ({ user, isOwner }) => {
   const dispatch = useAppDispatch();
 
   async function handleChangeNameClick() {
-    console.log(nameRef.current?.value, user);
     await userDB.writeUserData(user.uid, {
       displayName: nameRef.current?.value,
     });
     const newUserData = await userDB.getUserData(user!.uid);
     dispatch(setUser(newUserData));
+    dispatch(updateUserData());
   }
 
   useEffect(() => {

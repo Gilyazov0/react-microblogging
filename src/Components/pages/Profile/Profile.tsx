@@ -1,5 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import { Button } from "react-bootstrap";
+import React, { useEffect, useState } from "react";
 import userDB from "../../../lib/usersDB";
 import UserData from "../../../Types/userData";
 import "../../style/Profile.css";
@@ -38,7 +37,7 @@ const Profile: React.FC = () => {
             user={isOwner ? user : profileUser}
           />
           <ProfileName isOwner={isOwner} user={profileUser} />
-          <ProfilePassword />
+          {isOwner && <ProfilePassword />}
         </>
       )}
     </div>

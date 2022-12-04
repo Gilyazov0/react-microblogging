@@ -22,7 +22,6 @@ class UsersDB extends Firebase {
 
   public async getUserData(uid: string) {
     const data = await this.getData(this.db, this.collection, uid);
-    console.log(data);
     if (data) return data as UserData;
     return null;
   }
@@ -30,7 +29,6 @@ class UsersDB extends Firebase {
   public async addProfileImg(uid: string, file: File) {
     const userData = await this.getUserData(uid);
     if (!userData) return;
-    debugger;
     if (userData.picture) await storage.delFile(userData.picture);
     const fileName = await storage.storeFile(file);
     const data = { picture: fileName };
@@ -44,8 +42,9 @@ class UsersDB extends Firebase {
 
   public async addUserDataToTweet(tweet: TweetProps) {
     const user = await this.getUserData(tweet.userId);
-    tweet.picture = user?.picture;
-    tweet.userName = user?.displayName;
+    if (!user) return;
+    tweet.picture = user.picture;
+    tweet.userName = user.displayName;
   }
 }
 

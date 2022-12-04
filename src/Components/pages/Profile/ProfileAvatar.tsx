@@ -6,6 +6,7 @@ import UserData from "../../../Types/userData";
 import { useState } from "react";
 import { userSlice } from "../../../store/reducers/UserSlice";
 import { useAppDispatch } from "../../../hooks/redux";
+import { updateUserData } from "../../../store/reducers/TweetSlice";
 
 interface ProfileAvatarProps {
   isOwner: boolean;
@@ -24,6 +25,7 @@ const ProfileAvatar: React.FC<ProfileAvatarProps> = ({ user, isOwner }) => {
     await userDB.addProfileImg(user!.uid, file);
     const newUserData = await userDB.getUserData(user.uid);
     dispatch(setUser(newUserData));
+    await dispatch(updateUserData());
 
     imgRef!.current!.value = "";
     setDisable(true);

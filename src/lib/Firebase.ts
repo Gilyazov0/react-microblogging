@@ -12,7 +12,6 @@ abstract class Firebase {
 
   protected async getData(db: Firestore, collection: string, document: string) {
     const dataSnap = await this.getDataSnap(db, collection, document);
-    console.log(dataSnap?.data());
     if (dataSnap?.exists()) return dataSnap.data();
     return null;
   }
