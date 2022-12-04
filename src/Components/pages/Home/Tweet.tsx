@@ -41,16 +41,26 @@ const Tweet: React.FC<TweetProps> = ({
         </div>
       </div>
       <div>{content}</div>
-
-      <img
-        src="./like.svg"
-        alt="like"
-        className={`like-img ${like ? "like" : ""}`}
-        onClick={(e) => {
-          e.currentTarget.classList.toggle("like");
-          tweetsDB.toggleLike(id!, user!.uid);
-        }}
-      />
+      <div className="img-container">
+        <img
+          src="./follow.svg"
+          alt="follow"
+          className={`icon-img ${like ? "selected" : ""}`}
+          onClick={(e) => {
+            e.currentTarget.classList.toggle("selected");
+            tweetsDB.toggleLike(id!, user!.uid);
+          }}
+        />
+        <img
+          src="./like.svg"
+          alt="like"
+          className={`icon-img ${like ? "selected" : ""}`}
+          onClick={(e) => {
+            e.currentTarget.classList.toggle("like");
+            tweetsDB.toggleLike(id!, user!.uid);
+          }}
+        />
+      </div>
     </div>
   );
 };
