@@ -24,6 +24,7 @@ const UserListItem: React.FC<{ uid: string }> = ({ uid }) => {
       {user && (
         <div className="user-list-item">
           <ProfileImage pictureUrl={user.picture} />
+
           <div>
             <Link
               pageName="Profile"

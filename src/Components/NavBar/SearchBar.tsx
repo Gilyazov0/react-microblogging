@@ -4,9 +4,11 @@ import "../style/SearchBar.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { pageSlice } from "../../store/reducers/PageSlice";
 import { searchSlice } from "../../store/reducers/SearchSlice";
+import SearchAtType from "../../Types/SearchAtType";
 
 const SearchBar: React.FC = () => {
   const [inputValue, setInputValue] = useState("");
+  const [searchAt, setSearchAt] = useState<SearchAtType>("tweets");
 
   const { page } = useAppSelector((state) => state.page);
   const { setPage } = pageSlice.actions;
@@ -14,7 +16,7 @@ const SearchBar: React.FC = () => {
   const { setSearchParams } = searchSlice.actions;
 
   function handleClick() {
-    dispatch(setSearchParams({ query: inputValue }));
+    dispatch(setSearchParams({ query: inputValue, searchAt: searchAt }));
     setInputValue("");
     dispatch(setPage("Search"));
   }
@@ -24,7 +26,7 @@ const SearchBar: React.FC = () => {
       <span className={`me-2  ${page === "Search" ? "" : "text-secondary"}`}>
         Search at
       </span>
-      <SearchAt />
+      <SearchAt searchAt={searchAt} setSearchAt={setSearchAt} />
       <input
         type={"text"}
         className="ms-2 search-input"

@@ -1,8 +1,15 @@
-import { getFirestore, Firestore } from "firebase/firestore";
+import {
+  getFirestore,
+  Firestore,
+  query,
+  collection,
+  getDocs,
+} from "firebase/firestore";
 import { TweetProps } from "../Types/TweetProps";
 import UserData from "../Types/userData";
 import Firebase from "./Firebase";
 import storage from "./storage";
+import Search from "../Components/pages/Search";
 
 class UsersDB extends Firebase {
   private collection: string;
@@ -63,6 +70,11 @@ class UsersDB extends Firebase {
       userId,
       authorId
     );
+  }
+
+  public async SearchUser(data: string) {
+    const res = await this.Search(this.db, this.collection, data);
+    return res as UserData[];
   }
 }
 

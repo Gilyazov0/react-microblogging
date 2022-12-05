@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import SearchAtType from "../../Types/SearchAtType";
 
 interface SearchState {
-  searchAt?: "tweets" | "users";
+  searchAt?: SearchAtType;
   query?: string;
 }
 const initialState: SearchState = {

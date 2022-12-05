@@ -1,5 +1,13 @@
 import { FirebaseApp, initializeApp } from "firebase/app";
-import { collection, doc, Firestore, getDoc, setDoc } from "firebase/firestore";
+import {
+  collection,
+  doc,
+  Firestore,
+  getDoc,
+  getDocs,
+  query,
+  setDoc,
+} from "firebase/firestore";
 import FIREBASE_CONFIG from "./config_firebase";
 
 abstract class Firebase {
@@ -77,6 +85,27 @@ abstract class Firebase {
     index === -1 ? arr.push(data) : arr.splice(index, 1);
 
     await this.writeData(db, collection, document, { [fieldName]: arr });
+  }
+
+  protected async Search(db: Firestore, col: string, data: string) {
+    const q = query(collection(db, col));
+    const querySnapshot = await getDocs(q);
+    const res: any = [];
+    querySnapshot.forEach((doc) => {
+      const document = doc.data();
+      for (let key of Object.keys(document)) {
+        if (
+          document[key] &&
+          typeof document[key] === "string" &&
+          (document[key] as string).includes(data)
+        ) {
+          res.push(document);
+          break;
+        }
+      }
+    });
+
+    return res;
   }
 
   private async getField(

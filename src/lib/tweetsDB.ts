@@ -107,6 +107,10 @@ class TweetsDB extends Firebase {
         );
     }
   }
+  public async SearchTweets(data: string) {
+    const res = await this.Search(this.db, this.collection, data);
+    return res as TweetProps[];
+  }
 
   private checkDataInArray(
     data: { [key: string]: any },
