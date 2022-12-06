@@ -1,6 +1,8 @@
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import { pageSlice } from "../../store/reducers/PageSlice";
 import Pages from "../../Types/Pages";
+import "../style/Link.css";
+
 interface LinkProps {
   text: string;
   pageName: Pages;
@@ -12,7 +14,6 @@ const Link: React.FC<LinkProps> = ({ pageName, text, onClickExtra }) => {
 
   const { setPage } = pageSlice.actions;
   const dispatch = useAppDispatch();
-
   return (
     <span
       onClick={() => {

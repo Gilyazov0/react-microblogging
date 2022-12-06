@@ -2,7 +2,7 @@ import Home from "./pages/Home/Home";
 import NavBar from "./NavBar/NavBar";
 import { useEffect } from "react";
 import "./style/App.css";
-import ErrorBoundary from "./ErrorBoundary";
+import ErrorBoundary from "./BaseComponents/ErrorBoundary";
 import auth from "../lib/auth";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";

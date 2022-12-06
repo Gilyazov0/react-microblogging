@@ -1,15 +1,8 @@
-import {
-  getFirestore,
-  Firestore,
-  query,
-  collection,
-  getDocs,
-} from "firebase/firestore";
+import { getFirestore, Firestore } from "firebase/firestore";
 import { TweetProps } from "../Types/TweetProps";
 import UserData from "../Types/userData";
 import Firebase from "./Firebase";
 import storage from "./storage";
-import Search from "../Components/pages/Search";
 
 class UsersDB extends Firebase {
   private collection: string;
@@ -47,11 +40,16 @@ class UsersDB extends Firebase {
     return await storage.getUrl(fileName);
   }
 
+  /**
+   * Mutate input tweet data adding information about author and return it
+   */
   public async addUserDataToTweet(tweet: TweetProps) {
     const user = await this.getUserData(tweet.userId);
     if (!user) return;
     tweet.picture = user.picture;
     tweet.userName = user.displayName;
+    console.log("addUserDataToTweet", tweet.userName);
+    return tweet;
   }
 
   public async toggleFollow(authorId: string, userId: string) {

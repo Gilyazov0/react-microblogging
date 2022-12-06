@@ -87,6 +87,8 @@ abstract class Firebase {
     await this.writeData(db, collection, document, { [fieldName]: arr });
   }
 
+  //there is no way to implement proper search in firebase without paid account. So it made this way
+  //More information is here: https://firebase.google.com/docs/firestore/solutions/search?provider=typesense
   protected async Search(db: Firestore, col: string, data: string) {
     const q = query(collection(db, col));
     const querySnapshot = await getDocs(q);

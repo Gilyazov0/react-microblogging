@@ -80,6 +80,19 @@ class TweetsDB extends Firebase {
     }
   }
 
+  public async SearchTweets(data: string): Promise<TweetProps[]> {
+    const res: TweetProps[] = await this.Search(this.db, this.collection, data);
+    const promises: Promise<any>[] = [];
+
+    res.forEach((tweet) => {
+      promises.push(userDB.addUserDataToTweet(tweet));
+    });
+
+    const tweets = await Promise.all(promises);
+
+    return tweets as TweetProps[];
+  }
+
   private getQuery(date: number, uid: string, view: ViewType) {
     switch (view) {
       case "all tweets":
@@ -106,10 +119,6 @@ class TweetsDB extends Firebase {
           limit(this.queryLimit)
         );
     }
-  }
-  public async SearchTweets(data: string) {
-    const res = await this.Search(this.db, this.collection, data);
-    return res as TweetProps[];
   }
 
   private checkDataInArray(

@@ -3,7 +3,7 @@ import userDB from "../../../lib/usersDB";
 import UserData from "../../../Types/userData";
 import "../../style/Profile.css";
 import { useAppSelector } from "../../../hooks/redux";
-import Loading from "../../Loading";
+import Loading from "../../BaseComponents/Loading";
 import ProfileAvatar from "./ProfileAvatar";
 import ProfileName from "./ProfileName";
 import ProfilePassword from "./ProfilePassword";

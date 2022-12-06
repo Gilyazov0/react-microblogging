@@ -1,6 +1,6 @@
 import "../style/NavBar.css";
-import Link from "./Link";
-import ProfileImage from "../ProfileImage";
+import Link from "../BaseComponents/Link";
+import ProfileImage from "../BaseComponents/ProfileImage";
 import ViewSelector from "./ViewSelector";
 import SearchBar from "./SearchBar";
 import { useAppSelector, useAppDispatch } from "../../hooks/redux";

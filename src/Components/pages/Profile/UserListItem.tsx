@@ -1,9 +1,9 @@
 import userDB from "../../../lib/usersDB";
 import { useEffect, useState } from "react";
 import UserData from "../../../Types/userData";
-import ProfileImage from "../../ProfileImage";
+import ProfileImage from "../../BaseComponents/ProfileImage";
 import "../../style/UserListItem.css";
-import Link from "../../NavBar/Link";
+import Link from "../../BaseComponents/Link";
 import { useAppDispatch } from "../../../hooks/redux";
 import { profileSlice } from "../../../store/reducers/ProfileSlice";
 
@@ -18,7 +18,6 @@ const UserListItem: React.FC<{ uid: string }> = ({ uid }) => {
       setUser(user);
     })();
   }, [uid]);
-
   return (
     <>
       {user && (
@@ -28,7 +27,9 @@ const UserListItem: React.FC<{ uid: string }> = ({ uid }) => {
           <div>
             <Link
               pageName="Profile"
-              text={user.displayName}
+              text={`${user.displayName}  |  Followers: ${
+                user.followers ? user.followers.length : 0
+              }`}
               onClickExtra={() => dispatch(setProfileUid(uid))}
             />
           </div>

@@ -1,9 +1,9 @@
 import moment from "moment";
 import { TweetProps } from "../../../Types/TweetProps";
-import ProfileImage from "../../ProfileImage";
+import ProfileImage from "../../BaseComponents/ProfileImage";
 import "../../style/Tweet.css";
 import tweetsDB from "../../../lib/tweetsDB";
-import Link from "../../NavBar/Link";
+import Link from "../../BaseComponents/Link";
 import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
 import { profileSlice } from "../../../store/reducers/ProfileSlice";
 import FollowIcon from "./FollowIcon";

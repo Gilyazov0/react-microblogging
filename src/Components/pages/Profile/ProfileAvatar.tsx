@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Button } from "react-bootstrap";
 import userDB from "../../../lib/usersDB";
-import ProfileImage from "../../ProfileImage";
+import ProfileImage from "../../BaseComponents/ProfileImage";
 import UserData from "../../../Types/userData";
 import { useState } from "react";
 import { userSlice } from "../../../store/reducers/UserSlice";
