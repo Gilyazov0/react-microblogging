@@ -6,8 +6,25 @@
   align-items: center;
   color: white;
 }
+a {
+  text-decoration: none;
+  color: white;
+}
 
+a:hover {
+  color: white;
+}
 input {
   border-color: rgba(255, 255, 255, 0.438);
   border-radius: 6px;
+}
+
+.link-not-active {
+  color: gray;
+  padding: 0 8px;
+}
+
+.link-active {
+  color: white;
+  padding: 0 8px;
 }

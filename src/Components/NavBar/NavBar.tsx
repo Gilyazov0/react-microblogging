@@ -1,25 +1,28 @@
 import "../style/NavBar.css";
-import Link from "../BaseComponents/Link";
 import ProfileImage from "../BaseComponents/ProfileImage";
 import ViewSelector from "./ViewSelector";
 import SearchBar from "./SearchBar";
 import { useAppSelector, useAppDispatch } from "../../hooks/redux";
-import { profileSlice } from "../../store/reducers/ProfileSlice";
+import { NavLink } from "react-router-dom";
+import { viewSlice } from "../../store/reducers/ViewSlice";
+import auth from "../../lib/auth";
 
 const NavBar: React.FC = () => {
   const { user } = useAppSelector((state) => state.user);
-  const { setProfileUid } = profileSlice.actions;
+  const { setView } = viewSlice.actions;
 
   const dispatch = useAppDispatch();
-  const userName = user
-    ? user.displayName
-      ? user.displayName
-      : user.email!
-    : "";
 
   return (
     <div className="nav-bar">
-      <Link text={"Home"} pageName={"Home"} />
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          isActive ? "link-active" : "link-not-active"
+        }
+      >
+        Home
+      </NavLink>
       <ViewSelector />
       <div className="flex-grow-1"></div>
       <div>
@@ -28,19 +31,47 @@ const NavBar: React.FC = () => {
       <div className="flex-grow-1"></div>
       {!user && (
         <>
-          <Link text={"Sign up"} pageName={"SignUp"} />
-          <Link text={"Sign in"} pageName={"SignIn"} />
+          <NavLink
+            to="/signUp"
+            className={({ isActive }) =>
+              isActive ? "link-active" : "link-not-active"
+            }
+          >
+            Sign up
+          </NavLink>
+          <NavLink
+            to="/signIn"
+            className={({ isActive }) =>
+              isActive ? "link-active" : "link-not-active"
+            }
+          >
+            Sign in
+          </NavLink>
         </>
       )}
       {user && (
         <>
           <ProfileImage pictureUrl={user.picture} />
-          <Link
-            text={userName}
-            pageName={"Profile"}
-            onClickExtra={() => dispatch(setProfileUid(user.uid))}
-          />
-          <Link text={"Sign out"} pageName={"SignOut"} />
+          <NavLink
+            to={`/profile/${user.uid}`}
+            className={({ isActive }) =>
+              isActive ? "link-active" : "link-not-active"
+            }
+          >
+            Profile
+          </NavLink>
+          <NavLink
+            to="/signIn"
+            className={({ isActive }) =>
+              isActive ? "link-active" : "link-not-active"
+            }
+            onClick={() => {
+              auth.logOut();
+              dispatch(setView("all tweets"));
+            }}
+          >
+            Sign out
+          </NavLink>
         </>
       )}
     </div>

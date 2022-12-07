@@ -18,6 +18,7 @@ class TweetsDB extends Firebase {
   private db: Firestore;
   private collection: string;
   private queryLimit: number;
+
   constructor() {
     super();
     this.db = getFirestore(this.app);

@@ -7,6 +7,7 @@ import tweetsDB from "../../../lib/tweetsDB";
 import { useAppSelector, useAppDispatch } from "../../../hooks/redux";
 import { getTweets } from "../../../store/reducers/TweetSlice";
 import { tweetSlice } from "../../../store/reducers/TweetSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const { view } = useAppSelector((state) => state.view);
@@ -16,6 +17,8 @@ export default function Home() {
   const { setHasMore, addTweet } = tweetSlice.actions;
   const dispatch = useAppDispatch();
 
+  const navigate = useNavigate();
+
   useEffect(
     function reset() {
       if (!isLoading) dispatch(getTweets());
@@ -24,6 +27,11 @@ export default function Home() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [view, user]
   );
+
+  useEffect(() => {
+    if (!user) navigate("/signIn");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   useEffect(() => {
     const unsubscribe = tweetsDB.subscribeForUpdates((tweet: TweetProps) =>

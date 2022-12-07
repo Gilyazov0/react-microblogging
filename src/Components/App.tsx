@@ -8,18 +8,13 @@ import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Profile from "./pages/Profile/Profile";
 import Search from "./pages/Search";
-import { useAppSelector, useAppDispatch } from "../hooks/redux";
-import { pageSlice } from "../store/reducers/PageSlice";
-import { viewSlice } from "../store/reducers/ViewSlice";
 import { userSlice } from "../store/reducers/UserSlice";
 import UserData from "../Types/userData";
+import { Route, Routes } from "react-router-dom";
+import { useAppDispatch } from "../hooks/redux";
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { page } = useAppSelector((state) => state.page);
-  const { setPage } = pageSlice.actions;
-  const { setView } = viewSlice.actions;
-  const { user } = useAppSelector((state) => state.user);
   const { setUser } = userSlice.actions;
 
   useEffect(() => {
@@ -29,33 +24,17 @@ const App: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    switch (page) {
-      case "SignOut":
-        dispatch(setPage("SignIn"));
-        auth.logOut();
-        dispatch(setView("all tweets"));
-        break;
-
-      case "Home":
-        if (user === null) dispatch(setPage("SignIn"));
-        break;
-
-      case "SignIn":
-        if (user) dispatch(setPage("Home"));
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [page, user]);
-
   return (
     <ErrorBoundary>
       <div className="app">
         <NavBar />
-        {page === "Home" && <Home />}
-        {page === "SignUp" && <SignUp />}
-        {page === "SignIn" && <SignIn />}
-        {page === "Profile" && <Profile />}
-        {page === "Search" && <Search />}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/signUp" element={<SignUp />} />
+          <Route path="/signIn" element={<SignIn />} />
+          <Route path="/profile/:profileUid" element={<Profile />} />
+          <Route path="/search" element={<Search />} />
+        </Routes>
       </div>
     </ErrorBoundary>
   );

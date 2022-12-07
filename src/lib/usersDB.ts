@@ -7,11 +7,13 @@ import storage from "./storage";
 class UsersDB extends Firebase {
   private collection: string;
   private db: Firestore;
+
   constructor() {
     super();
     this.db = getFirestore(this.app);
     this.collection = "users";
   }
+
   public async writeUserData(uid: string, data: object) {
     await this.writeData(this.db, this.collection, uid, data);
   }
@@ -48,7 +50,6 @@ class UsersDB extends Firebase {
     if (!user) return;
     tweet.picture = user.picture;
     tweet.userName = user.displayName;
-    console.log("addUserDataToTweet", tweet.userName);
     return tweet;
   }
 

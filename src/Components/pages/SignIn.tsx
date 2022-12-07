@@ -1,9 +1,14 @@
-import { FormEvent, useRef } from "react";
+import { FormEvent, useRef, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import auth from "../../lib/auth";
+import { useAppSelector } from "../../hooks/redux";
+import { useNavigate } from "react-router-dom";
 
 const LogIn: React.FC = () => {
+  const { user } = useAppSelector((state) => state.user);
+
   const refAlert = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -19,6 +24,11 @@ const LogIn: React.FC = () => {
       alert.innerText! = (error as Error).message;
     }
   }
+
+  useEffect(() => {
+    if (user) navigate("/");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   return (
     <div className="profile">

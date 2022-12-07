@@ -12,6 +12,7 @@ import { nanoid } from "nanoid";
 class Storage extends Firebase {
   private storage: FirebaseStorage;
   private workFolder: string;
+
   constructor(workFolder = "") {
     super();
     this.storage = getStorage(this.app);

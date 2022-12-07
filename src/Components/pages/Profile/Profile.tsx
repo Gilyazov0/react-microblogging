@@ -8,21 +8,28 @@ import ProfileAvatar from "./ProfileAvatar";
 import ProfileName from "./ProfileName";
 import ProfilePassword from "./ProfilePassword";
 import UsersList from "./UsersList";
+import { useParams, useNavigate } from "react-router-dom";
 
 const Profile: React.FC = () => {
-  const user = useAppSelector((state) => state.user.user as UserData);
-  const { profileUid } = useAppSelector((state) => state.profile);
+  const user = useAppSelector((state) => state.user.user);
+  const { profileUid } = useParams();
+  const navigate = useNavigate();
 
   const [profileUser, setProfileUser] = useState<UserData | null>(null);
+
+  useEffect(() => {
+    if (!user) navigate("/signIn");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   useEffect(() => {
     (async (uid: string) => {
       const user = await userDB.getUserData(uid);
       setProfileUser(user);
-    })(profileUid);
+    })(profileUid!);
   }, [profileUid]);
 
-  const isOwner = profileUid === user.uid;
+  const isOwner = profileUid === user?.uid;
 
   return (
     <div className="profile mt-5 ">
@@ -35,7 +42,7 @@ const Profile: React.FC = () => {
         <>
           <ProfileAvatar
             isOwner={isOwner}
-            user={isOwner ? user : profileUser}
+            user={isOwner ? user! : profileUser}
           />
           <ProfileName isOwner={isOwner} user={profileUser} />
           {isOwner && <ProfilePassword />}

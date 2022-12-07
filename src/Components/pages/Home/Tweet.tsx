@@ -3,10 +3,9 @@ import { TweetProps } from "../../../Types/TweetProps";
 import ProfileImage from "../../BaseComponents/ProfileImage";
 import "../../style/Tweet.css";
 import tweetsDB from "../../../lib/tweetsDB";
-import Link from "../../BaseComponents/Link";
-import { useAppDispatch, useAppSelector } from "../../../hooks/redux";
-import { profileSlice } from "../../../store/reducers/ProfileSlice";
+import { useAppSelector } from "../../../hooks/redux";
 import FollowIcon from "./FollowIcon";
+import { Link } from "react-router-dom";
 
 const Tweet: React.FC<TweetProps> = ({
   content,
@@ -20,9 +19,7 @@ const Tweet: React.FC<TweetProps> = ({
 }) => {
   const { view } = useAppSelector((state) => state.view);
   const { user } = useAppSelector((state) => state.user);
-  const { setProfileUid } = profileSlice.actions;
 
-  const dispatch = useAppDispatch();
   return (
     <div
       className={`tweet ${view === "all tweets" ? "all-tweets" : "my-tweets"}`}
@@ -32,11 +29,7 @@ const Tweet: React.FC<TweetProps> = ({
           <ProfileImage pictureUrl={picture} />
         </div>
 
-        <Link
-          pageName={"Profile"}
-          text={userName!}
-          onClickExtra={() => dispatch(setProfileUid(userId))}
-        />
+        <Link to={`/profile/${userId}`}>{userName}</Link>
         <div className="flex-grow-1"></div>
         <div className="text-secondary">
           {moment(date).format("MMM Mo HH:mm A")}
