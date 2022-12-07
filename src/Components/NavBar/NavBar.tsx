@@ -24,11 +24,9 @@ const NavBar: React.FC = () => {
         Home
       </NavLink>
       <ViewSelector />
-      <div className="flex-grow-1"></div>
       <div>
         <SearchBar />
       </div>
-      <div className="flex-grow-1"></div>
       {!user && (
         <>
           <NavLink
@@ -51,15 +49,17 @@ const NavBar: React.FC = () => {
       )}
       {user && (
         <>
-          <ProfileImage pictureUrl={user.picture} />
-          <NavLink
-            to={`/profile/${user.uid}`}
-            className={({ isActive }) =>
-              isActive ? "link-active" : "link-not-active"
-            }
-          >
-            Profile
-          </NavLink>
+          <div className="nav-bar-img">
+            <ProfileImage pictureUrl={user.picture} />
+            <NavLink
+              to={`/profile/${user.uid}`}
+              className={({ isActive }) =>
+                isActive ? "link-active" : "link-not-active"
+              }
+            >
+              Profile
+            </NavLink>
+          </div>
           <NavLink
             to="/signIn"
             className={({ isActive }) =>

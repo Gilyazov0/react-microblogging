@@ -15,7 +15,6 @@ const Tweet: React.FC<TweetProps> = ({
   id,
   like,
   userId,
-  follow,
 }) => {
   const { view } = useAppSelector((state) => state.view);
   const { user } = useAppSelector((state) => state.user);

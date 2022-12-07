@@ -1,17 +1,23 @@
 .nav-bar {
   color: #ffffff;
   background-color: #343a40;
-  height: 58px;
-  padding-left: 35px;
+  min-height: 58px;
   display: flex;
   align-items: center;
   max-width: 1076px;
   width: 100%;
   border-radius: 0 0 6px 6px;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 10px;
 }
 
 .link {
   font-size: 14px;
   margin-right: 45px;
   cursor: pointer;
+}
+
+.nav-bar-img {
+  height: 58px;
 }
