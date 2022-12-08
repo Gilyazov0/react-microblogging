@@ -12,15 +12,12 @@ const NavBar: React.FC = () => {
   const { setView } = viewSlice.actions;
 
   const dispatch = useAppDispatch();
+  const setClass = (isActive: boolean) =>
+    isActive ? "link-active" : "link-not-active";
 
   return (
     <div className="nav-bar">
-      <NavLink
-        to="/"
-        className={({ isActive }) =>
-          isActive ? "link-active" : "link-not-active"
-        }
-      >
+      <NavLink to="/" className={({ isActive }) => setClass(isActive)}>
         Home
       </NavLink>
       <ViewSelector />
@@ -31,17 +28,13 @@ const NavBar: React.FC = () => {
         <>
           <NavLink
             to="/signUp"
-            className={({ isActive }) =>
-              isActive ? "link-active" : "link-not-active"
-            }
+            className={({ isActive }) => setClass(isActive)}
           >
             Sign up
           </NavLink>
           <NavLink
             to="/signIn"
-            className={({ isActive }) =>
-              isActive ? "link-active" : "link-not-active"
-            }
+            className={({ isActive }) => setClass(isActive)}
           >
             Sign in
           </NavLink>
@@ -55,18 +48,14 @@ const NavBar: React.FC = () => {
             </div>
             <NavLink
               to={`/profile/${user.uid}`}
-              className={({ isActive }) =>
-                isActive ? "link-active" : "link-not-active"
-              }
+              className={({ isActive }) => setClass(isActive)}
             >
               Profile
             </NavLink>
           </div>
           <NavLink
             to="/signIn"
-            className={({ isActive }) =>
-              isActive ? "link-active" : "link-not-active"
-            }
+            className={({ isActive }) => setClass(isActive)}
             onClick={() => {
               auth.logOut();
               dispatch(setView("all tweets"));
