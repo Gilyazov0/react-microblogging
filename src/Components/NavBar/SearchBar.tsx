@@ -24,7 +24,7 @@ const SearchBar: React.FC = () => {
   return (
     <div className="d-flex align-items-center">
       <span
-        className={`me-2  ${
+        className={`me-2 hide-on-small-screen ${
           location.pathname === "/search" ? "" : "link-not-active"
         }`}
       >

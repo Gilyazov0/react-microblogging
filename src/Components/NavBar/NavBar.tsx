@@ -24,7 +24,7 @@ const NavBar: React.FC = () => {
         Home
       </NavLink>
       <ViewSelector />
-      <div>
+      <div className="hide-on-small-screen">
         <SearchBar />
       </div>
       {!user && (
@@ -49,8 +49,10 @@ const NavBar: React.FC = () => {
       )}
       {user && (
         <>
-          <div className="nav-bar-img">
-            <ProfileImage pictureUrl={user.picture} />
+          <div className="d-flex align-items-center">
+            <div className="nav-bar-img hide-on-small-screen">
+              <ProfileImage pictureUrl={user.picture} />
+            </div>
             <NavLink
               to={`/profile/${user.uid}`}
               className={({ isActive }) =>
@@ -72,6 +74,9 @@ const NavBar: React.FC = () => {
           >
             Sign out
           </NavLink>
+          <div className="hide-on-big-screen">
+            <SearchBar />
+          </div>
         </>
       )}
     </div>

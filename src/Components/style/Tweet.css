@@ -3,13 +3,13 @@
   color: #ffffff;
   display: flex;
   max-width: 600px;
-  width: 100vw;
+  width: 95vw;
   flex-direction: column;
   border: 0;
   border-radius: 6px;
   padding: 10px 20px;
   gap: 6px;
-  margin: 20px 20px;
+  margin: 20px 0px;
   word-wrap: break-word;
 }
 
