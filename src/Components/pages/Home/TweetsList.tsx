@@ -1,6 +1,6 @@
 import InfiniteScroll from "react-infinite-scroll-component";
 import { TweetProps } from "../../../Types/TweetProps";
-import Loading from "./Loading";
+import Loading from "../../BaseComponents/Loading";
 import Tweet from "./Tweet";
 import { useAppSelector, useAppDispatch } from "../../../hooks/redux";
 import { getTweets } from "../../../store/reducers/TweetSlice";

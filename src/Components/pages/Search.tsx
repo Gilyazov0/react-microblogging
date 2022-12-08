@@ -4,17 +4,16 @@ import tweetsDB from "../../lib/tweetsDB";
 import { useEffect, useState } from "react";
 import UserData from "../../Types/userData";
 import { TweetProps } from "../../Types/TweetProps";
-import Loading from "./Home/Loading";
+import Loading from "../BaseComponents/Loading";
 import UsersList from "./Profile/UsersList";
 import Tweet from "./Home/Tweet";
 import { useNavigate } from "react-router-dom";
 const Search: React.FC = () => {
   const { query, searchAt } = useAppSelector((state) => state.search);
-
-  const [data, setData] = useState<UserData[] | TweetProps[] | null>(null);
-
   const user = useAppSelector((state) => state.user.user);
   const navigate = useNavigate();
+
+  const [data, setData] = useState<UserData[] | TweetProps[] | null>(null);
 
   useEffect(() => {
     if (!user) navigate("/signIn");

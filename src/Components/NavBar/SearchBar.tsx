@@ -12,6 +12,7 @@ const SearchBar: React.FC = () => {
 
   const dispatch = useAppDispatch();
   const { setSearchParams } = searchSlice.actions;
+
   const navigate = useNavigate();
   const location = useLocation();
 

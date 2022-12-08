@@ -4,9 +4,9 @@ import { userSlice } from "../../../store/reducers/UserSlice";
 
 const FollowIcon: React.FC<{ authorId: string }> = ({ authorId }) => {
   const user = useAppSelector((state) => state.user.user);
-
   const { setUser } = userSlice.actions;
   const dispatch = useAppDispatch();
+
   async function handleClick(
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) {

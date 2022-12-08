@@ -5,8 +5,7 @@ import { TweetProps } from "../../../Types/TweetProps";
 import TweetList from "./TweetsList";
 import tweetsDB from "../../../lib/tweetsDB";
 import { useAppSelector, useAppDispatch } from "../../../hooks/redux";
-import { getTweets } from "../../../store/reducers/TweetSlice";
-import { tweetSlice } from "../../../store/reducers/TweetSlice";
+import { getTweets, tweetSlice } from "../../../store/reducers/TweetSlice";
 import { useNavigate } from "react-router-dom";
 
 export default function Home() {
@@ -40,7 +39,8 @@ export default function Home() {
     return () => {
       unsubscribe();
     };
-  }, [addTweet, dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

@@ -1,26 +1,28 @@
 import { ChangeEvent, useRef } from "react";
 import "../../style/TextBox.css";
 
-const TextBox: React.FC<{ setTweetLength: Function }> = ({
-  setTweetLength,
+const TextBox: React.FC<{ setText: Function; text: string }> = ({
+  setText,
+  text,
 }) => {
   const ref = useRef<HTMLTextAreaElement>(null);
 
   const handleInput = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const input = ref.current;
     if (input) {
-      setTweetLength(input.value.length);
+      setText(input.value);
       input.style.height = "auto";
       input.style.height = `${e.target.scrollHeight}px`;
     }
   };
+  ref.current?.focus();
 
   return (
     <textarea
       ref={ref}
-      rows={1}
       onInput={handleInput}
       className="tweet-content"
+      value={text}
     />
   );
 };

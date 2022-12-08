@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import { Button, Alert } from "react-bootstrap";
 import TextBox from "./TextBox";
 import "../../style/NewTweet.css";
@@ -6,45 +6,31 @@ import tweetsDB from "../../../lib/tweetsDB";
 import { useAppSelector } from "../../../hooks/redux";
 
 const NewTweet: React.FC = () => {
-  const [tweetLength, setTweetLength] = useState(0);
+  const [text, setText] = useState("");
   const [serverError, setServerError] = useState<string>("");
   const { user } = useAppSelector((state) => state.user);
 
-  const handleClick = useCallback(
-    async (e: React.FormEvent<HTMLFormElement>) => {
-      setServerError("");
-      setTweetLength(0);
-      e.preventDefault();
-      const input = e.currentTarget.firstChild as HTMLTextAreaElement;
-      const content = input.value;
-      input.value = "";
-      input.focus();
+  const handleClick = async function () {
+    setServerError("");
+    setText("");
 
-      const tweet = {
-        content: content,
-        userId: user!.uid,
-        date: Date.now(),
-      };
-      try {
-        await tweetsDB.postTweet(tweet);
-      } catch (e: any) {
-        setServerError("server error:" + e?.message);
-      }
-    },
-    [setServerError, user]
-  );
-
+    const tweet = {
+      content: text,
+      userId: user!.uid,
+      date: Date.now(),
+    };
+    try {
+      await tweetsDB.postTweet(tweet);
+    } catch (e: any) {
+      setServerError("server error:" + e?.message);
+    }
+  };
   return (
     <>
-      <form
-        className="form"
-        onSubmit={(e) => {
-          handleClick(e);
-        }}
-      >
-        <TextBox setTweetLength={(x: number) => setTweetLength(x)} />
+      <div className="new-tweet">
+        <TextBox setText={setText} text={text} />
         <div className="d-flex ">
-          {tweetLength > 140 && (
+          {text.length > 140 && (
             <div className="text-danger">
               The tweet can't contain more then 140 chars.
             </div>
@@ -52,13 +38,13 @@ const NewTweet: React.FC = () => {
           <div className="flex-grow-1 "></div>
           <Button
             variant="primary"
-            disabled={tweetLength < 1 || tweetLength > 140}
-            type="submit"
+            disabled={text.length < 1 || text.length > 140}
+            onClick={handleClick}
           >
             Tweet
           </Button>
         </div>
-      </form>
+      </div>
       {serverError && (
         <Alert variant="danger" className="m-0 p-1 ">
           {serverError}
