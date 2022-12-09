@@ -8,4 +8,5 @@ export interface TweetProps {
   like?: boolean;
   follow?: boolean;
   replyTo?: string;
+  replies?: string[];
 }

@@ -25,6 +25,9 @@ abstract class Firebase {
     return null;
   }
 
+  /**
+   * if document exists merge data
+   */
   protected async writeData(
     db: Firestore,
     collection: string,
@@ -39,11 +42,16 @@ abstract class Firebase {
     }
   }
 
+  /**
+   *
+   * @returns id of new document
+   */
   protected async writeDataWithId(db: Firestore, col: string, data: object) {
     const newDocRef = doc(collection(db, col));
     const newData = { ...data, id: newDocRef.id };
     try {
       await setDoc(newDocRef, newData, { merge: true });
+      return newDocRef.id;
     } catch (error) {
       console.log(error);
     }
@@ -73,6 +81,9 @@ abstract class Firebase {
     }
   }
 
+  /**
+   * if fieldName is array add or remove data from it
+   */
   protected async toggleDataInArray(
     fieldName: string,
     db: Firestore,
@@ -82,6 +93,7 @@ abstract class Firebase {
   ) {
     const arr = await this.getField(fieldName, db, collection, document);
 
+    if (!(arr instanceof Array)) return;
     const index = arr.indexOf(data);
     index === -1 ? arr.push(data) : arr.splice(index, 1);
 

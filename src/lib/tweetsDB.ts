@@ -27,7 +27,15 @@ class TweetsDB extends Firebase {
   }
 
   public async postTweet(tweet: TweetProps) {
-    await this.writeDataWithId(this.db, this.collection, tweet);
+    const id = await this.writeDataWithId(this.db, this.collection, tweet);
+    if (tweet.replyTo && id)
+      await this.toggleDataInArray(
+        "replies",
+        this.db,
+        this.collection,
+        tweet.replyTo,
+        id
+      );
   }
 
   public async toggleLike(tweetId: string, uid: string) {
