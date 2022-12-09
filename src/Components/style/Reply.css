@@ -1,0 +1,8 @@
+.modal-backdrop {
+  background-color: lightslategray;
+}
+
+.modal-content {
+  background-color: #15202b;
+  width: fit-content;
+}

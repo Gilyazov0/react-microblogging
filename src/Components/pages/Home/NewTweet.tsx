@@ -5,7 +5,7 @@ import "../../style/NewTweet.css";
 import tweetsDB from "../../../lib/tweetsDB";
 import { useAppSelector } from "../../../hooks/redux";
 
-const NewTweet: React.FC = () => {
+const NewTweet: React.FC<{ replyTo: string }> = ({ replyTo = "" }) => {
   const [text, setText] = useState("");
   const [serverError, setServerError] = useState<string>("");
   const { user } = useAppSelector((state) => state.user);
@@ -18,6 +18,7 @@ const NewTweet: React.FC = () => {
       content: text,
       userId: user!.uid,
       date: Date.now(),
+      replyTo: replyTo,
     };
     try {
       await tweetsDB.postTweet(tweet);

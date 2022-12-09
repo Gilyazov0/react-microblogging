@@ -12,7 +12,7 @@ export default function Home() {
 
   return (
     <>
-      <NewTweet />
+      <NewTweet replyTo="" />
       <TweetList />
     </>
   );
