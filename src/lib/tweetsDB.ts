@@ -8,6 +8,7 @@ import {
   where,
   orderBy,
   limit,
+  QueryConstraint,
 } from "firebase/firestore";
 import Firebase from "./Firebase";
 import { TweetProps } from "../Types/TweetProps";
@@ -103,31 +104,25 @@ class TweetsDB extends Firebase {
   }
 
   private getQuery(date: number, uid: string, view: ViewType) {
+    const constraint: QueryConstraint[] = [
+      where("date", "<", date),
+      orderBy("date", "desc"),
+      limit(this.queryLimit),
+      where("replyTo", "==", ""),
+    ];
     switch (view) {
       case "all tweets":
-        return query(
-          collection(this.db, this.collection),
-          where("date", "<", date),
-          orderBy("date", "desc"),
-          limit(this.queryLimit)
-        );
+        break;
+
       case "my tweets":
-        return query(
-          collection(this.db, this.collection),
-          where("date", "<", date),
-          where("userId", "==", uid),
-          orderBy("date", "desc"),
-          limit(this.queryLimit)
-        );
+        constraint.push(where("userId", "==", uid));
+        break;
+
       case "liked":
-        return query(
-          collection(this.db, this.collection),
-          where("date", "<", date),
-          where("likes", "array-contains", uid),
-          orderBy("date", "desc"),
-          limit(this.queryLimit)
-        );
+        constraint.push(where("likes", "array-contains", uid));
+        break;
     }
+    return query(collection(this.db, this.collection), ...constraint);
   }
 
   private checkDataInArray(
