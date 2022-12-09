@@ -7,7 +7,6 @@ import { getTweets } from "../../../store/reducers/TweetSlice";
 
 const TweetList: React.FC = () => {
   const { tweets } = useAppSelector((state) => state.tweet);
-
   const { hasMore } = useAppSelector((state) => state.tweet);
   const dispatch = useAppDispatch();
 

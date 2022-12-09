@@ -8,19 +8,16 @@ import ProfileAvatar from "./ProfileAvatar";
 import ProfileName from "./ProfileName";
 import ProfilePassword from "./ProfilePassword";
 import UsersList from "./UsersList";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import useUnsignedRedirect from "../../../hooks/useUnsignedRedirect";
 
 const Profile: React.FC = () => {
   const user = useAppSelector((state) => state.user.user);
   const { profileUid } = useParams();
-  const navigate = useNavigate();
 
   const [profileUser, setProfileUser] = useState<UserData | null>(null);
 
-  useEffect(() => {
-    if (!user) navigate("/signIn");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  useUnsignedRedirect();
 
   useEffect(() => {
     (async (uid: string) => {
