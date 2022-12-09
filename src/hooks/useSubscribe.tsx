@@ -4,6 +4,9 @@ import { tweetSlice } from "../store/reducers/TweetSlice";
 import { TweetProps } from "../Types/TweetProps";
 import { useAppDispatch } from "./redux";
 
+/**
+ * subscribe for new tweets
+ */
 export default function useSubscribe() {
   const { addTweet } = tweetSlice.actions;
   const dispatch = useAppDispatch();

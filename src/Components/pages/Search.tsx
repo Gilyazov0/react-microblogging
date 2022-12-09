@@ -7,18 +7,13 @@ import { TweetProps } from "../../Types/TweetProps";
 import Loading from "../BaseComponents/Loading";
 import UsersList from "./Profile/UsersList";
 import Tweet from "./Home/Tweet";
-import { useNavigate } from "react-router-dom";
+import useUnsignedRedirect from "../../hooks/useUnsignedRedirect";
+
 const Search: React.FC = () => {
   const { query, searchAt } = useAppSelector((state) => state.search);
-  const user = useAppSelector((state) => state.user.user);
-  const navigate = useNavigate();
-
   const [data, setData] = useState<UserData[] | TweetProps[] | null>(null);
 
-  useEffect(() => {
-    if (!user) navigate("/signIn");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [user]);
+  useUnsignedRedirect();
 
   useEffect(() => {
     async function getData() {
