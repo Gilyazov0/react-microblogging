@@ -19,6 +19,7 @@ const NewTweet: React.FC<{ replyTo: string }> = ({ replyTo = "" }) => {
       userId: user!.uid,
       date: Date.now(),
       replyTo: replyTo,
+      replies: [],
     };
     try {
       await tweetsDB.postTweet(tweet);
