@@ -2,8 +2,6 @@
   align-self: center;
   color: #ffffff;
   display: flex;
-  max-width: 600px;
-  width: 95vw;
   flex-direction: column;
   border: 0;
   border-radius: 6px;
@@ -41,4 +39,12 @@
 .img-container {
   display: flex;
   flex-direction: row-reverse;
+}
+
+.replies {
+  margin-left: 20px;
+}
+.infinite-scroll-component {
+  max-width: 600px;
+  width: 95vw;
 }

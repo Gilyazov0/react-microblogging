@@ -64,7 +64,8 @@ export const tweetSlice = createSlice({
     },
     addTweet(state, action: PayloadAction<TweetProps>) {
       const tweets = state.tweets;
-      tweets.unshift(action.payload);
+      const tweet = action.payload;
+      if (tweet.replies && tweet.replies.length > 0) tweets.unshift(tweet);
       state.tweets = tweets;
     },
   },
