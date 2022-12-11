@@ -9,7 +9,6 @@ export default function Home() {
   useResetTweets();
   useSubscribe();
   useUnsignedRedirect();
-
   return (
     <>
       <NewTweet replyTo="" />

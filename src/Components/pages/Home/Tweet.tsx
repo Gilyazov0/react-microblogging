@@ -3,6 +3,7 @@ import "../../style/Tweet.css";
 import TweetMain from "./TweetMain";
 import TweetFooter from "./TweetFooter";
 import { useAppSelector } from "../../../hooks/redux";
+import Replies from "./Replies";
 
 const Tweet: React.FC<TweetProps> = (props) => {
   const { view } = useAppSelector((state) => state.view);
@@ -13,6 +14,9 @@ const Tweet: React.FC<TweetProps> = (props) => {
     >
       <TweetMain {...props} />
       <TweetFooter {...props} />
+      {props.replies && props.replies.length !== 0 && (
+        <Replies ids={props.replies!} />
+      )}
     </div>
   );
 };

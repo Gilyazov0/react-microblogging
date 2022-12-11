@@ -73,9 +73,14 @@ class TweetsDB extends Firebase {
     return unsubscribe;
   }
 
-  public async getTweets(date: number, uid: string = "", view: ViewType) {
+  public async getTweets(
+    date: number,
+    uid: string = "",
+    view: ViewType | "by id",
+    ids: string[] = []
+  ) {
     try {
-      const q = this.getQuery(date, uid, view);
+      const q = this.getQuery(date, uid, view, ids);
       const querySnapshot = await getDocs(q);
       const res: TweetProps[] = [];
       querySnapshot.forEach((doc) => {
@@ -103,8 +108,13 @@ class TweetsDB extends Firebase {
     return tweets as TweetProps[];
   }
 
-  private getQuery(date: number, uid: string, view: ViewType) {
-    const constraint: QueryConstraint[] = [
+  private getQuery(
+    date: number,
+    uid: string,
+    view: ViewType | "by id",
+    ids: string[]
+  ) {
+    let constraint: QueryConstraint[] = [
       where("date", "<", date),
       orderBy("date", "desc"),
       limit(this.queryLimit),
@@ -120,6 +130,9 @@ class TweetsDB extends Firebase {
 
       case "liked":
         constraint.push(where("likes", "array-contains", uid));
+        break;
+      case "by id":
+        constraint = [where("id", "in", ids)];
         break;
     }
     return query(collection(this.db, this.collection), ...constraint);
