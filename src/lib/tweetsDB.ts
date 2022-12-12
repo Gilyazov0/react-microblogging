@@ -132,7 +132,7 @@ class TweetsDB extends Firebase {
         constraint.push(where("likes", "array-contains", uid));
         break;
       case "by id":
-        constraint = [where("id", "in", ids)];
+        constraint = [where("id", "in", ids), orderBy("date", "desc")];
         break;
     }
     return query(collection(this.db, this.collection), ...constraint);

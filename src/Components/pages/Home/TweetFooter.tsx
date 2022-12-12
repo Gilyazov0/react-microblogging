@@ -4,13 +4,14 @@ import tweetsDB from "../../../lib/tweetsDB";
 import { useAppSelector } from "../../../hooks/redux";
 import FollowIcon from "./FollowIcon";
 import Reply from "./Reply";
-import { useState } from "react";
+import { useContext } from "react";
+import { ReplyContext } from "./Home";
 
 const TweetFooter: React.FC<TweetProps> = (props) => {
   const { id, like, userId, replies } = { ...props };
-  const [show, setShow] = useState<boolean>(false);
-  const { user } = useAppSelector((state) => state.user);
 
+  const { user } = useAppSelector((state) => state.user);
+  const { replyId, setReplyId } = useContext(ReplyContext);
   return (
     <>
       <div className="img-container">
@@ -29,10 +30,14 @@ const TweetFooter: React.FC<TweetProps> = (props) => {
           className={`icon-img`}
           src="./reply.png"
           alt="reply"
-          onClick={() => setShow((prev) => !prev)}
+          onClick={() => setReplyId(id)}
         />
       </div>
-      <Reply show={show} setShow={setShow} tweet={props} />
+      <Reply
+        show={id === replyId}
+        setShow={() => setReplyId("")}
+        tweet={props}
+      />
     </>
   );
 };

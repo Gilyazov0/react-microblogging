@@ -4,18 +4,22 @@ import TweetMain from "./TweetMain";
 import TweetFooter from "./TweetFooter";
 import { useAppSelector } from "../../../hooks/redux";
 import Replies from "./Replies";
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { ReplyContext } from "./Home";
 
 const Tweet: React.FC<TweetProps> = (props) => {
   const { view } = useAppSelector((state) => state.view);
   const [showReplies, setShowReplies] = useState<boolean>(false);
+  const { replyId } = useContext(ReplyContext);
   return (
     <>
       <div
         className={`tweet ${
           view === "all tweets" ? "all-tweets" : "my-tweets"
         }`}
-        onClick={() => setShowReplies((prev) => !prev)}
+        onClick={() => {
+          if (replyId === "") setShowReplies((prev) => !prev);
+        }}
       >
         <TweetMain {...props} />
         <TweetFooter {...props} />

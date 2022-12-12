@@ -7,7 +7,7 @@ import { useAppSelector } from "../../../hooks/redux";
 
 interface Props {
   show: boolean;
-  setShow: React.Dispatch<React.SetStateAction<boolean>>;
+  setShow: Function;
   tweet: TweetProps;
 }
 const Reply: React.FC<Props> = ({ show, setShow, tweet }) => {

@@ -1,14 +1,16 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Button, Alert } from "react-bootstrap";
 import TextBox from "./TextBox";
 import "../../style/NewTweet.css";
 import tweetsDB from "../../../lib/tweetsDB";
 import { useAppSelector } from "../../../hooks/redux";
+import { ReplyContext } from "./Home";
 
 const NewTweet: React.FC<{ replyTo: string }> = ({ replyTo = "" }) => {
   const [text, setText] = useState("");
   const [serverError, setServerError] = useState<string>("");
   const { user } = useAppSelector((state) => state.user);
+  const { setReplyId } = useContext(ReplyContext);
 
   const handleClick = async function () {
     setServerError("");
@@ -23,6 +25,7 @@ const NewTweet: React.FC<{ replyTo: string }> = ({ replyTo = "" }) => {
     };
     try {
       await tweetsDB.postTweet(tweet);
+      setReplyId("");
     } catch (e: any) {
       setServerError("server error:" + e?.message);
     }

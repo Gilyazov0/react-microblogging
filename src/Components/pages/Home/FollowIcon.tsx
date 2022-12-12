@@ -10,6 +10,7 @@ const FollowIcon: React.FC<{ authorId: string }> = ({ authorId }) => {
   async function handleClick(
     e: React.MouseEvent<HTMLImageElement, MouseEvent>
   ) {
+    e.stopPropagation();
     e.currentTarget.classList.toggle("selected");
     await userDB.toggleFollow(authorId, user!.uid);
     const newUserData = await userDB.getUserData(user!.uid);
