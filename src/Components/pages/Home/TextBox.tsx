@@ -15,7 +15,7 @@ const TextBox: React.FC<{ setText: Function; text: string }> = ({
       input.style.height = `${e.target.scrollHeight}px`;
     }
   };
-  ref.current?.focus();
+  if (window.scrollY === 0) ref.current?.focus();
 
   return (
     <textarea
