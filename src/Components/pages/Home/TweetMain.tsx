@@ -20,9 +20,7 @@ const TweetMain: React.FC<TweetProps> = ({
 
         <Link to={`/profile/${userId}`}>{userName}</Link>
         <div className="flex-grow-1"></div>
-        <div className="text-secondary">
-          {moment(date).format("MMM Mo HH:mm A")}
-        </div>
+        <div className="text-secondary">{moment(date).format("LLL")}</div>
       </div>
       <div>{content}</div>
     </>
