@@ -34,6 +34,7 @@
   height: 20px;
   align-self: flex-end;
   margin-left: 10px;
+  cursor: pointer;
 }
 
 .img-container {
@@ -44,6 +45,12 @@
 .replies {
   margin-left: 20px;
 }
+
+.replies-number {
+  font-size: xx-small;
+  color: black;
+}
+
 .infinite-scroll-component {
   max-width: 600px;
   width: 95vw;

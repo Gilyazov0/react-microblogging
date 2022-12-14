@@ -1,5 +1,4 @@
 import { TweetProps } from "../../../Types/TweetProps";
-import "../../style/TweetFooter.css";
 import tweetsDB from "../../../lib/tweetsDB";
 import { useAppSelector } from "../../../hooks/redux";
 import FollowIcon from "./FollowIcon";
