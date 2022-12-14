@@ -143,7 +143,7 @@ class TweetsDB extends Firebase {
     uid: string,
     fieldName: string
   ) {
-    if (!data[fieldName]) return false;
+    if (!data[fieldName] || !(data[fieldName] instanceof Array)) return false;
     return (data[fieldName] as string[]).indexOf(uid) !== -1;
   }
 }
