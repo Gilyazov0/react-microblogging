@@ -5,6 +5,7 @@ import UsersList from "./Profile/UsersList";
 import Tweet from "./Home/Tweet";
 import useSearch from "../../hooks/useSearch";
 import useUnsignedRedirect from "../../hooks/useUnsignedRedirect";
+import "../style/Search.css";
 
 const Search: React.FC = () => {
   useUnsignedRedirect();
@@ -21,11 +22,13 @@ const Search: React.FC = () => {
       {data && searchAt === "users" && (
         <UsersList title="" uids={(data as UserData[]).map((u) => u.uid)} />
       )}
-      {data &&
-        searchAt === "tweets" &&
-        (data as []).map((tweet: TweetProps) => {
-          return <Tweet {...tweet} key={tweet.id} />;
-        })}
+      {data && searchAt === "tweets" && (
+        <div className="tweets-list">
+          {(data as []).map((tweet: TweetProps) => {
+            return <Tweet {...tweet} key={tweet.id} />;
+          })}
+        </div>
+      )}
     </>
   );
 };
