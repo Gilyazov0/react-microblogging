@@ -1,7 +1,8 @@
 import { FirebaseApp, initializeApp } from "firebase/app";
 import {
-  collection,
+  CollectionReference,
   doc,
+  DocumentData,
   Firestore,
   getDoc,
   getDocs,
@@ -9,18 +10,24 @@ import {
   setDoc,
 } from "firebase/firestore";
 import FIREBASE_CONFIG from "./config_firebase";
+import { getFirestore } from "firebase/firestore";
 
 abstract class Firebase {
   private readonly firebaseConfig;
   protected app: FirebaseApp;
+  protected db: Firestore;
 
   constructor() {
     this.firebaseConfig = FIREBASE_CONFIG;
     this.app = initializeApp(this.firebaseConfig);
+    this.db = getFirestore(this.app);
   }
 
-  protected async getData(db: Firestore, collection: string, document: string) {
-    const dataSnap = await this.getDataSnap(db, collection, document);
+  protected async getData(
+    col: CollectionReference<DocumentData>,
+    document: string
+  ) {
+    const dataSnap = await this.getDataSnap(col, document);
     if (dataSnap?.exists()) return dataSnap.data();
     return null;
   }
@@ -29,12 +36,11 @@ abstract class Firebase {
    * if document exists merge data
    */
   protected async writeData(
-    db: Firestore,
-    collection: string,
+    col: CollectionReference<DocumentData>,
     document: string,
     data: object
   ): Promise<void> {
-    const ref = doc(db, collection, document);
+    const ref = doc(col, document);
     try {
       await setDoc(ref, data, { merge: true });
     } catch (error) {
@@ -46,8 +52,11 @@ abstract class Firebase {
    *
    * @returns id of new document
    */
-  protected async writeDataWithId(db: Firestore, col: string, data: object) {
-    const newDocRef = doc(collection(db, col));
+  protected async writeDataWithId(
+    col: CollectionReference<DocumentData>,
+    data: object
+  ) {
+    const newDocRef = doc(col);
     const newData = { ...data, id: newDocRef.id };
     try {
       await setDoc(newDocRef, newData, { merge: true });
@@ -58,22 +67,20 @@ abstract class Firebase {
   }
 
   public async writeIfNotExist(
-    db: Firestore,
-    collection: string,
+    col: CollectionReference<DocumentData>,
     document: string,
     data: object
   ) {
-    const dataSnap = await this.getDataSnap(db, collection, document);
-    if (!dataSnap?.exists()) this.writeData(db, collection, document, data);
+    const dataSnap = await this.getDataSnap(col, document);
+    if (!dataSnap?.exists()) this.writeData(col, document, data);
   }
 
   protected async getDataSnap(
-    db: Firestore,
-    collection: string,
+    col: CollectionReference<DocumentData>,
     document: string
   ) {
     try {
-      const docRef = doc(db, collection, document);
+      const docRef = doc(col, document);
       const dataSnap = await getDoc(docRef);
       return dataSnap;
     } catch (error) {
@@ -86,24 +93,23 @@ abstract class Firebase {
    */
   protected async toggleDataInArray(
     fieldName: string,
-    db: Firestore,
-    collection: string,
+    col: CollectionReference<DocumentData>,
     document: string,
     data: string
   ) {
-    const arr = await this.getField(fieldName, db, collection, document);
+    const arr = await this.getField(fieldName, col, document);
 
     if (!(arr instanceof Array)) return;
     const index = arr.indexOf(data);
     index === -1 ? arr.push(data) : arr.splice(index, 1);
 
-    await this.writeData(db, collection, document, { [fieldName]: arr });
+    await this.writeData(col, document, { [fieldName]: arr });
   }
 
   //there is no way to implement proper search in firebase without paid account. So it made this way
   //More information is here: https://firebase.google.com/docs/firestore/solutions/search?provider=typesense
-  protected async Search(db: Firestore, col: string, data: string) {
-    const q = query(collection(db, col));
+  protected async Search(col: CollectionReference<DocumentData>, data: string) {
+    const q = query(col);
     const querySnapshot = await getDocs(q);
     const res: any = [];
     querySnapshot.forEach((doc) => {
@@ -125,12 +131,11 @@ abstract class Firebase {
 
   private async getField(
     fieldName: string,
-    db: Firestore,
-    collection: string,
+    col: CollectionReference<DocumentData>,
     document: string
   ): Promise<string[]> {
     try {
-      const data = await this.getData(db, collection, document);
+      const data = await this.getData(col, document);
       if (!data || !data[fieldName]) return [] as string[];
       return data[fieldName] as string[];
     } catch (error) {

@@ -1,7 +1,5 @@
 import {
-  getFirestore,
   collection,
-  Firestore,
   getDocs,
   onSnapshot,
   query,
@@ -9,6 +7,8 @@ import {
   orderBy,
   limit,
   QueryConstraint,
+  CollectionReference,
+  DocumentData,
 } from "firebase/firestore";
 import Firebase from "./Firebase";
 import { TweetProps } from "../Types/TweetProps";
@@ -16,23 +16,20 @@ import ViewType from "../Types/ViewType";
 import userDB from "./usersDB";
 
 class TweetsDB extends Firebase {
-  private db: Firestore;
-  private collection: string;
+  private collection: CollectionReference<DocumentData>;
   private queryLimit: number;
 
   constructor() {
     super();
-    this.db = getFirestore(this.app);
-    this.collection = "tweets";
+    this.collection = collection(this.db, "tweets");
     this.queryLimit = 10;
   }
 
   public async postTweet(tweet: TweetProps) {
-    const id = await this.writeDataWithId(this.db, this.collection, tweet);
+    const id = await this.writeDataWithId(this.collection, tweet);
     if (tweet.replyTo && id)
       await this.toggleDataInArray(
         "replies",
-        this.db,
         this.collection,
         tweet.replyTo,
         id
@@ -40,21 +37,12 @@ class TweetsDB extends Firebase {
   }
 
   public async toggleLike(tweetId: string, uid: string) {
-    await this.toggleDataInArray(
-      "likes",
-      this.db,
-      this.collection,
-      tweetId,
-      uid
-    );
+    await this.toggleDataInArray("likes", this.collection, tweetId, uid);
   }
 
   public subscribeForUpdates(callback: Function) {
     const date = Date.now();
-    const q = query(
-      collection(this.db, this.collection),
-      where("date", ">", date)
-    );
+    const q = query(this.collection, where("date", ">", date));
     const unsubscribe = onSnapshot(q, (snapshot) => {
       snapshot.docChanges().forEach(
         async (change) => {
@@ -96,7 +84,7 @@ class TweetsDB extends Firebase {
   }
 
   public async SearchTweets(data: string): Promise<TweetProps[]> {
-    const res: TweetProps[] = await this.Search(this.db, this.collection, data);
+    const res: TweetProps[] = await this.Search(this.collection, data);
     const promises: Promise<any>[] = [];
 
     res.forEach((tweet) => {
@@ -135,7 +123,7 @@ class TweetsDB extends Firebase {
         constraint = [where("id", "in", ids), orderBy("date", "desc")];
         break;
     }
-    return query(collection(this.db, this.collection), ...constraint);
+    return query(this.collection, ...constraint);
   }
 
   private checkDataInArray(

@@ -1,29 +1,31 @@
-import { getFirestore, Firestore } from "firebase/firestore";
+import {
+  collection,
+  CollectionReference,
+  DocumentData,
+} from "firebase/firestore";
 import { TweetProps } from "../Types/TweetProps";
 import UserData from "../Types/userData";
 import Firebase from "./Firebase";
 import storage from "./storage";
 
 class UsersDB extends Firebase {
-  private collection: string;
-  private db: Firestore;
+  private collection: CollectionReference<DocumentData>;
 
   constructor() {
     super();
-    this.db = getFirestore(this.app);
-    this.collection = "users";
+    this.collection = collection(this.db, "users");
   }
 
   public async writeUserData(uid: string, data: object) {
-    await this.writeData(this.db, this.collection, uid, data);
+    await this.writeData(this.collection, uid, data);
   }
 
   public async createUserIfNotExist(uid: string, data: object) {
-    await this.writeIfNotExist(this.db, this.collection, uid, data);
+    await this.writeIfNotExist(this.collection, uid, data);
   }
 
   public async getUserData(uid: string) {
-    const data = await this.getData(this.db, this.collection, uid);
+    const data = await this.getData(this.collection, uid);
     if (data) return data as UserData;
     return null;
   }
@@ -56,23 +58,16 @@ class UsersDB extends Firebase {
   public async toggleFollow(authorId: string, userId: string) {
     await this.toggleDataInArray(
       "followers",
-      this.db,
       this.collection,
       authorId,
       userId
     );
 
-    await this.toggleDataInArray(
-      "follow",
-      this.db,
-      this.collection,
-      userId,
-      authorId
-    );
+    await this.toggleDataInArray("follow", this.collection, userId, authorId);
   }
 
   public async SearchUser(data: string) {
-    const res = await this.Search(this.db, this.collection, data);
+    const res = await this.Search(this.collection, data);
     return res as UserData[];
   }
 }
